@@ -31,13 +31,15 @@ The application is designed for GitHub Pages and modern browsers using static HT
 
 ## Contributor handoff and project tracking
 
-Before coding, read these files in order:
+**AI coding agents: start with [AGENTS.md](AGENTS.md).** It explains the whole project, specifies the required reading order, and tells agents how to begin the current coding task.
+
+Supporting records:
 
 1. [DECISIONS.md](DECISIONS.md) — what the maintainer explicitly decided, first-release scope, and what is deferred/excluded.
-2. [PLAN.md](PLAN.md) — instructions and guardrails for coding agents.
+2. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
 3. [PHASES.md](PHASES.md) — phased work breakdown and acceptance checklists.
-4. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
-5. [Detailed project specification](docs/PROJECT_PLAN.md) — product requirements and release rules.
+4. [PLAN.md](PLAN.md) — coding-agent instructions and guardrails.
+5. [Detailed project specification](docs/PROJECT_PLAN.md) — full product requirements and release rules.
 
 Update `PROGRESS.md` alongside implementation work. Never mark a feature or phase complete without test evidence. Keep confirmed decisions separate from implementation status.
 
