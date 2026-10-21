@@ -31,14 +31,37 @@ test("manual: responsive no horizontal overflow", async ({page}) => {
   }
 });
 
-test("manual: reduced motion disables animations", async ({page}) => {
+test("manual: reduced motion disables transitions, animations and smooth scrolling", async ({page}) => {
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.goto("http://127.0.0.1:4173/");
-  const duration = await page.evaluate(() => {
-    const el = document.querySelector("*");
-    return getComputedStyle(el).transitionDuration;
+
+  await expect.poll(() => page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
+
+  const styles = await page.evaluate(() => {
+    const elements = [...document.querySelectorAll("html, body, .button, .panel, .issue-card, .site-header")];
+    const durationInMs = value => {
+      const parts = value.split(",").map(part => part.trim());
+      return parts.map(part => parseFloat(part) * (part.endsWith("ms") ? 1 : 1000));
+    };
+    return {
+      scroll: getComputedStyle(document.documentElement).scrollBehavior,
+      elements: elements.map(el => ({
+        selector: el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.trim().replace(/\s+/g, ".") : ""),
+        transitionMs: durationInMs(getComputedStyle(el).transitionDuration),
+        animationMs: durationInMs(getComputedStyle(el).animationDuration),
+        animationIterationCount: getComputedStyle(el).animationIterationCount
+      }))
+    };
   });
-  console.log("REDUCED_MOTION_TRANSITION:", duration);
+
+  console.log("REDUCED_MOTION:", JSON.stringify(styles));
+  expect(styles.scroll).toBe("auto");
+  expect(styles.elements.length).toBeGreaterThan(0);
+  for (const el of styles.elements) {
+    expect(el.transitionMs.every(ms => ms <= 1), `${el.selector} transition duration should be <= 1ms: ${el.transitionMs}`).toBe(true);
+    expect(el.animationMs.every(ms => ms <= 1), `${el.selector} animation duration should be <= 1ms: ${el.animationMs}`).toBe(true);
+    expect(el.animationIterationCount).not.toBe("infinite");
+  }
 });
 
 test("manual: open detail and verify focus moves to heading", async ({page}) => {
