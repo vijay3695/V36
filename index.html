@@ -18,7 +18,7 @@
 <main id="main" tabindex="-1">
 <div id="status" class="status" role="status" aria-live="polite">Ready to search public GitHub issues.</div>
 <section id="view-discover" class="view" aria-labelledby="discover-title">
-<div class="hero"><p class="eyebrow">OPEN-SOURCE DISCOVERY</p><h1 id="discover-title">Find work worth contributing to.</h1><p class="lede">Search GitHub issues, inspect activity evidence, and build a portable context pack for your own AI coding assistant.</p></div>
+<div class="hero"><p class="eyebrow">OPEN-SOURCE DISCOVERY</p><h1 id="discover-title" tabindex="-1">Find work worth contributing to.</h1><p class="lede">Search GitHub issues, inspect activity evidence, and build a portable context pack for your own AI coding assistant.</p></div>
 <form id="search-form" class="panel filter-panel">
 <div class="field search-field"><label for="query">Search issues</label><input id="query" name="query" type="search" maxlength="200" placeholder="e.g. improve error handling"></div>
 <div class="filter-grid">
@@ -51,12 +51,12 @@
 </section>
 <section id="view-detail" class="view" aria-labelledby="detail-title" hidden><button id="back-to-results" class="button button-quiet" type="button">Back to results</button><div id="detail-content"></div></section>
 <section id="view-saved" class="view" aria-labelledby="saved-title" hidden>
-<div class="page-heading"><p class="eyebrow">YOUR BROWSER</p><h1 id="saved-title">Saved</h1><p class="lede">Saved locally in this browser only. There is no account or cloud sync.</p></div>
+<div class="page-heading"><p class="eyebrow">YOUR BROWSER</p><h1 id="saved-title" tabindex="-1">Saved</h1><p class="lede">Saved locally in this browser only. There is no account or cloud sync.</p></div>
 <div class="panel saved-tools"><button id="export-saved" class="button button-secondary" type="button">Export backup</button><label class="button button-secondary file-button" for="import-file">Import backup</label><input id="import-file" type="file" accept="application/json,.json" hidden><p class="hint">Imports are validated and deduplicated. Never import files you do not trust. Clearing browser data or private browsing may remove saved items.</p></div>
 <h2>Saved issues</h2><div id="saved-issues" class="results"></div><h2>Saved searches</h2><div id="saved-searches" class="saved-searches"></div>
 </section>
 <section id="view-about" class="view" aria-labelledby="about-title" hidden>
-<div class="page-heading"><p class="eyebrow">PROJECT RULES</p><h1 id="about-title">About V36</h1></div>
+<div class="page-heading"><p class="eyebrow">PROJECT RULES</p><h1 id="about-title" tabindex="-1">About V36</h1></div>
 <div class="panel prose">
 <h2>Evidence, not verdicts</h2><p>V36 surfaces dates and observable activity. It does not label projects dead or calculate an overall health score. Older repositories remain visible unless you choose a commit-age filter. Missing information is marked unknown or unavailable, never treated as zero.</p>
 <h2>Data and rate limits</h2><p>Search and repository information come from the public GitHub API. Unauthenticated API limits apply. V36 stops additional requests when limited, preserves loaded results, and offers manual retry. Filters that need extra metadata can only evaluate the loaded set.</p>

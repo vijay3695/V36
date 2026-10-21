@@ -9,3 +9,9 @@ test("context pack never invents absent README, contribution guide, or source li
  const pack=buildContextPack({issue:{title:"Unknown",html_url:"https://github.com/acme/demo/issues/2"},repo:{full_name:"acme/demo"},fetchedAt:"2026-01-02T00:00:00Z"});
  assert.match(pack,/README content was unavailable/);assert.match(pack,/separate contribution guide was not retrieved/);assert.match(pack,/No source-file links were identified/);
 });
+
+test("context pack discloses when retrieved source files were truncated",()=>{
+ const pack=buildContextPack({issue:{title:"Example",html_url:"https://github.com/acme/demo/issues/1"},repo:{full_name:"acme/demo"},readme:{content:"README excerpt",truncated:true},contributing:{content:"Contribution excerpt",truncated:true},fetchedAt:"2026-01-02T00:00:00Z"});
+ assert.match(pack,/README content truncated at 30000 characters/);
+ assert.match(pack,/Contribution guide truncated at 15000 characters/);
+});

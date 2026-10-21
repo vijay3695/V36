@@ -68,3 +68,40 @@ test("unknown commit metadata stays visible",async({page})=>{
  await page.goto("/");await page.locator("details.advanced-filters summary").click();await page.getByLabel("Latest commit on or after").fill("2026-01-01");await page.getByLabel("Search issues").fill("crash");await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.getByRole("status")).toContainText("rate limit reached");await expect(page.getByRole("link",{name:"Fix crash"})).toBeVisible();await expect(page.getByText(/Could not evaluate selected filters: latest commit date/)).toBeVisible();await expect(page.locator("#results-meta")).toContainText("1 need metadata");
 });
+
+test("keyboard skip link and page navigation move focus to the destination",async({page})=>{
+ await page.goto("/");
+ await page.keyboard.press("Tab");
+ await expect(page.locator(".skip-link")).toBeFocused();
+ await page.keyboard.press("Enter");
+ await expect(page.locator("#main")).toBeFocused();
+ await page.getByRole("link",{name:"Saved",exact:true}).focus();
+ await page.keyboard.press("Enter");
+ await expect(page.getByRole("heading",{name:"Saved",exact:true})).toBeFocused();
+});
+test("valid import reports accepted, rejected and duplicate items",async({page})=>{
+ await page.goto("/#saved");
+ const issue={url:"https://github.com/acme/demo/issues/5",title:"Imported issue",repository:"acme/demo",number:5};
+ const data={version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[issue,{...issue},{url:"javascript:alert(1)"}],searches:[]};
+ await page.locator("#import-file").setInputFiles({name:"backup.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(data))});
+ await expect(page.getByRole("status")).toContainText("1 valid item accepted, 1 invalid item rejected, 1 duplicate merged");
+ await expect(page.getByRole("link",{name:"Imported issue"})).toBeVisible();
+});
+test("export downloads a versioned saved-data backup",async({page})=>{
+ await page.goto("/#saved");
+ const downloadPromise=page.waitForEvent("download");
+ await page.getByRole("button",{name:"Export backup"}).click();
+ const download=await downloadPromise;
+ expect(download.suggestedFilename()).toBe("v36-backup.json");
+});
+test("storage write failures are reported and saved references remain visible",async({page})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem("v36.saved.v1",JSON.stringify({version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[{url:"https://github.com/acme/demo/issues/7",title:"Keep this",repository:"acme/demo",number:7}],searches:[]}));
+  const original=Storage.prototype.setItem;
+  Storage.prototype.setItem=function(key,value){if(key==="v36.saved.v1")throw new DOMException("Quota exceeded","QuotaExceededError");return original.call(this,key,value);};
+ });
+ await page.goto("/#saved");
+ await page.getByRole("button",{name:"Remove saved reference"}).click();
+ await expect(page.getByRole("status")).toContainText("Could not update browser storage");
+ await expect(page.getByRole("link",{name:"Keep this"})).toBeVisible();
+});

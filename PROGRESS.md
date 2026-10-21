@@ -55,6 +55,14 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Keyboard focus, source bounds, and portability verification (pending CI)
+
+- Added focus movement to destination headings after navigation and issue-detail opening; advanced filters open automatically when shared/saved custom filters are present.
+- Added timestamp precision for fetch evidence, bounded README/contribution-guide excerpts, and checked common nested CONTRIBUTING.md locations on demand.
+- Added browser tests for keyboard skip-link/navigation focus, valid import diagnostics, backup download, and storage write failures.
+- Latest preceding run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. This new batch is pending its own single bulk run.
+
+
 ### 2026-10-21 — Unknown metadata and incomplete search results (pending CI)
 
 - Changed metadata-dependent filtering so missing language, labels, dates, stars, or latest-commit evidence does not silently remove an issue from the visible result set. Such results are visibly marked as not fully evaluated.
@@ -62,7 +70,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Kept load-more available when GitHub marks a result set incomplete but provides another page.
 - Canonicalized saved-search label ordering during backup validation to improve duplicate detection.
 - Added unit and browser regression tests for unknown metadata behavior.
-- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected batch is pending its next consolidated run.
+- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. The current batch adds keyboard focus management, accessible keyboard navigation, bounded source excerpts, valid import/export checks, and browser-storage failure coverage; its run is pending.
 
 
 ### 2026-10-21 — API failure and import diagnostics coverage (pending CI)

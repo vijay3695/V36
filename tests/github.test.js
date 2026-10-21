@@ -30,3 +30,11 @@ test("repository file content is decoded from GitHub's base64 response",async t=
  assert.equal(file.content,"# Contribution guide");
  assert.equal(file.url,"https://github.com/acme/demo/blob/main/CONTRIBUTING.md");
 });
+
+test("large README responses are bounded and marked truncated",async t=>{
+ const content="x".repeat(30001);
+ t.mock.method(globalThis,"fetch",async()=>new Response(JSON.stringify({content:Buffer.from(content).toString("base64"),encoding:"base64",html_url:"https://github.com/acme/demo/blob/main/README.md"}),{status:200,headers:{"content-type":"application/json"}}));
+ const readme=await (await import("../js/github.js")).getReadme("acme","demo");
+ assert.equal(readme.content.length,30000);
+ assert.equal(readme.truncated,true);
+});
