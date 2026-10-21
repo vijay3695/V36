@@ -3,7 +3,8 @@ import {searchIssues,getIssue,getRepo,getRepoLanguages,getReadme,getLatestCommit
 import {loadSaved,addSavedIssue,addSavedSearch,removeSavedIssue,removeSavedSearch,exportBackup,parseImportFile,mergeBackup} from "./storage.js";
 import {buildContextPack} from "./context-pack.js";
 const $=id=>document.getElementById(id),form=$("search-form"),status=$("status");
-let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;\nconst repoCache=new Map();
+let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;
+const repoCache=new Map();
 function setStatus(message,kind="info"){status.textContent=message;status.dataset.kind=kind;}
 function setBusy(v){busy=v;form.querySelector('button[type="submit"]').disabled=v;$("load-more").disabled=v;}
 function dateLabel(v){if(!v)return "Unknown";const d=new Date(v);return Number.isNaN(d.getTime())?"Unknown":d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});}
