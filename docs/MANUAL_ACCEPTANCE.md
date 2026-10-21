@@ -1,6 +1,6 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and the issue-detail content pass succeeded. Four defects were found and fixed (`534bca7` Saved-search layout, `7bd7d45` star-input spaces, `28d0768` related-work links, `ac5306e` context-pack completeness); the maintainer re-tested all four and confirmed them fixed. Responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
+**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Responsive layout is **DEV APPROVED at 320px and 375px only**; 768px and desktop remain pending. Contrast, reduced motion, and long-content checks remain **NOT RUN**.
 
 ## Record the test environment
 
@@ -25,7 +25,7 @@
 
 ## Visual / responsive checks
 
-- [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls. **NOT RUN**
+- [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls. **PARTIAL — DEV APPROVED**: 320px: PASS, 0px overflow, no offenders; 375px: PASS, 0px overflow, no offenders. 768px and desktop: NOT RUN.
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
 - [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast. **NOT RUN**
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN**
@@ -45,7 +45,7 @@
 
 ## Results
 
-- Outcome: **PARTIAL** — nine checks passed (four with defects fixed since); four remain **NOT RUN**
+- Outcome: **PARTIAL** — prior manual checks remain recorded; responsive layout is DEV APPROVED at 320px and 375px (0px overflow, no offenders at either width); 768px and desktop widths, contrast, reduced motion, and long-content checks remain pending.
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
