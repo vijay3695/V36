@@ -79,3 +79,18 @@ test("star preset boundaries are inclusive",()=>{
  assert.equal(matchesFilters({...issue,repository:{...issue.repository,stargazers_count:99}},f,now),true);
  assert.equal(matchesFilters({...issue,repository:{...issue.repository,stargazers_count:100}},f,now),false);
 });
+
+test("repository push date filters are distinct from latest commit filters",()=>{
+ const f=normalizeFilters({commitAfter:"2026-01-01",pushAgeDays:"30",pushAfter:"2026-01-10",pushBefore:"2026-01-25"});
+ assert.equal(f.pushAgeDays,"");
+ const pushed={...issue,repository:{...issue.repository,latestCommitDate:"2026-01-28T00:00:00Z",pushed_at:"2026-01-20T00:00:00Z"}};
+ assert.equal(matchesFilters(pushed,f,now),true);
+ assert.equal(matchesFilters({...pushed,repository:{...pushed.repository,pushed_at:"2026-01-26T00:00:00Z"}},f,now),false);
+ const unknown={...pushed,repository:{...pushed.repository,pushed_at:null}};
+ assert.equal(matchesFilters(unknown,f,now),true);
+ assert.deepEqual(unknownFilterReasons(unknown,f),["repository last push date"]);
+});
+test("repository push age preset rejects known stale repositories",()=>{
+ const f=normalizeFilters({pushAgeDays:"30"});
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,pushed_at:"2025-12-01T00:00:00Z"}},f,now),false);
+});

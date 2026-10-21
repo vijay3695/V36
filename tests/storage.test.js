@@ -11,9 +11,13 @@ test("exports versioned JSON",()=>{assert.equal(JSON.parse(exportBackup(validate
 test("import size is capped at one megabyte",()=>assert.equal(MAX_IMPORT_BYTES,1048576));
 
 test("saved custom date and exact star filters survive backup validation",()=>{
- const filters={query:"bug",labels:[],sort:"relevance",createdAfter:"2026-01-01",createdBefore:"2026-01-31",updatedAfter:"",updatedBefore:"",commitAfter:"2025-01-01",commitBefore:"",minStars:"25",maxStars:"500"};
+ const filters={query:"bug",labels:[],sort:"relevance",createdDays:"30",createdAfter:"2026-01-01",createdBefore:"2026-01-31",updatedAfter:"",updatedBefore:"",commitAfter:"2025-01-01",commitBefore:"",pushAgeDays:"90",pushAfter:"2025-12-01",pushBefore:"",stars:"0-99",minStars:"25",maxStars:"500"};
  const x=validateBackup({...backup,searches:[{name:"custom",filters}]});
  assert.equal(x.searches[0].filters.createdAfter,"2026-01-01");
+ assert.equal(x.searches[0].filters.createdDays,"");
+ assert.equal(x.searches[0].filters.pushAfter,"2025-12-01");
+ assert.equal(x.searches[0].filters.pushAgeDays,"");
+ assert.equal(x.searches[0].filters.stars,"");
  assert.equal(x.searches[0].filters.maxStars,"500");
  assert.equal(x.searches[0].filters.sort,"relevance");
 });

@@ -25,12 +25,15 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.getByLabel("Search issues").fill("crash");
  await page.locator("details.advanced-filters summary").click();
  await page.getByLabel("Created on or after").fill("2026-01-01");
+ await page.getByLabel("Repository last push on or after").fill("2026-01-01");
  await page.getByLabel("Minimum stars").fill("100");
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page).toHaveURL(/ca=2026-01-01/);
+ await expect(page).toHaveURL(/pa=2026-01-01/);
  await expect(page).toHaveURL(/minStars=100/);
  await page.reload();
  await expect(page.getByLabel("Created on or after")).toHaveValue("2026-01-01");
+ await expect(page.getByLabel("Repository last push on or after")).toHaveValue("2026-01-01");
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Fix crash on startup"})).toBeVisible();

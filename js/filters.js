@@ -28,6 +28,7 @@ export function matchesFilters(issue,f,now=Date.now()){
  if(Number.isFinite(stars)&&f.minStars!==""&&f.minStars!==undefined&&stars<Number(f.minStars))return false;
  if(Number.isFinite(stars)&&f.maxStars!==""&&f.maxStars!==undefined&&stars>Number(f.maxStars))return false;
  if(dateIsInRange(repo.latestCommitDate,f.commitAfter,f.commitBefore,f.commitAgeDays,now)===false)return false;
+ if(dateIsInRange(repo.pushed_at,f.pushAfter,f.pushBefore,f.pushAgeDays,now)===false)return false;
  return true;
 }
 export function unknownFilterReasons(issue,f){
@@ -38,6 +39,7 @@ export function unknownFilterReasons(issue,f){
  if((f.updatedDays||f.updatedAfter||f.updatedBefore)&&(!issue.updated_at||!Number.isFinite(Date.parse(issue.updated_at))))reasons.push("issue update date");
  if((f.stars||f.minStars!==""&&f.minStars!==undefined||f.maxStars!==""&&f.maxStars!==undefined)&&!Number.isFinite(repo.stargazers_count))reasons.push("repository star count");
  if((f.commitAgeDays||f.commitAfter||f.commitBefore)&&(!repo.latestCommitDate||!Number.isFinite(Date.parse(repo.latestCommitDate))))reasons.push("latest commit date");
+ if((f.pushAgeDays||f.pushAfter||f.pushBefore)&&(!repo.pushed_at||!Number.isFinite(Date.parse(repo.pushed_at))))reasons.push("repository last push date");
  if(f.category&&!issue.title&&!issue.body&&!Array.isArray(issue.labels))reasons.push("category evidence");
  return reasons;
 }
@@ -55,7 +57,7 @@ export function buildSearchQuery(f,now=Date.now()){
 const dateValue=v=>typeof v==="string"&&validDate(v)?v:"";
 const numberValue=v=>v!==""&&v!==null&&v!==undefined&&Number.isSafeInteger(Number(v))&&Number(v)>=0&&Number(v)<=100000000?String(Number(v)):"";
 export function normalizeFilters(f={}){
- const createdAfter=dateValue(f.createdAfter),createdBefore=dateValue(f.createdBefore),updatedAfter=dateValue(f.updatedAfter),updatedBefore=dateValue(f.updatedBefore),commitAfter=dateValue(f.commitAfter),commitBefore=dateValue(f.commitBefore);
+ const createdAfter=dateValue(f.createdAfter),createdBefore=dateValue(f.createdBefore),updatedAfter=dateValue(f.updatedAfter),updatedBefore=dateValue(f.updatedBefore),commitAfter=dateValue(f.commitAfter),commitBefore=dateValue(f.commitBefore),pushAfter=dateValue(f.pushAfter),pushBefore=dateValue(f.pushBefore);
  const minStars=numberValue(f.minStars),maxStars=numberValue(f.maxStars);
- return {query:String(f.query||"").trim().slice(0,200),language:String(f.language||"").trim().slice(0,50),labels:[...new Set((Array.isArray(f.labels)?f.labels:[]).map(x=>String(x).trim().slice(0,80)).filter(Boolean))].slice(0,20).sort(),issueType:["issue","pr"].includes(f.issueType)?f.issueType:"",category:CATEGORIES.includes(f.category)?f.category:"",createdDays:createdAfter||createdBefore?"":(["7","30","90","365"].includes(String(f.createdDays||""))?String(f.createdDays||""):""),updatedDays:updatedAfter||updatedBefore?"":(["7","30","90","365"].includes(String(f.updatedDays||""))?String(f.updatedDays||""):""),commitAgeDays:commitAfter||commitBefore?"":(["30","90","180","365"].includes(String(f.commitAgeDays||""))?String(f.commitAgeDays||""):""),createdAfter,createdBefore,updatedAfter,updatedBefore,commitAfter,commitBefore,stars:minStars!==""||maxStars!==""?"":(["0-99","100-999","1000-9999","10000-"].includes(f.stars)?f.stars:""),minStars,maxStars,sort:["updated","created","comments","relevance"].includes(f.sort)?f.sort:"updated"};
+ return {query:String(f.query||"").trim().slice(0,200),language:String(f.language||"").trim().slice(0,50),labels:[...new Set((Array.isArray(f.labels)?f.labels:[]).map(x=>String(x).trim().slice(0,80)).filter(Boolean))].slice(0,20).sort(),issueType:["issue","pr"].includes(f.issueType)?f.issueType:"",category:CATEGORIES.includes(f.category)?f.category:"",createdDays:createdAfter||createdBefore?"":(["7","30","90","365"].includes(String(f.createdDays||""))?String(f.createdDays||""):""),updatedDays:updatedAfter||updatedBefore?"":(["7","30","90","365"].includes(String(f.updatedDays||""))?String(f.updatedDays||""):""),commitAgeDays:commitAfter||commitBefore?"":(["30","90","180","365"].includes(String(f.commitAgeDays||""))?String(f.commitAgeDays||""):""),pushAgeDays:pushAfter||pushBefore?"":(["30","90","180","365"].includes(String(f.pushAgeDays||""))?String(f.pushAgeDays||""):""),createdAfter,createdBefore,updatedAfter,updatedBefore,commitAfter,commitBefore,pushAfter,pushBefore,stars:minStars!==""||maxStars!==""?"":(["0-99","100-999","1000-9999","10000-"].includes(f.stars)?f.stars:""),minStars,maxStars,sort:["updated","created","comments","relevance"].includes(f.sort)?f.sort:"updated"};
 }
