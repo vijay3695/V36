@@ -55,7 +55,47 @@ After reading the files:
 - No paid services, paid AI API, server-side account system, automatic code changes, or full-repository download unless the maintainer explicitly changes the documented scope.
 - Keep the documentation synchronized: confirmed decisions in `DECISIONS.md`, phase criteria in `PHASES.md`, and actual implementation/test status in `PROGRESS.md`.
 
-## 5. First-release scope at a glance
+## 5. Explicit do / do-not instructions
+
+### DO
+
+- Read this guide and every required project document before editing code; inspect relevant source and tests rather than relying on summaries alone.
+- Treat `DECISIONS.md` as the record of maintainer decisions and `PROGRESS.md` as a snapshot that must be checked against the real repository and latest CI state.
+- Complete work for the current phase, including its acceptance criteria, before moving on. Work on the actual blocker first.
+- Trace bugs to their source, reproduce failures where practical, and add regression tests for fixes.
+- Preserve existing working behavior and all confirmed first-release requirements while making changes.
+- Prefer small, coherent changes that solve a verified problem; review the diff for unintended changes.
+- Run the relevant checks and record exact commands, outcomes, links, and limitations. If a check cannot be run, say why and mark it NOT RUN.
+- Update the appropriate docs when facts or decisions change. Update `PROGRESS.md` alongside implementation work.
+- Work on `main` unless the maintainer explicitly instructs otherwise.
+- Give a final report that separates **implemented**, **tested**, **verified**, **not tested**, and **still blocked**.
+
+### DO NOT
+
+- Do not start coding before reading the required documents and checking the current state.
+- Do not invent product requirements, silently change a confirmed decision, re-ask a question already settled in `DECISIONS.md`, or treat a proposed/unconfirmed item as approved.
+- Do not create branches, change the target branch, open pull requests, or change the workflow strategy unless the maintainer asks.
+- Do not skip the current phase, start unrelated features to avoid a blocker, or claim the project is finished while required work remains.
+- Do not delete, skip, loosen, or rewrite meaningful tests just to turn CI green. Do not hide errors, suppress failures, or replace real assertions with weak smoke tests.
+- Do not push a chain of speculative commits. Diagnose first, group related changes, and inspect CI after the coherent fix.
+- Do not refactor unrelated areas, replace the architecture, rename/move large groups of files, remove existing functionality, or reformat the whole project without a demonstrated need.
+- Do not add dependencies, paid services, backend infrastructure, accounts, telemetry, required tokens, secrets, or AI API integrations outside the confirmed scope.
+- Do not hardcode fake GitHub data as if it were live, fabricate metadata or evidence, or describe missing information as a negative result.
+- Do not trust or execute GitHub content or imported files. Do not expose credentials or put secrets in code, logs, tests, or context packs.
+- Do not claim a command ran, a test passed, a deployment succeeded, a file changed, or a commit was pushed unless tool output or other direct evidence confirms it.
+- Do not release or label a release ready until every required acceptance criterion and release gate is verified.
+- Do not overwrite user work or discard changes without understanding their impact. If the current state is ambiguous or a destructive action seems necessary, stop and ask the maintainer.
+
+### Stop and ask the maintainer only when
+
+- Two confirmed decisions conflict and the conflict cannot be resolved from the documented source of truth.
+- A required product decision is genuinely missing and choosing incorrectly would materially change behavior or scope.
+- The next step would be destructive, security-sensitive beyond the documented design, incur a cost, expose private data, or change the agreed repository/branch workflow.
+- A blocker cannot be resolved safely from repository evidence and existing decisions.
+
+Otherwise, do not stall for approval on routine implementation details: investigate, follow the documented decisions, implement, test, and report accurately.
+
+## 6. First-release scope at a glance
 
 The first release is intended to include:
 - Discover/Saved/About navigation.
@@ -69,7 +109,7 @@ The first release is intended to include:
 
 See `DECISIONS.md` and `docs/PROJECT_PLAN.md` for authoritative details and exclusions.
 
-## 6. Definition of done
+## 7. Definition of done
 
 A task is done only when:
 - The implementation matches the confirmed decision and acceptance criteria.
