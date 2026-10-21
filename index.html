@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="Discover GitHub issues, inspect activity evidence, and prepare reusable AI coding context packs.">
+<title>V36 — Open-source issue discovery</title>
+<link rel="stylesheet" href="./css/styles.css">
+<script type="module" src="./js/app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<a class="brand" href="#discover" aria-label="V36 home">V36</a>
+<nav aria-label="Main navigation"><a href="#discover" data-nav="discover" aria-current="page">Discover</a><a href="#saved" data-nav="saved">Saved</a><a href="#about" data-nav="about">About</a></nav>
+</header>
+<main id="main" tabindex="-1">
+<section id="view-discover" class="view" aria-labelledby="discover-title">
+<div class="hero"><p class="eyebrow">OPEN-SOURCE DISCOVERY</p><h1 id="discover-title">Find work worth contributing to.</h1><p class="lede">Search GitHub issues, inspect activity evidence, and build a portable context pack for your own AI coding assistant.</p></div>
+<form id="search-form" class="panel filter-panel">
+<div class="field search-field"><label for="query">Search issues</label><input id="query" name="query" type="search" maxlength="200" placeholder="e.g. improve error handling"></div>
+<div class="filter-grid">
+<div class="field"><label for="language">Language</label><input id="language" name="language" maxlength="50" placeholder="Any language"></div>
+<div class="field"><label for="labels">Labels (comma-separated)</label><input id="labels" name="labels" maxlength="200" placeholder="good first issue, help wanted"></div>
+<div class="field"><label for="issue-type">Issue type</label><select id="issue-type" name="issueType"><option value="">Any type</option><option value="issue">Issues only</option><option value="pr">Pull requests only</option></select></div>
+<div class="field"><label for="category">Contribution category</label><select id="category" name="category"><option value="">Any category</option><option>Bug fix</option><option>Documentation</option><option>Tests</option><option>Feature or enhancement</option><option>Refactoring</option><option>Other/No category inferred</option></select></div>
+<div class="field"><label for="created">Issue created</label><select id="created" name="created"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
+<div class="field"><label for="updated">Issue last updated</label><select id="updated" name="updated"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
+<div class="field"><label for="commit-age">Latest commit age</label><select id="commit-age" name="commitAge"><option value="">No commit-age filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div>
+<div class="field"><label for="stars">Repository popularity</label><select id="stars" name="stars"><option value="">Any star count</option><option value="0-99">Under 100 stars</option><option value="100-999">100–999 stars</option><option value="1000-9999">1,000–9,999 stars</option><option value="10000-">10,000 or more stars</option></select></div>
+<div class="field"><label for="sort">Sort by</label><select id="sort" name="sort"><option value="updated">Recently updated</option><option value="created">Recently created</option><option value="comments">Most discussed</option></select></div>
+</div>
+<div class="form-actions"><button class="button button-primary" type="submit">Search GitHub</button><button class="button button-secondary" id="save-search" type="button">Save search</button><button class="button button-quiet" id="reset-search" type="reset">Reset filters</button></div>
+<p class="hint">Filters combine using AND logic. Some filters are evaluated only on loaded issues; results may be incomplete until you load more. Stars indicate popularity, not project health.</p>
+</form>
+<div id="status" class="status" role="status" aria-live="polite">Ready to search public GitHub issues.</div><div id="results-meta" class="results-meta"></div><div id="results" class="results" aria-label="Search results"></div><div class="center-actions"><button id="load-more" class="button button-secondary" type="button" hidden>Load more</button></div>
+</section>
+<section id="view-detail" class="view" aria-labelledby="detail-title" hidden><button id="back-to-results" class="button button-quiet" type="button">Back to results</button><div id="detail-content"></div></section>
+<section id="view-saved" class="view" aria-labelledby="saved-title" hidden>
+<div class="page-heading"><p class="eyebrow">YOUR BROWSER</p><h1 id="saved-title">Saved</h1><p class="lede">Saved locally in this browser only. There is no account or cloud sync.</p></div>
+<div class="panel saved-tools"><button id="export-saved" class="button button-secondary" type="button">Export backup</button><label class="button button-secondary file-button" for="import-file">Import backup</label><input id="import-file" type="file" accept="application/json,.json" hidden><p class="hint">Imports are validated and deduplicated. Never import files you do not trust. Clearing browser data or private browsing may remove saved items.</p></div>
+<h2>Saved issues</h2><div id="saved-issues" class="results"></div><h2>Saved searches</h2><div id="saved-searches" class="saved-searches"></div>
+</section>
+<section id="view-about" class="view" aria-labelledby="about-title" hidden>
+<div class="page-heading"><p class="eyebrow">PROJECT RULES</p><h1 id="about-title">About V36</h1></div>
+<div class="panel prose">
+<h2>Evidence, not verdicts</h2><p>V36 surfaces dates and observable activity. It does not label projects dead or calculate an overall health score. Older repositories remain visible unless you choose a commit-age filter. Missing information is marked unknown or unavailable, never treated as zero.</p>
+<h2>Data and rate limits</h2><p>Search and repository information come from the public GitHub API. Unauthenticated API limits apply. V36 stops additional requests when limited, preserves loaded results, and offers manual retry. Filters that need extra metadata can only evaluate the loaded set.</p>
+<h2>Category inference</h2><p>Categories are inferred conservatively from issue text and labels. Official labels remain separate from inferred categories; inference is not a GitHub-provided fact.</p>
+<h2>AI context packs</h2><p>Context packs are plain text for use in an AI assistant you choose. They contain only information V36 actually retrieved, with links, fetch times, and missing context disclosed. V36 does not call an AI API, execute repository code, run tests on a repository, or create pull requests.</p>
+<h2>Privacy and limitations</h2><p>Saved items stay in this browser's local storage. Do not save credentials or tokens. Shareable URLs contain search settings, not saved private data. GitHub content and imported files are untrusted and must never be executed.</p>
+<p>V36 is in development. Do not consider a release verified until tests, CI, accessibility checks, manual acceptance, and known limitations have been reviewed.</p>
+<p><a href="https://github.com/vijay3695/V36">Repository on GitHub</a> · <a href="https://docs.github.com/en/rest/search/search#search-issues-and-pull-requests">GitHub issue search API documentation</a></p>
+</div>
+</section>
+</main>
+<footer class="site-footer"><span>V36 · Evidence over assumptions</span><a href="https://github.com/vijay3695/V36">Source code</a></footer>
+</body></html>
