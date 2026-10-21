@@ -1,3 +1,4 @@
+import {normalizeLanguage} from "./filters.js";
 const KEY="v36.saved.v1";export const MAX_IMPORT_BYTES=1048576;const LIMIT=2000;const CATEGORIES=["Bug fix","Documentation","Tests","Feature or enhancement","Refactoring","Other/No category inferred"];
 const str=(v,n=10000)=>typeof v==="string"?v.slice(0,n):"";const dateValue=v=>typeof v==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v+"T00:00:00Z"))&&new Date(v+"T00:00:00Z").toISOString().slice(0,10)===v?v:"";const numberValue=v=>v!==""&&v!==null&&v!==undefined&&Number.isSafeInteger(Number(v))&&Number(v)>=0&&Number(v)<=100000000?String(Number(v)):"";
 function issueUrl(v){try{const u=new URL(v);if(u.hostname!=="github.com"||!/^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/(issues|pull)\/\d+\/?$/.test(u.pathname))return "";return "https://github.com"+u.pathname.replace(/\/$/,"");}catch{return "";}}
@@ -7,7 +8,7 @@ function cleanSearch(x){
  if(!x||typeof x!=="object"||!x.filters||typeof x.filters!=="object")return null;
  const f=x.filters,createdAfter=dateValue(f.createdAfter),createdBefore=dateValue(f.createdBefore),updatedAfter=dateValue(f.updatedAfter),updatedBefore=dateValue(f.updatedBefore),commitAfter=dateValue(f.commitAfter),commitBefore=dateValue(f.commitBefore),pushAfter=dateValue(f.pushAfter),pushBefore=dateValue(f.pushBefore),minStars=numberValue(f.minStars),maxStars=numberValue(f.maxStars);
  const filters={
-  query:str(f.query,200),language:str(f.language,50),
+  query:str(f.query,200),language:normalizeLanguage(str(f.language,50)),
   labels:Array.isArray(f.labels)?[...new Set(f.labels.filter(v=>typeof v==="string").map(v=>v.trim().slice(0,80)).filter(Boolean))].sort().slice(0,20):[],
   issueType:["issue","pr",""].includes(f.issueType)?f.issueType:"",
   category:CATEGORIES.includes(f.category)?f.category:"",
