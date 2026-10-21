@@ -1,6 +1,6 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, search, failure handling, import/export, and 200% zoom passed. One defect was found in the Saved-search layout and fixed in `534bca7`; that fix needs a human re-test. Advanced-filter keyboard operation, the issue-detail keyboard pass, responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
+**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, and 200% zoom passed. Two defects were found and fixed (`534bca7` Saved-search layout, `7bd7d45` star-input spaces); both need a human re-test. The issue-detail keyboard pass, responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
 
 ## Record the test environment
 
@@ -9,14 +9,14 @@
 - OS and version: Windows (version not recorded)
 - Browser and version: Firefox (version not recorded)
 - Viewport / zoom: 200% zoom, default desktop, and 320px (Saved-search re-test target)
-- Commit SHA tested: `e381197` preview build for the first pass; Saved-search fix landed in `534bca7`
+- Commit SHA tested: `e381197` preview build for the first pass; Saved-search fix in `534bca7`; star-input fix in `7bd7d45`
 - Assistive technology used: none recorded (keyboard and visual checks only)
 
 ## Keyboard-only checks
 
 - [x] Load the home page and confirm the skip link is the first useful keyboard stop. **PASS**
 - [x] Tab through Discover navigation, all search fields, advanced filters, submit/reset/load-more actions, and result-card controls without a mouse. **PASS** (tab order verified through the filter set and form actions)
-- [ ] Open and close the advanced filter disclosure using the keyboard. **NOT RUN** (instruction was unclear in the first pass)
+- [x] Open and close the advanced filter disclosure using the keyboard. **PASS** — the "Custom date ranges and exact star counts" row opens on Space/Enter, its fields are reachable, and it collapses again. Reviewer noted the purpose of the row was initially unclear, but the keyboard behavior itself passed.
 - [x] Submit a search and confirm focus, loading feedback, result count, partial-result warning, and errors remain understandable. **PASS**
 - [ ] Open issue details, navigate the related-work links, inspect official labels and activity evidence, and use Retry activity refresh. **NOT RUN**
 - [x] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard. **PASS WITH DEFECT** — saved items and import/export worked; the Saved-search row let long filter text overflow and push its actions out of the card (fixed in `534bca7`, human re-test pending)
@@ -45,7 +45,7 @@
 
 ## Results
 
-- Outcome: **PARTIAL** — seven checks passed (one with a now-fixed defect); six remain **NOT RUN**
+- Outcome: **PARTIAL** — eight checks passed (two with defects fixed since); five remain **NOT RUN**
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
@@ -54,7 +54,8 @@
   - Saved issues/searches and import/export: **PASS** except the Saved-search layout defect below
 - Defects with reproduction steps:
   - **Saved-search row overflow (found 2026-10-21)** — save a search with a long query/labels, open Saved: the raw filter text overflowed the card and pushed "Run search"/"Remove" outside it. Fixed in `534bca7` by wrapping the text and replacing raw JSON with a readable filter summary; regression test "saved searches wrap long summaries without pushing actions out of the card" passes at 320px. Human re-test pending.
-- Follow-up issue/commit links: `534bca7`
+  - **Star inputs rejected values containing a space (found 2026-10-21)** — typing a space in "Minimum stars" or "Maximum stars" left the field in an invalid state, so Firefox showed "Please enter a number" and refused to submit the search. Fixed in `7bd7d45`: spaces are ignored while typing and stripped from pasted values, with a regression test covering both fields and a successful submit. Human re-test pending.
+- Follow-up issue/commit links: `534bca7`, `7bd7d45`
 - Reviewer sign-off: pending
 
 Automated axe checks are useful but do not replace these manual checks.
