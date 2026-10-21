@@ -13,10 +13,10 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
 | 3 — Saved/import/export | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist and are tested locally. | All storage/import edge cases verified locally; no GitHub Actions used. |
 | 4 — AI context packs | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Context-pack generation, source links, contribution guide and missing-source disclosure exist and are tested locally. | All context-pack acceptance criteria verified locally; no GitHub Actions used. |
-| 5 — Accessibility/security/resilience | **IN PROGRESS — automated work complete, manual acceptance partial** | Announcements (results count, assertive errors, detail refresh, retry outcomes) and `aria-busy` added with four browser regression tests. Local suite: 92/92 unit, 37/37 browser, 3/3 axe. Manual pass: keyboard navigation, advanced-filter disclosure, focus, search success/failure, saved items, import/export, issue detail and 200% zoom PASS; defect fixes in `534bca7`, `7bd7d45`, `28d0768`. | Contrast, responsive widths, long content and reduced motion remain, plus human re-tests of the last two fixes. |
+| 5 — Accessibility/security/resilience | **IN PROGRESS — automated work complete, manual acceptance partial** | Announcements (results count, assertive errors, detail refresh, retry outcomes) and `aria-busy` added with four browser regression tests. Local suite: 95/95 unit, 37/37 browser, 3/3 axe. Manual pass: keyboard navigation, advanced-filter disclosure, focus, search success/failure, saved items, import/export, issue detail and 200% zoom PASS; defect fixes in `534bca7`, `7bd7d45`, `28d0768`, `ac5306e`. | Contrast, responsive widths, long content and reduced motion remain, plus human re-tests of the last two fixes. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
 
-The suite now contains 37 browser tests (including the Phase 5 announcement/live-region coverage). It was re-run green on `main`: 92/92 unit, 37/37 browser, 3/3 standalone axe. The counts recorded in the Phase 2–4 rows and sections below are historical snapshots from those verification runs, not the current suite size.
+The suite now contains 37 browser tests (including the Phase 5 announcement/live-region coverage). It was re-run green on `main`: 95/95 unit, 37/37 browser, 3/3 standalone axe. The counts recorded in the Phase 2–4 rows and sections below are historical snapshots from those verification runs, not the current suite size.
 
 **Phase 0/CI clarification:** the Phase 0 status was earned against [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647). The consolidated workflow was later deleted in `ad8379b`, so there is no CI check on current commits. `DECISIONS.md` and `docs/ACCEPTANCE_CHECKLIST.md` still require a passing GitHub Actions run at release; that conflict is unresolved and blocks Phase 6.
 
@@ -98,6 +98,8 @@ Acceptance criteria:
 ## Phase 4 — AI context packs
 
 **Status: VERIFIED (local, no GitHub Actions).** Context-pack generation, source links, contribution guide, missing-source disclosure, and copy/fallback behavior are implemented and tested (86/86 unit, 25/25 E2E, 3/3 a11y).
+
+**Post-verification improvement (`ac5306e`):** packs now open with an **Evidence completeness** section (`COMPLETE`, or `INCOMPLETE — not retrieved: …` plus a neutral reason), show the repository identity derived from the issue URL when metadata is missing, state issue-data provenance, and replace raw API error strings with neutral "Not retrieved: <sources>" bullets.
 
 Tasks:
 - [x] Generate a copyable, provider-portable prompt from retrieved context.

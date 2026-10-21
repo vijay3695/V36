@@ -7,7 +7,7 @@
 - **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
 - **Project status:** In development; not release-ready.
 - **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete. Manual acceptance is **partial**: the maintainer reported 200% zoom PASS on 2026-10-21; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN. Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
-- **Latest local evidence (`main`):** 92/92 unit tests, 37/37 browser tests, 3/3 standalone axe scans at commit `28d0768`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
+- **Latest local evidence (`main`):** 95/95 unit tests, 37/37 browser tests, 3/3 standalone axe scans at commit `ac5306e`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
 - **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
 - **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
 - **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
@@ -20,7 +20,7 @@
 - [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
 - [ ] `main` no longer contains a CI workflow; the CI requirement and its removal conflict (see snapshot).
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
-- [x] Local `npm test` passes 92/92 on `main`.
+- [x] Local `npm test` passes 95/95 on `main`.
 - [x] Local browser suite passes 37/37 on `main`.
 - [x] Local standalone axe scans pass 3/3 on `main`; the issue-detail view is scanned inside the end-to-end flow.
 - [x] The last recorded CI failure (#67) was superseded by `53907b9`; its test passes locally.
@@ -37,7 +37,7 @@ These are **not yet verified as complete** merely because related code exists.
 | Issue details and activity metadata | IMPLEMENTED, VERIFIED LOCALLY | Detail refresh, fetch times, unavailable/closed/404 paths covered |
 | Saved issues and searches | IMPLEMENTED, VERIFIED LOCALLY | Local storage, reload, closed/inaccessible references covered |
 | Import/export and duplicate handling | IMPLEMENTED, VERIFIED LOCALLY | Malformed/oversized/duplicate imports and data preservation covered |
-| AI context packs | IMPLEMENTED, VERIFIED LOCALLY | Source links, missing context and copy fallback covered |
+| AI context packs | IMPLEMENTED, VERIFIED LOCALLY | Source links, missing context and copy fallback covered; packs now state evidence completeness and use neutral limitations (`ac5306e`) |
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
@@ -52,6 +52,18 @@ These are **not yet verified as complete** merely because related code exists.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
 
 ## Work log
+
+### 2026-10-21 — AI context pack made self-describing and rate-limit honest (commit `ac5306e`)
+
+- Problem reported from a rate-limited session: the pack showed `Repository Name: Unavailable` although the issue URL identified the repository, listed raw API error text including a transient "Retry after 8:59:32 pm", and never stated that the pack was incomplete.
+- Added an **Evidence completeness** section: `COMPLETE — …` only when repository metadata, README, contribution guide, source-file listing, latest commit and a fresh issue refresh were all retrieved; otherwise `INCOMPLETE — not retrieved: <list>` plus a neutral reason (rate limit, failed requests, or evidence not exposed).
+- Repository identity now falls back to `owner/repo` from the issue URL and is labelled "identity from the issue URL; repository metadata was not retrieved" — never presented as fetched metadata.
+- Issue data now states provenance: `Issue data fetched: <timestamp>` or `Issue data: from earlier loaded results; refresh not completed`.
+- Raw API error strings are gone from the artifact; the limitations section lists only which sources were not retrieved.
+- Missing fetch timestamps now read `Not retrieved` instead of `Unknown`.
+- Tests: three new unit tests (rate-limited completeness/identity/no raw errors, complete-pack labelling, invalid identity rejection) plus browser assertions that generate a pack after a 403 repository response. Suite: 95/95 unit, 37/37 browser, 3/3 axe.
+- Human re-test of the new pack output pending.
+
 
 ### 2026-10-21 — Related-work links fixed: no more `repo:undefined` (commit `28d0768`)
 

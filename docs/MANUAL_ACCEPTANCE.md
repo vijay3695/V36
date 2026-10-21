@@ -1,6 +1,6 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and the issue-detail content pass succeeded. Three defects were found and fixed (`534bca7` Saved-search layout, `7bd7d45` star-input spaces, `28d0768` `repo:undefined` related links); the last two need a human re-test. Responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
+**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and the issue-detail content pass succeeded. Four defects were found and fixed (`534bca7` Saved-search layout, `7bd7d45` star-input spaces, `28d0768` `repo:undefined` related links, `ac5306e` context-pack completeness); the last three need a human re-test. Responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
 
 ## Record the test environment
 
@@ -9,7 +9,7 @@
 - OS and version: Windows (version not recorded)
 - Browser and version: Firefox (version not recorded)
 - Viewport / zoom: 200% zoom, default desktop, and 320px (Saved-search re-test target)
-- Commit SHA tested: `e381197` preview build for the first pass; fixes in `534bca7` (Saved search), `7bd7d45` (star inputs), `28d0768` (related-work links)
+- Commit SHA tested: `e381197` preview build for the first pass; fixes in `534bca7` (Saved search), `7bd7d45` (star inputs), `28d0768` (related-work links), `ac5306e` (context-pack completeness)
 - Assistive technology used: none recorded (keyboard and visual checks only)
 
 ## Keyboard-only checks
@@ -45,7 +45,7 @@
 
 ## Results
 
-- Outcome: **PARTIAL** — nine checks passed (three with defects fixed since); four remain **NOT RUN**
+- Outcome: **PARTIAL** — nine checks passed (four with defects fixed since); four remain **NOT RUN**
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
@@ -56,7 +56,8 @@
   - **Saved-search row overflow (found 2026-10-21)** — save a search with a long query/labels, open Saved: the raw filter text overflowed the card and pushed "Run search"/"Remove" outside it. Fixed in `534bca7` by wrapping the text and replacing raw JSON with a readable filter summary; regression test "saved searches wrap long summaries without pushing actions out of the card" passes at 320px, and the maintainer confirmed the fix on 2026-10-21.
   - **Star inputs rejected values containing a space (found 2026-10-21)** — typing a space in "Minimum stars" or "Maximum stars" left the field in an invalid state, so Firefox showed "Please enter a number" and refused to submit the search. Fixed in `7bd7d45`: spaces are ignored while typing and stripped from pasted values, with a regression test covering both fields and a successful submit. Human re-test pending.
   - **Related-work links contained `repo:undefined` (found 2026-10-21)** — when repository metadata could not be retrieved, the detail view built search links as `repo:undefined <title>`, and the pull-request link pointed at the issues filter. Fixed in `28d0768`: repository identity falls back to the issue's own URL, the `repo:` qualifier is omitted when no repository is known, and the PR link uses `type=pullrequests`. Covered by unit and browser tests. Human re-test pending.
-- Follow-up issue/commit links: `534bca7`, `7bd7d45`, `28d0768`
+  - **Context pack did not state its completeness (found 2026-10-21)** — under a rate limit the pack showed `Repository Name: Unavailable` even though the issue URL identified the repository, buried the incompleteness in two raw API error bullets (including a transient "Retry after 8:59:32 pm"), and did not distinguish "not fetched" from "unknown". Fixed in `ac5306e`: a new **Evidence completeness** section reports `COMPLETE` or `INCOMPLETE — not retrieved: …` with a neutral reason, the repository identity from the issue URL is shown and labelled as such, issue-data provenance is stated, and raw API error strings are replaced by a neutral "Not retrieved: <sources>" list. Human re-test pending.
+- Follow-up issue/commit links: `534bca7`, `7bd7d45`, `28d0768`, `ac5306e`
 - Reviewer sign-off: pending
 
 Automated axe checks are useful but do not replace these manual checks.
