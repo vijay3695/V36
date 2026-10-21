@@ -23,7 +23,7 @@ const palette = {
   inputBackground: color("input background", /\.field input,\.field select\{[^}]*background:(#[0-9a-f]{6})/i),
   placeholder: color("input placeholder", /::placeholder\{color:(#[0-9a-f]{6})/i),
   focus: color("focus outline", /outline:3px solid (#[0-9a-f]{6})/i),
-  primaryBackground: color("primary button background", /\.button-primary\{background:var\(--accent\)/i) || null,
+  primaryBackground: color("primary button background", /--accent:\s*(#[0-9a-f]{6})/i),
   secondaryBackground: color("secondary button background", /\.button-secondary\{background:(#[0-9a-f]{6})/i),
   secondaryText: color("secondary button text", /\.button-secondary\{[^}]*color:(#[0-9a-f]{6})/i),
   quietText: color("quiet button text", /\.button-quiet\{[^}]*color:(#[0-9a-f]{6})/i),
