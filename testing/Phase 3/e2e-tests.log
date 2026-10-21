@@ -1,0 +1,34 @@
+
+> v36@0.1.0 test:e2e
+> playwright test
+
+
+Running 25 tests using 4 workers
+
+  ✓   4 [chromium] › tests/e2e/app.spec.js:3:1 › discover view exposes labelled filters and navigation (1.0s)
+  ✓   5 [chromium] › tests/e2e/app.spec.js:4:1 › saved page explains browser-local storage (699ms)
+  ✓   6 [chromium] › tests/e2e/app.spec.js:5:1 › about page documents evidence and API limits (706ms)
+  ✓   2 [chromium] › tests/e2e/accessibility.spec.js:3:51 › automated accessibility scan #about (3.6s)
+  ✓   1 [chromium] › tests/e2e/accessibility.spec.js:3:51 › automated accessibility scan #discover (4.2s)
+  ✓   3 [chromium] › tests/e2e/accessibility.spec.js:3:51 › automated accessibility scan #saved (4.1s)
+  ✓   8 [chromium] › tests/e2e/app.spec.js:79:1 › invalid backup import preserves existing saved references (1.3s)
+  ✓  11 [chromium] › tests/e2e/app.spec.js:114:1 › valid import reports accepted, rejected and duplicate items (1.4s)
+  ✓   9 [chromium] › tests/e2e/app.spec.js:88:1 › unknown commit metadata stays visible (2.6s)
+  ✓  10 [chromium] › tests/e2e/app.spec.js:95:1 › keyboard users can skip content, navigate, and submit a search (2.9s)
+  ✓  12 [chromium] › tests/e2e/app.spec.js:122:1 › export downloads a versioned saved-data backup (1.3s)
+  ✓  13 [chromium] › tests/e2e/app.spec.js:129:1 › storage write failures are reported and saved references remain visible (1.3s)
+  ✓  16 [chromium] › tests/e2e/app.spec.js:158:1 › saved route keeps its hash when a shareable query is present (1.5s)
+  ✓  14 [chromium] › tests/e2e/app.spec.js:141:1 › incomplete GitHub results remain pageable and load-more appends results (2.6s)
+  ✓  15 [chromium] › tests/e2e/app.spec.js:149:1 › untrusted issue markup is rendered as text rather than executable HTML (2.4s)
+  ✓  17 [chromium] › tests/e2e/app.spec.js:170:1 › unreadable saved storage is never overwritten by import or export (1.7s)
+  ✓  18 [chromium] › tests/e2e/app.spec.js:185:1 › shareable URL round-trips the standard filter set (4.4s)
+  ✓  20 [chromium] › tests/e2e/app.spec.js:238:1 › issue details preserve the reference and disclose when GitHub returns 404 (3.2s)
+  ✓  19 [chromium] › tests/e2e/app.spec.js:224:1 › shareable URL round-trips custom date bounds and exact star limits (4.9s)
+  ✓   7 [chromium] › tests/e2e/app.spec.js:7:1 › mocked GitHub flow searches, opens evidence, builds a sourced context pack and saves an issue (12.7s)
+  ✓  21 [chromium] › tests/e2e/app.spec.js:256:1 › issue detail activity can be retried after a rate-limited repository refresh (2.6s)
+  ✓  22 [chromium] › tests/e2e/app.spec.js:282:1 › language filter includes secondary repository languages from GitHub metadata (1.9s)
+  ✓  24 [chromium] › tests/e2e/app.spec.js:304:1 › shareable search URLs never contain saved references or credential-like data (1.6s)
+  ✓  23 [chromium] › tests/e2e/app.spec.js:293:1 › language metadata failure keeps a result visible and marks the filter uncertain (1.9s)
+  ✓  25 [chromium] › tests/e2e/app.spec.js:315:1 › fresh detail response reflects a closed issue without losing the saved reference (1.4s)
+
+  25 passed (21.3s)
