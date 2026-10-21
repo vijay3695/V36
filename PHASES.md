@@ -12,7 +12,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 1 — Discovery and filters | **VERIFIED** | [Run #60](https://github.com/vijay3695/V36/actions/runs/39575117877): 75/75 unit tests, 24/24 browser tests, and 3/3 accessibility checks passed. Standard/custom URL round-trips, secondary-language metadata, safe share URLs, partial results, and filter boundaries are covered. | Re-check after later changes; investigate any regression. |
 | 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
 | 3 — Saved/import/export | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist and are tested locally. | All storage/import edge cases verified locally; no GitHub Actions used. |
-| 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
+| 4 — AI context packs | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Context-pack generation, source links, contribution guide and missing-source disclosure exist and are tested locally. | All context-pack acceptance criteria verified locally; no GitHub Actions used. |
 | 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, screen-reader, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
 
@@ -93,18 +93,20 @@ Acceptance criteria:
 
 ## Phase 4 — AI context packs
 
+**Status: VERIFIED (local, no GitHub Actions).** Context-pack generation, source links, contribution guide, missing-source disclosure, and copy/fallback behavior are implemented and tested (86/86 unit, 25/25 E2E, 3/3 a11y).
+
 Tasks:
-- [ ] Generate a copyable, provider-portable prompt from retrieved context.
-- [ ] Include issue title/description/labels/link and available README/contribution instructions/source-file links.
-- [ ] List source links, fetch times, unavailable context, and limitations.
-- [ ] Keep incomplete packs usable only when missing context is explicitly disclosed.
-- [ ] Do not invent files, repository instructions, test results, or issue facts.
-- [ ] Do not call paid AI APIs, execute repository code, or automatically change user code.
+- [x] Generate a copyable, provider-portable prompt from retrieved context.
+- [x] Include issue title/description/labels/link and available README/contribution instructions/source-file links.
+- [x] List source links, fetch times, unavailable context, and limitations.
+- [x] Keep incomplete packs usable only when missing context is explicitly disclosed.
+- [x] Do not invent files, repository instructions, test results, or issue facts.
+- [x] Do not call paid AI APIs, execute repository code, or automatically change user code.
 
 Acceptance criteria:
-- [ ] Tests prove output uses only supplied/retrieved data.
-- [ ] Missing context is clearly marked.
-- [ ] Copy action and fallback behavior work in supported browsers.
+- [x] Tests prove output uses only supplied/retrieved data.
+- [x] Missing context is clearly marked.
+- [x] Copy action and fallback behavior work in supported browsers.
 
 ## Phase 5 — Accessibility, resilience, and security
 
