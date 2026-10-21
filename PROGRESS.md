@@ -7,7 +7,7 @@
 - **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
 - **Project status:** In development; not release-ready.
 - **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete. Manual acceptance is **partial**: the maintainer reported 200% zoom PASS on 2026-10-21; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN. Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
-- **Latest local evidence (`main`):** 89/89 unit tests, 36/36 browser tests, 3/3 standalone axe scans at commit `7bd7d45`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
+- **Latest local evidence (`main`):** 92/92 unit tests, 37/37 browser tests, 3/3 standalone axe scans at commit `28d0768`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
 - **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
 - **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
 - **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
@@ -20,8 +20,8 @@
 - [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
 - [ ] `main` no longer contains a CI workflow; the CI requirement and its removal conflict (see snapshot).
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
-- [x] Local `npm test` passes 89/89 on `main`.
-- [x] Local browser suite passes 36/36 on `main`.
+- [x] Local `npm test` passes 92/92 on `main`.
+- [x] Local browser suite passes 37/37 on `main`.
 - [x] Local standalone axe scans pass 3/3 on `main`; the issue-detail view is scanned inside the end-to-end flow.
 - [x] The last recorded CI failure (#67) was superseded by `53907b9`; its test passes locally.
 
@@ -41,7 +41,7 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual keyboard/contrast/zoom checks | PARTIAL — keyboard navigation, advanced-filter disclosure, focus/no-trap, search success and failure, saved items, import/export, and 200% zoom PASS; detail keyboard pass, contrast, responsive widths, long content, reduced motion NOT RUN | Continue from `docs/MANUAL_ACCEPTANCE.md`; re-test the `534bca7` and `7bd7d45` fixes |
+| Manual keyboard/contrast/zoom checks | PARTIAL — keyboard navigation, advanced-filter disclosure, focus/no-trap, search success and failure, saved items, import/export, issue detail, and 200% zoom PASS; contrast, responsive widths, long content, reduced motion NOT RUN | Continue from `docs/MANUAL_ACCEPTANCE.md`; re-test the `7bd7d45` and `28d0768` fixes |
 | CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
 
 ## Immediate next actions
@@ -52,6 +52,16 @@ These are **not yet verified as complete** merely because related code exists.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
 
 ## Work log
+
+### 2026-10-21 — Related-work links fixed: no more `repo:undefined` (commit `28d0768`)
+
+- Manual pass found the detail view's Related-work links built as `repo:undefined <title>` whenever repository metadata was unavailable (for example after a rate limit), and the pull-request link pointed at the issues result filter.
+- Fix: new `relatedSearchUrl()` in `filters.js` validates an `owner/repo` identity, omits the `repo:` qualifier when the repository is unknown, truncates titles at 100 characters, and URL-encodes the query; the PR link now uses `type=pullrequests`.
+- The detail view derives repository identity from `repository_url` or the issue's `html_url` when `repo.full_name` is missing.
+- Tests: three unit tests for link construction (no `undefined`, correct result type, truncation/blank fallback) and a browser test where repository metadata returns 403 — the links still resolve to `repo:acme/demo`.
+- Local suite: 92/92 unit, 37/37 browser, 3/3 axe.
+- Human re-tests of this fix and the star-input fix are pending. Rate-limit/unknown-field behaviour and the AI context pack contents are queued as the next problem to address.
+
 
 ### 2026-10-21 — Advanced filters PASS; star-input space defect fixed (commit `7bd7d45`)
 
