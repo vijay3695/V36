@@ -164,3 +164,18 @@ test("saved route keeps its hash when a shareable query is present",async({page}
  await expect(page).toHaveURL(/#discover$/);
  await expect(page.getByRole("button",{name:"Save search"})).toBeVisible();
 });
+
+test("unreadable saved storage is never overwritten by import or export",async({page})=>{
+ const corrupted="{not valid json";
+ await page.addInitScript(value=>localStorage.setItem("v36.saved.v1",value),corrupted);
+ await page.goto("/#saved");
+ await expect(page.getByRole("status")).toContainText("Saved data could not be read");
+ await page.getByRole("button",{name:"Import backup"}).click();
+ const valid=JSON.stringify({version:1,issues:[{url:"https://github.com/acme/demo/issues/5",title:"Imported"}],searches:[]});
+ await page.locator("#import-file").setInputFiles({name:"valid.json",mimeType:"application/json",buffer:Buffer.from(valid)});
+ await expect(page.getByRole("status")).toContainText("saving, importing, removing, and exporting are disabled");
+ await expect.poll(()=>page.evaluate(()=>localStorage.getItem("v36.saved.v1"))).toBe(corrupted);
+ await page.getByRole("button",{name:"Export backup"}).click();
+ await expect(page.getByRole("status")).toContainText("saving, importing, removing, and exporting are disabled");
+ await expect.poll(()=>page.evaluate(()=>localStorage.getItem("v36.saved.v1"))).toBe(corrupted);
+});

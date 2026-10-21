@@ -38,9 +38,9 @@ test("unsupported saved-search categories are discarded during import",()=>{
  const x=validateBackup({...backup,searches:[{name:"bad category",filters:{query:"bug",category:"Make up a category",sort:"updated"}}]});
  assert.equal(x.searches[0].filters.category,"");
 });
-test("saved-search labels are trimmed, deduplicated and sorted",()=>{
+test("saved-search labels are deduplicated and sorted after trimming",()=>{
  const x=validateBackup({...backup,searches:[{name:"labels",filters:{query:"bug",labels:[" z ","a","a",""],sort:"updated"}}]});
- assert.deepEqual(x.searches[0].filters.labels,[" z ","a"]);
+ assert.deepEqual(x.searches[0].filters.labels,["a","z"]);
 });
 test("saved-search date ranges reject impossible calendar dates",()=>{
  const x=validateBackup({...backup,searches:[{name:"dates",filters:{createdAfter:"2026-02-31",updatedBefore:"2026-12-31",sort:"updated"}}]});

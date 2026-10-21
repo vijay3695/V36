@@ -1,46 +1,75 @@
-const KEY="v36.saved.v1";export const MAX_IMPORT_BYTES=1048576;const LIMIT=2000;const CATEGORIES=["Bug fix","Documentation","Tests","Feature or enhancement","Refactoring","Other/No category inferred"];
-const str=(v,n=10000)=>typeof v==="string"?v.slice(0,n):"";const dateValue=v=>typeof v==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v+"T00:00:00Z"))&&new Date(v+"T00:00:00Z").toISOString().slice(0,10)===v?v:"";const numberValue=v=>v!==""&&v!==null&&v!==undefined&&Number.isSafeInteger(Number(v))&&Number(v)>=0&&Number(v)<=100000000?String(Number(v)):"";
-function issueUrl(v){try{const u=new URL(v);if(u.hostname!=="github.com"||!/^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/(issues|pull)\/\d+\/?$/.test(u.pathname))return "";return "https://github.com"+u.pathname.replace(/\/$/,"");}catch{return "";}}
-function cleanIssue(x){if(!x||typeof x!=="object")return null;const url=issueUrl(x.url||x.html_url);if(!url)return null;return {url,title:str(x.title,500),repository:str(x.repository,300),number:Number.isSafeInteger(x.number)&&x.number>0?x.number:Number(url.match(/\/(\d+)$/)?.[1]||0),savedAt:str(x.savedAt,40)||new Date().toISOString()};}
-function key(f){return JSON.stringify(Object.fromEntries(Object.entries(f||{}).sort(([a],[b])=>a.localeCompare(b))));}
-function cleanSearch(x){
- if(!x||typeof x!=="object"||!x.filters||typeof x.filters!=="object")return null;
- const f=x.filters,createdAfter=dateValue(f.createdAfter),createdBefore=dateValue(f.createdBefore),updatedAfter=dateValue(f.updatedAfter),updatedBefore=dateValue(f.updatedBefore),commitAfter=dateValue(f.commitAfter),commitBefore=dateValue(f.commitBefore),pushAfter=dateValue(f.pushAfter),pushBefore=dateValue(f.pushBefore),minStars=numberValue(f.minStars),maxStars=numberValue(f.maxStars);
- const filters={
-  query:str(f.query,200),language:str(f.language,50),
-  labels:Array.isArray(f.labels)?[...new Set(f.labels.filter(v=>typeof v==="string").map(v=>v.slice(0,80)).filter(Boolean))].sort().slice(0,20):[],
-  issueType:["issue","pr",""].includes(f.issueType)?f.issueType:"",
-  category:CATEGORIES.includes(f.category)?f.category:"",
-  createdDays:createdAfter||createdBefore?"":(["","7","30","90","365"].includes(String(f.createdDays||""))?String(f.createdDays||""):""),
-  updatedDays:updatedAfter||updatedBefore?"":(["","7","30","90","365"].includes(String(f.updatedDays||""))?String(f.updatedDays||""):""),
-  commitAgeDays:commitAfter||commitBefore?"":(["","30","90","180","365"].includes(String(f.commitAgeDays||""))?String(f.commitAgeDays||""):""),
-  pushAgeDays:pushAfter||pushBefore?"":(["","30","90","180","365"].includes(String(f.pushAgeDays||""))?String(f.pushAgeDays||""):""),
-  createdAfter,createdBefore,updatedAfter,updatedBefore,commitAfter,commitBefore,pushAfter,pushBefore,
-  minStars,maxStars,
-  stars:minStars!==""||maxStars!==""?"":(["","0-99","100-999","1000-9999","10000-"].includes(f.stars)?f.stars:""),
-  sort:["updated","created","comments","relevance"].includes(f.sort)?f.sort:"updated"
- };
- return {id:str(x.id,100)||key(filters),name:str(x.name,100)||"Saved search",filters,savedAt:str(x.savedAt,40)||new Date().toISOString()};
-}
-function dedupe(items,fn){const seen=new Set(),out=[];for(const x of items){const k=fn(x);if(k&&!seen.has(k)){seen.add(k);out.push(x);}}return out.slice(0,LIMIT);}
-export function validateBackup(x){if(!x||typeof x!=="object"||x.version!==1||!Array.isArray(x.issues)||!Array.isArray(x.searches))throw new Error("Unsupported V36 backup format.");if(x.issues.length>LIMIT||x.searches.length>LIMIT)throw new Error("Backup contains too many items.");return {version:1,exportedAt:str(x.exportedAt,40),issues:dedupe(x.issues.map(cleanIssue).filter(Boolean, v=>v.url),item=>item.url),searches:dedupe(x.searches.map(cleanSearch).filter(Boolean),search=>key(search.filters))};}
-export function loadSaved(){try{const raw=localStorage.getItem(KEY);return raw?validateBackup(JSON.parse(raw)):{version:1,issues:[],searches:[]};}catch{return {version:1,issues:[],searches:[],storageWarning:"Saved data could not be read; existing browser data was not overwritten."};}}
-export function saveSaved(x){const clean=validateBackup({...x,version:1});if(typeof localStorage!=="undefined")localStorage.setItem(KEY,JSON.stringify(clean));return clean;}
-export function addSavedIssue(data,issue){const x=cleanIssue({url:issue.html_url,title:issue.title,repository:issue.repository?.full_name,number:issue.number,savedAt:new Date().toISOString()});if(!x)throw new Error("Issue URL is not a valid GitHub issue URL.");return saveSaved({...data,issues:dedupe([x,...data.issues],i=>i.url)});}
-export function addSavedSearch(data,filters,name){const x=cleanSearch({filters,name:name||"Saved search",id:key(filters),savedAt:new Date().toISOString()});return saveSaved({...data,searches:dedupe([x,...data.searches],i=>key(i.filters))});}
-export function removeSavedIssue(data,url){return saveSaved({...data,issues:data.issues.filter(x=>x.url!==url)});}
-export function removeSavedSearch(data,id){return saveSaved({...data,searches:data.searches.filter(x=>x.id!==id)});}
-export function exportBackup(data){return JSON.stringify({version:1,exportedAt:new Date().toISOString(),issues:data.issues,searches:data.searches},null,2);}
-export async function parseImportFile(file){
- if(!file)throw new Error("Choose a backup file first.");
- if(file.size>MAX_IMPORT_BYTES)throw new Error("Backup exceeds the 1 MB import limit.");
- const raw=JSON.parse(await file.text());
- const valid=validateBackup(raw);
- const cleanIssues=raw.issues.map(cleanIssue).filter(Boolean);
- const cleanSearches=raw.searches.map(cleanSearch).filter(Boolean);
- return {...valid,importReport:{
-  acceptedIssues:valid.issues.length,rejectedIssues:raw.issues.length-cleanIssues.length,duplicateIssues:cleanIssues.length-valid.issues.length,
-  acceptedSearches:valid.searches.length,rejectedSearches:raw.searches.length-cleanSearches.length,duplicateSearches:cleanSearches.length-valid.searches.length
- }};
-}
-export function mergeBackup(current,incoming){return saveSaved({version:1,issues:dedupe([...current.issues,...incoming.issues],x=>x.url),searches:dedupe([...current.searches,...incoming.searches],x=>key(x.filters))});}
+import test from "node:test";
+import assert from "node:assert/strict";
+import {validateBackup,mergeBackup,exportBackup,parseImportFile,MAX_IMPORT_BYTES} from "../js/storage.js";
+const backup={version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[{url:"https://github.com/acme/demo/issues/1",title:"Bug",repository:"acme/demo",number:1}],searches:[{id:"one",name:"bugs",filters:{query:"bug",labels:["bug"],sort:"updated"}}]};
+test("validates versioned backup and canonical issue URLs",()=>{const x=validateBackup(backup);assert.equal(x.issues.length,1);assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/1");});
+test("rejects invalid versions and structures",()=>{assert.throws(()=>validateBackup({version:2,issues:[],searches:[]}),/Unsupported/);assert.throws(()=>validateBackup({version:1,issues:{},searches:[]}),/Unsupported/);});
+test("discards unsafe URLs and deduplicates issues",()=>{const x=validateBackup({...backup,issues:[...backup.issues,{...backup.issues[0]},{url:"javascript:alert(1)"}]});assert.equal(x.issues.length,1);});
+test("deduplicates equivalent saved searches",()=>{const x=validateBackup({...backup,searches:[...backup.searches,{...backup.searches[0],id:"other"}]});assert.equal(x.searches.length,1);});
+test("merging preserves unrelated references",()=>{const other={version:1,issues:[{url:"https://github.com/acme/demo/issues/2",title:"Other"}],searches:[]};const x=mergeBackup(validateBackup(backup),validateBackup(other));assert.equal(x.issues.length,2);});
+test("exports versioned JSON",()=>{assert.equal(JSON.parse(exportBackup(validateBackup(backup))).version,1);});
+test("import size is capped at one megabyte",()=>assert.equal(MAX_IMPORT_BYTES,1048576));
+
+test("saved custom date and exact star filters survive backup validation",()=>{
+ const filters={query:"bug",labels:[],sort:"relevance",createdDays:"30",createdAfter:"2026-01-01",createdBefore:"2026-01-31",updatedAfter:"",updatedBefore:"",commitAfter:"2025-01-01",commitBefore:"",pushAgeDays:"90",pushAfter:"2025-12-01",pushBefore:"",stars:"0-99",minStars:"25",maxStars:"500"};
+ const x=validateBackup({...backup,searches:[{name:"custom",filters}]});
+ assert.equal(x.searches[0].filters.createdAfter,"2026-01-01");
+ assert.equal(x.searches[0].filters.createdDays,"");
+ assert.equal(x.searches[0].filters.pushAfter,"2025-12-01");
+ assert.equal(x.searches[0].filters.pushAgeDays,"");
+ assert.equal(x.searches[0].filters.stars,"");
+ assert.equal(x.searches[0].filters.maxStars,"500");
+ assert.equal(x.searches[0].filters.sort,"relevance");
+});
+
+test("import reports accepted, rejected and duplicate records",async()=>{
+ const raw={version:1,issues:[backup.issues[0],{...backup.issues[0]},{url:"javascript:alert(1)"}],searches:[backup.searches[0],{name:"invalid"}]};
+ const json=JSON.stringify(raw);
+ const parsed=await parseImportFile({size:json.length,text:async()=>json});
+ assert.deepEqual(parsed.importReport,{acceptedIssues:1,rejectedIssues:1,duplicateIssues:1,acceptedSearches:1,rejectedSearches:1,duplicateSearches:0});
+});
+test("oversized import is rejected before its contents are read",async()=>{
+ let read=false;
+ await assert.rejects(parseImportFile({size:MAX_IMPORT_BYTES+1,text:async()=>{read=true;return "{}";}}),/1 MB import limit/);
+ assert.equal(read,false);
+});
+
+test("unsupported saved-search categories are discarded during import",()=>{
+ const x=validateBackup({...backup,searches:[{name:"bad category",filters:{query:"bug",category:"Make up a category",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.category,"");
+});
+test("saved-search labels are deduplicated and sorted after trimming",()=>{
+ const x=validateBackup({...backup,searches:[{name:"labels",filters:{query:"bug",labels:[" z ","a","a",""],sort:"updated"}}]});
+ assert.deepEqual(x.searches[0].filters.labels,["a","z"]);
+});
+test("saved-search date ranges reject impossible calendar dates",()=>{
+ const x=validateBackup({...backup,searches:[{name:"dates",filters:{createdAfter:"2026-02-31",updatedBefore:"2026-12-31",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.createdAfter,"");
+ assert.equal(x.searches[0].filters.updatedBefore,"2026-12-31");
+});
+test("saved-search invalid star bounds are discarded",()=>{
+ const x=validateBackup({...backup,searches:[{name:"stars",filters:{minStars:"-1",maxStars:"500",stars:"100-999",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.minStars,"");
+ assert.equal(x.searches[0].filters.maxStars,"500");
+ assert.equal(x.searches[0].filters.stars,"");
+});
+test("pull request references remain portable saved items",()=>{
+ const x=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/pull/8",title:"PR",repository:"acme/demo",number:8}]});
+ assert.equal(x.issues[0].url,"https://github.com/acme/demo/pull/8");
+ assert.equal(x.issues[0].number,8);
+});
+test("trailing slash variants canonicalize to one issue identity",()=>{
+ const x=validateBackup({...backup,issues:[
+  {url:"https://github.com/acme/demo/issues/9/",title:"One"},
+  {url:"https://github.com/acme/demo/issues/9",title:"Duplicate"}
+ ]});
+ assert.equal(x.issues.length,1);
+ assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/9");
+});
+test("malformed JSON imports reject without producing a partial backup",async()=>{
+ await assert.rejects(parseImportFile({size:4,text:async()=>"nope"}));
+});
+test("import refuses item arrays over the configured cap",()=>{
+ const issues=Array.from({length:2001},(_,i)=>({url:"https://github.com/acme/demo/issues/"+(i+1),title:"Issue"}));
+ assert.throws(()=>validateBackup({version:1,issues,searches:[]}),/too many items/);
+});

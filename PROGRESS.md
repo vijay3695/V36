@@ -7,9 +7,9 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** IN PROGRESS. [CI #51](https://github.com/vijay3695/V36/actions/runs/39572800393) on commit [`a504309`](https://github.com/vijay3695/V36/commit/a504309d90f7530a5abb8621c0c47160f13f0bd1) passed 51/51 unit tests and 16/16 browser tests. The saved-route startup bug is fixed. The next batch makes the standalone accessibility script an explicit part of `test:all` and adds storage import normalization coverage; verify that new exact commit before marking Phase 0 complete.
+- **Phase 0 status:** VERIFIED on [CI #52](https://github.com/vijay3695/V36/actions/runs/39573103139), exact commit [`9f8b841`](https://github.com/vijay3695/V36/commit/9f8b841c08ff0d4c5717891d84687c9e1916277c): 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Re-check after every subsequent change.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
-- **Latest run status:** PASS — [run #51](https://github.com/vijay3695/V36/actions/runs/39572800393) completed the single CI job successfully; 51/51 unit tests and 16/16 browser tests passed. Phase 0 remains open pending the explicit standalone accessibility script and next exact-commit run.
+- **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
 - **This file's purpose:** handoff state for the next coding agent. Re-check current `main` and latest Actions run before relying on this snapshot.
 
@@ -54,12 +54,20 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
-### 2026-10-21 — Explicit accessibility gate and saved-data normalization tests (pending CI)
+### 2026-10-21 — Protect unreadable browser storage (pending CI)
+
+- Added a storage-write guard when saved data cannot be parsed. Save, remove, import, and export actions now refuse to overwrite unreadable existing local storage and report why.
+- Added an E2E regression test that attempts valid import and export against malformed existing storage and verifies the original value remains unchanged.
+- Corrected saved-search label normalization to trim whitespace before deduplication and sorting; aligned the storage regression assertion.
+- Phase 0 is marked VERIFIED based on run #52; this new storage-safety batch remains pending its own CI run.
+
+
+### 2026-10-21 — Explicit accessibility gate and saved-data normalization tests (passed CI)
 
 - Updated `test:all` to run unit tests, the full browser suite, and the standalone accessibility script as one bulk command within the existing single GitHub Actions job.
 - Tightened saved-search import normalization so unsupported inferred categories are discarded rather than retained as invalid UI state.
 - Added storage tests for invalid categories, normalized labels, invalid date/star values, canonical pull-request references, trailing-slash identity dedupe, malformed JSON, and the 2,000-item cap.
-- Latest prior run [#51](https://github.com/vijay3695/V36/actions/runs/39572800393) is green. This batch is pending its own Actions run.
+- Run [#52](https://github.com/vijay3695/V36/actions/runs/39573103139) passed on the preceding commit: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. This batch itself adds additional storage safeguards and needs its own run.
 
 
 ### 2026-10-21 — Saved-route regression fixed; full browser suite green

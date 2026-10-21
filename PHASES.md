@@ -8,7 +8,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 | Phase | Current status | What is done | What remains |
 |---|---|---|---|
-| 0 — Baseline and CI | **IN PROGRESS** | One consolidated workflow; [run #51](https://github.com/vijay3695/V36/actions/runs/39572800393) passed 51 unit tests and 16 browser tests, including accessibility scans. | Run the explicit standalone accessibility script in the bulk command and verify the next exact commit. |
+| 0 — Baseline and CI | **VERIFIED** | [Run #52](https://github.com/vijay3695/V36/actions/runs/39573103139): 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
 | 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, custom dates, push age, star bounds, share URLs and unknown-metadata messaging are implemented with tests. | Verify full behavior after Phase 0 is green; inspect remaining API/filter edge cases. |
 | 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps and related-work search links exist. | Verify inaccessible/closed/moved cases, rate-limit retry and freshness behavior. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
@@ -18,22 +18,22 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 ## Phase 0 — Baseline and CI stabilization
 
-**Current status: IN PROGRESS — [CI run #51](https://github.com/vijay3695/V36/actions/runs/39572800393) passed 51/51 unit tests and 16/16 browser tests on commit `a504309`. The route-state bug is fixed. The next batch explicitly runs the standalone accessibility script and adds storage-import normalization regression tests; Phase 0 remains open until that consolidated run passes.**
+**Current status: VERIFIED — [CI run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) passed 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks on commit `9f8b841`. The route-state bug is fixed. The next feature batch adds safeguards for unreadable browser storage; Phase 0 remains verified unless a later run exposes a regression.**
 
 Tasks:
 - [x] Inspect current `.github/workflows/ci.yml`, package scripts, unit tests, E2E tests, and actual failed GitHub Actions job output.
 - [x] Identify the E2E failure from job output: startup auto-search rewrote the hash to Discover on the Saved route, so activating Discover did not emit a hash change and its controls remained hidden.
 - [ ] Fix startup route handling and confirm a green rerun; do not weaken or delete meaningful tests just to get a green run.
-- [ ] Run `npm test`, `npm run test:e2e`, and `npm run test:a11y` (the accessibility script may overlap with E2E; record what was actually run).
-- [ ] Ensure CI reports actionable failure output and does not rely on a missing lockfile.
-- [ ] Confirm a new run on the resulting commit and record its URL and per-job result in `PROGRESS.md`.
+- [x] Run `npm test`, `npm run test:e2e`, and `npm run test:a11y` through the single bulk command.
+- [x] CI logs show the failing test/assertion and the workflow uses the available package manifest (`npm install`; there is currently no package-lock file).
+- [x] Confirm [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) on commit `9f8b841`; one job completed successfully.
 
 Acceptance criteria:
-- [ ] Unit tests pass.
-- [ ] E2E tests pass.
-- [ ] Accessibility automation passes.
-- [ ] The actual commit under test is recorded.
-- [ ] No failures are hidden by skipped tests, weakened assertions, or unverified claims.
+- [x] Unit tests pass: 59/59.
+- [x] Browser E2E tests pass: 16/16.
+- [x] Standalone accessibility automation passes: 3/3.
+- [x] The exact commit is recorded: `9f8b841c08ff0d4c5717891d84687c9e1916277c`.
+- [x] No failures are hidden; failed run #50 and its fix are documented in `PROGRESS.md`.
 
 ## Phase 1 — Core discovery and filtering
 
