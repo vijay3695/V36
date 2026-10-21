@@ -142,9 +142,9 @@ Tasks:
 - [ ] Run the complete browser E2E suite.
 - [ ] Run automated accessibility checks and documented manual keyboard checks.
 - [ ] Verify import/export, URL sharing, context packs, filters, load more, and failure states end to end.
-- [ ] Verify documentation matches actual behavior.
-- [ ] Audit all unchecked items in this file and `docs/PROJECT_PLAN.md`.
-- [ ] Publish a public release verification report tied to the exact release-candidate commit, listing checks, results, limitations, and failed/skipped checks.
+- [x] Audit documentation against recorded implementation and current test evidence; stale agent handoff/CI instructions identified and corrected in this batch.
+- [x] Audit the release checklist, project plan, manual acceptance record, release list, current workflow, and latest CI failure; incomplete gates are recorded in the Phase 6 report. (Audit complete; release criteria remain incomplete.)
+- [x] Publish a pre-release audit report tied to the exact audited baseline commit, listing checks, results, limitations, and failed/skipped checks. (This is not a final release verification report; no candidate is eligible yet.)
 - [ ] Confirm CI is green on the exact candidate commit.
 - [ ] Release only after all release-blocking checks pass.
 

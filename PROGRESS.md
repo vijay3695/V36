@@ -323,3 +323,14 @@ These are **not yet verified as complete** merely because related code exists.
 - No Phase 5 test failure was fixed in this batch; the failure is intentionally left for the deferred Phase 5 follow-up rather than being misreported as passed.
 - Phase 6 is active for the documentation and release-acceptance audit only. Release readiness remains **BLOCKED** until Phase 5 acceptance is completed and a consolidated CI run passes on the exact candidate commit.
 - Next: continue the Phase 6 audit of the acceptance checklist and documentation against actual implementation/test evidence, without publishing a release or marking incomplete criteria as verified.
+
+
+### 2026-10-21 — Phase 6 release-readiness audit batch
+
+- Audited the latest `main` snapshot, release list, full acceptance checklist, project plan, manual acceptance record, package scripts, workflow, recent workflow history, and actual latest CI job log.
+- Exact audit baseline: `3f86bf81a2c45d14972c2d3bb3669db6b80c2d63`. No GitHub Releases are published.
+- CI run [#71](https://github.com/vijay3695/V36/actions/runs/39640377631): unit tests **PASS**; browser suite **41 passed / 1 failed**; standalone accessibility scan **SKIPPED**. Failure: `tests/e2e/manual-check.spec.js:125` uses a non-unique text locator for `accessibility-resilience-label-24`, which matches both the result-card label and issue detail. This is a test-selector ambiguity; the test itself is still failing and has not been altered because the maintainer deferred remaining Phase 5 tests.
+- Confirmed manual acceptance remains partial: human visual review at 320/375px and 200% zoom/keyboard results are recorded as passed; 768px/desktop human visual review, contrast review, reduced-motion review, and long-content manual review remain pending. Automated document overflow at 320/375/768/1280 passed on an earlier commit, but it is not visual sign-off.
+- Confirmed there are no published releases. The full release gate remains blocked by incomplete Phase 5 acceptance and non-green CI.
+- Corrected stale Phase 5/removed-workflow claims in `AGENTS.md`, consolidated CI to the documented single `npm run test:all` command, and added `docs/PHASE_6_AUDIT.md` as an auditable pre-release report. No app behavior or test assertion was changed in this batch.
+- Phase 6 audit/documentation tasks are complete for this batch, but Phase 6 is **not VERIFIED** and the project is **not release-ready**. Remaining next action is the deferred Phase 5 follow-up (make the locator unambiguous, rerun the full test suite, then complete outstanding manual acceptance); only after those gates pass can the final release-candidate verification occur.
