@@ -19,7 +19,7 @@
 - [x] Open and close the advanced filter disclosure using the keyboard. **PASS** — the "Custom date ranges and exact star counts" row opens on Space/Enter, its fields are reachable, and it collapses again. Reviewer noted the purpose of the row was initially unclear, but the keyboard behavior itself passed.
 - [x] Submit a search and confirm focus, loading feedback, result count, partial-result warning, and errors remain understandable. **PASS**
 - [ ] Open issue details, navigate the related-work links, inspect official labels and activity evidence, and use Retry activity refresh. **NOT RUN**
-- [x] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard. **PASS WITH DEFECT** — saved items and import/export worked; the Saved-search row let long filter text overflow and push its actions out of the card (fixed in `534bca7`, human re-test pending)
+- [x] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard. **PASS** — saved items and import/export worked; the Saved-search overflow defect found in this pass was fixed in `534bca7` and the maintainer confirmed the fix works
 - [x] Confirm focus remains visible and is not trapped; returning between views does not strand focus on a hidden element. **PASS**
 - [x] Test a failed search and rate-limit state; verify existing results and saved data remain available. **PASS** — the offline search reported "Network request failed. Check your connection and retry. Existing results and saved items are preserved. You can retry manually." and restored the previous results and filters
 
@@ -53,7 +53,7 @@
   - Offline search failure with previous results and saved data preserved: **PASS**
   - Saved issues/searches and import/export: **PASS** except the Saved-search layout defect below
 - Defects with reproduction steps:
-  - **Saved-search row overflow (found 2026-10-21)** — save a search with a long query/labels, open Saved: the raw filter text overflowed the card and pushed "Run search"/"Remove" outside it. Fixed in `534bca7` by wrapping the text and replacing raw JSON with a readable filter summary; regression test "saved searches wrap long summaries without pushing actions out of the card" passes at 320px. Human re-test pending.
+  - **Saved-search row overflow (found 2026-10-21)** — save a search with a long query/labels, open Saved: the raw filter text overflowed the card and pushed "Run search"/"Remove" outside it. Fixed in `534bca7` by wrapping the text and replacing raw JSON with a readable filter summary; regression test "saved searches wrap long summaries without pushing actions out of the card" passes at 320px, and the maintainer confirmed the fix on 2026-10-21.
   - **Star inputs rejected values containing a space (found 2026-10-21)** — typing a space in "Minimum stars" or "Maximum stars" left the field in an invalid state, so Firefox showed "Please enter a number" and refused to submit the search. Fixed in `7bd7d45`: spaces are ignored while typing and stripped from pasted values, with a regression test covering both fields and a successful submit. Human re-test pending.
 - Follow-up issue/commit links: `534bca7`, `7bd7d45`
 - Reviewer sign-off: pending
