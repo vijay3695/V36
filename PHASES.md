@@ -9,8 +9,8 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | Phase | Current status | What is done | What remains |
 |---|---|---|---|
 | 0 — Baseline and CI | **VERIFIED** | [Run #59](https://github.com/vijay3695/V36/actions/runs/39574808517): 75/75 unit tests, 21/21 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
-| 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, standard/custom filter URL round-trips, secondary-language matching, safe share URLs, push age, star bounds, and unknown-metadata messaging have unit/E2E coverage. | Finish the remaining acceptance audit; mark verified only when every filter and partial-coverage criterion has evidence. |
-| 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps and related-work search links exist. | Verify inaccessible/closed/moved cases, rate-limit retry and freshness behavior. |
+| 1 — Discovery and filters | **VERIFIED** | [Run #60](https://github.com/vijay3695/V36/actions/runs/39575117877): 75/75 unit tests, 24/24 browser tests, and 3/3 accessibility checks passed. Standard/custom URL round-trips, secondary-language metadata, safe share URLs, partial results, and filter boundaries are covered. | Re-check after later changes; investigate any regression. |
+| 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps, official labels, related-work search links, unavailable-issue handling and retry tests exist. | Verify all missing/closed/moved states, retry-time messaging, and freshness behavior in the current batch. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
 | 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
 | 5 — Accessibility/security/resilience | **IN PROGRESS — not verified** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. | Green automation plus documented manual keyboard and screen-reader checks. |
@@ -37,21 +37,23 @@ Acceptance criteria:
 
 ## Phase 1 — Core discovery and filtering
 
+**Status: VERIFIED on [CI run #60](https://github.com/vijay3695/V36/actions/runs/39575117877), commit `83d8327`.** Unit, browser, and standalone accessibility checks passed; filter and URL behavior has explicit regression coverage.
+
 Tasks:
-- [ ] Search open GitHub issues and support pagination/load-more.
-- [ ] Compact result cards and explicit loading, empty, partial-results, unavailable-data, error, and rate-limit states.
-- [ ] Filters: language metadata, official labels, issue type, creation age/custom bounds, last-update age/custom bounds, latest commit/push age/custom bounds, popularity presets and exact min/max stars, inferred contribution category, and sorting.
-- [ ] AND semantics for selected filters and visible explanation of partial coverage.
-- [ ] Preserve older projects by default; unknown dates remain Unknown.
-- [ ] Clearly separate official labels from conservative inferred categories.
-- [ ] Shareable URLs encode filters only and restore them safely.
-- [ ] Unit tests for filter logic, date boundaries, URL encode/decode, category inference, unknown metadata, and pagination/partial coverage.
+- [x] Search open GitHub issues and support pagination/load-more.
+- [x] Compact result cards and explicit loading, empty, partial-results, unavailable-data, error, and rate-limit states.
+- [x] Filters: language metadata, official labels, issue type, creation age/custom bounds, last-update age/custom bounds, latest commit/push age/custom bounds, popularity presets and exact min/max stars, inferred contribution category, and sorting.
+- [x] AND semantics for selected filters and visible explanation of partial coverage.
+- [x] Preserve older projects by default; unknown dates remain Unknown.
+- [x] Clearly separate official labels from conservative inferred categories.
+- [x] Shareable URLs encode filters only and restore them safely.
+- [x] Unit tests for filter logic, date boundaries, URL encode/decode, category inference, unknown metadata, and pagination/partial coverage.
 
 Acceptance criteria:
-- [ ] Each filter has tests for positive, negative, and missing-data cases.
-- [ ] Loaded-result filters disclose incomplete coverage.
-- [ ] Search failures do not erase already-loaded results.
-- [ ] No unsupported claim that all GitHub results have been evaluated.
+- [x] Each filter has tests for positive, negative, and missing-data cases.
+- [x] Loaded-result filters disclose incomplete coverage.
+- [x] Search failures do not erase already-loaded results.
+- [x] No unsupported claim that all GitHub results have been evaluated.
 
 ## Phase 2 — Issue details and activity evidence
 

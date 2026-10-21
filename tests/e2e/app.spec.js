@@ -37,6 +37,8 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Fix crash on startup"})).toBeVisible();
+ await expect(page.getByRole("heading",{name:"Official issue labels"})).toBeVisible();
+ await expect(page.locator(".issue-label")).toHaveText(["bug"]);
  await expect(page.getByText(/Issue comments: 2/)).toBeVisible();
  await expect(page.getByText(/Issue data fetched/)).toBeVisible();
  await expect(page.getByText(/Last repository push/)).toBeVisible();
@@ -266,6 +268,7 @@ test("issue detail activity can be retried after a rate-limited repository refre
  await page.getByRole("button",{name:"View details"}).click();
  await expect(page.getByRole("heading",{name:"Unavailable data"})).toBeVisible();
  await expect(page.getByText(/Repository metadata: GitHub API rate limit reached/)).toBeVisible();
+ await expect(page.getByText(/Retry after/)).toBeVisible();
  expect(readmeCalls).toBe(0);expect(commitCalls).toBe(0);
  await page.getByRole("button",{name:"Retry activity refresh"}).click();
  await expect(page.getByText("Stars (popularity only): 150")).toBeVisible();
