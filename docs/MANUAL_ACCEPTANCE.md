@@ -32,17 +32,19 @@
 
 ## Automated proxy results (Playwright)
 
+**Not manual sign-off.** These are automated approximations from a headless browser. They do not replace the human checks above and must not be recorded as a reviewer result.
+
 - Date: 2026-10-21
-- Commit: $(git rev-parse HEAD 2>/dev/null || echo unknown)
-- Keyboard tab order: pass (skip link first; no trap observed)
-- Responsive overflow at 320/375/768/1280px: no horizontal overflow
-- Reduced motion: transition duration 0.00001s (effectively disabled)
-- Detail view focus moves to heading: pass
-- 200% zoom: PASS (reported by reviewer)
+- Command: `npx playwright test tests/e2e/manual-check.spec.js`
+- Keyboard tab order: automated tab traversal starts at the skip link and no focus trap was detected (approximation; not assistive-technology testing).
+- Responsive overflow at 320/375/768/1280px: no horizontal overflow.
+- Reduced motion: transition duration 0.00001s (effectively disabled).
+- Detail view focus moves to the issue heading: pass.
+- 200% zoom: **NOT PERFORMED** — requires a human reviewer; no automated substitute is recorded.
 
 ## Results
 
-- Outcome: NOT RUN / PASS / FAIL
+- Outcome: **NOT RUN** (replace with PASS or FAIL only after every manual check above is recorded)
 - Defects with reproduction steps:
 - Follow-up issue/commit links:
 - Reviewer sign-off:

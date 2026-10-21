@@ -4,28 +4,26 @@
 
 ## Current snapshot
 
-- **Branch:** `main`
+- **Branch:** `cline/91jvxv68` (created from `main` at `0638fb9`; not merged to `main`)
 - **Project status:** In development; not release-ready.
-- **Current work phase:** Phase 5 — Accessibility, resilience, and security. Phase 4 is now VERIFIED locally (86/86 unit, 25/25 E2E, 3/3 a11y; no GitHub Actions).
-- **Phase 0 and Phase 1 status:** VERIFIED. Phase 2 status: VERIFIED locally (see work log).
-- **Phase 2 retry-time test:** Kept in place as requested. Earlier runs #61 and #62 failed; the CORS fixture correction was followed by green [CI #63](https://github.com/vijay3695/V36/actions/runs/39576107714) and [CI #64](https://github.com/vijay3695/V36/actions/runs/39576488647). Do not spend another batch on this assertion; revisit it only during the later Phase 2/5 audit. Historical failures #53–#55 remain documented below.
-- **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
-- **Latest run status:** PASS — [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current `main`: 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks. One consolidated workflow/job.
-- **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
-- **This file's purpose:** handoff state for the next coding agent. Re-check current `main` and latest Actions run before relying on this snapshot.
+- **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete; only the human manual-acceptance record remains (`docs/MANUAL_ACCEPTANCE.md` is still NOT RUN). Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
+- **Latest local evidence (this branch):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
+- **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
+- **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
+- **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
+- **Last documentation commit before this work:** `0638fb9` — "docs: remove screen-reader requirement per maintainer".
+- **This file's purpose:** handoff state for the next coding agent. Re-check the real branch, tree, and Actions state before relying on this snapshot.
 
 ## Verified observations
 
-- [x] Repository contains a static-first app entry point (`index.html`), `package.json`, `playwright.config.js`, and `.github/workflows/ci.yml`.
-- [x] Package scripts define `npm test`, `npm run test:e2e`, and `npm run test:a11y`.
-- [x] The CI workflow has been consolidated to one job that invokes the bulk test command `npm run test:all`.
+- [x] Repository contains the static-first app (`index.html`), `package.json`, `playwright.config.js`, and unit/browser tests.
+- [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
+- [ ] `main` no longer contains a CI workflow; the CI requirement and its removal conflict (see snapshot).
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
-- [ ] The new consolidated bulk test command has passed on the current `main` commit. Latest run #49 FAILED in one browser test.
-- [x] In the reported run #17, unit tests passed.
-- [x] In the reported run #17, `npm run test:e2e` failed.
-- [x] Latest E2E failure identified from job logs: saved-search test navigation leaves the Discover-only Save search button inaccessible to the locator.
-- [ ] Root cause fixed and regression test added/updated; fix and expanded filter coverage are in the next batch.
-- [ ] New CI run fully green on the current `main` commit.
+- [x] Local `npm test` passes 86/86 on this branch.
+- [x] Local browser suite passes 34/34 on this branch.
+- [x] Local standalone axe scans pass 3/3 on this branch; the issue-detail view is scanned inside the end-to-end flow.
+- [x] The last recorded CI failure (#67) was superseded by `53907b9`; its test passes locally.
 
 ## Feature status
 
@@ -33,27 +31,38 @@ These are **not yet verified as complete** merely because related code exists.
 
 | Area | Status | Evidence / next action |
 |---|---|---|
-| App shell and Discover/Saved/About navigation | IMPLEMENTED, NOT VERIFIED | Inspect current browser behavior and E2E results |
-| GitHub issue search and load-more | IMPLEMENTED, NOT VERIFIED | Verify API behavior, pagination, partial-result messaging |
-| Search filters and category inference | IMPLEMENTED, NOT VERIFIED | Run unit tests and filter E2E tests; check unknown/multi-language cases |
-| Issue details and activity metadata | IMPLEMENTED, NOT VERIFIED | Verify missing metadata, rate-limit handling, fetch times |
-| Saved issues and searches | IMPLEMENTED, NOT VERIFIED | Test local storage, reload, closed/inaccessible references |
-| Import/export and duplicate handling | IMPLEMENTED, NOT VERIFIED | Test malformed/oversized files, duplicates, preservation of existing data |
-| AI context packs | IMPLEMENTED, NOT VERIFIED | Verify only retrieved data is included and missing sources are disclosed |
-| Shareable search URLs | IMPLEMENTED, NOT VERIFIED | Test filter round-trip and ensure no saved data/secrets are encoded |
-| Automated accessibility | PRESENT, FAILING/NOT VERIFIED | E2E/accessibility run currently fails; inspect exact assertion output |
-| Manual keyboard checks | NOT VERIFIED | Perform and record manual checks |
-| CI / release readiness | BLOCKED | Do not release until Phase 0 and all later acceptance criteria pass |
+| App shell and Discover/Saved/About navigation | IMPLEMENTED, VERIFIED LOCALLY | Browser suite and axe scans pass on this branch |
+| GitHub issue search and load-more | IMPLEMENTED, VERIFIED LOCALLY | Mocked search, pagination, partial-result and empty states covered |
+| Search filters and category inference | IMPLEMENTED, VERIFIED LOCALLY | Unit filter tests and URL round-trip browser tests pass |
+| Issue details and activity metadata | IMPLEMENTED, VERIFIED LOCALLY | Detail refresh, fetch times, unavailable/closed/404 paths covered |
+| Saved issues and searches | IMPLEMENTED, VERIFIED LOCALLY | Local storage, reload, closed/inaccessible references covered |
+| Import/export and duplicate handling | IMPLEMENTED, VERIFIED LOCALLY | Malformed/oversized/duplicate imports and data preservation covered |
+| AI context packs | IMPLEMENTED, VERIFIED LOCALLY | Source links, missing context and copy fallback covered |
+| Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
+| Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
+| Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
+| Manual keyboard/contrast/zoom checks | NOT PERFORMED | Human reviewer must complete `docs/MANUAL_ACCEPTANCE.md` |
+| CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
 
 ## Immediate next actions
 
-1. Proceed with Phase 3 saved issues/searches/import-export edge cases; do not reopen the retry-time assertion in this batch.
-2. Inspect current implementation and tests before changing code; preserve existing saved data on invalid imports and storage errors.
-3. Bundle at least 10 meaningful checks/improvements where practical, then run the single consolidated `npm run test:all` workflow.
-4. Record exact results and the tested commit below; update `PHASES.md` and `PROGRESS.md` together.
-5. Revisit Phase 2 acceptance gaps during a later audit before any release; do not mark Phase 2 VERIFIED yet.
+1. A human reviewer completes `docs/MANUAL_ACCEPTANCE.md` (keyboard-only, contrast, 200% zoom, responsive, reduced motion) and records environment, commit SHA, and outcome. Automation cannot substitute.
+2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
+3. After review, merge this branch to `main` (or replay the commits there) before Phase 6 verification.
+4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
 
 ## Work log
+
+### 2026-10-21 — Phase 5 automated completion: announcements, manual-record correction, and truth pass (branch `cline/91jvxv68`)
+
+- Added accessible announcements: `#results-meta` is now a polite `role="status"` live region for loaded-result counts; `#results` exposes `aria-busy` while a search is pending; `#status` switches to `aria-live="assertive"` for error/rate-limit messages; the detail view announces "Refreshing issue and repository evidence…" politely and announces completion or unavailable-evidence outcomes.
+- Added four browser regression tests: result-count and detail-outcome live regions, assertive failure announcements that preserve prior results, pending-search `aria-busy`, and detail-refresh progress before refreshed evidence.
+- Scoped existing status assertions to `#status` because `#results-meta` is now a second `role="status"` region; assertions were made more specific, not weaker.
+- Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the unsupported "200% zoom: PASS (reported by reviewer)" entry, marked 200% zoom NOT PERFORMED, and stated that automated proxies are not sign-off. Outcome remains NOT RUN.
+- Local runs on this branch (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
+- Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`docs/ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
+- Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN.
+
 
 ### 2026-10-21 — Phase 4 verified locally (no GitHub Actions)
 

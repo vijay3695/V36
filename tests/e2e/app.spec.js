@@ -50,7 +50,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  const pack=page.getByRole("textbox",{name:"Generated AI context pack"});
  await expect(pack).toHaveValue(/Please add tests\./);
  await expect(pack).toHaveValue(/app\.js: https:\/\/github\.com\/acme\/demo\/blob\/main\/app\.js/);
- await page.getByRole("button",{name:"Copy context pack"}).focus();await page.keyboard.press("Enter");await expect(page.getByRole("status")).toContainText(/Context pack copied|Clipboard unavailable/);
+ await page.getByRole("button",{name:"Copy context pack"}).focus();await page.keyboard.press("Enter");await expect(page.locator("#status")).toContainText(/Context pack copied|Clipboard unavailable/);
  await page.getByRole("button",{name:"Save issue"}).focus();await page.keyboard.press("Enter");
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Saved issues"})).toBeVisible();
@@ -61,7 +61,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page).toHaveURL(/#discover$/);
  await expect(page.getByRole("button",{name:"Save search"})).toBeVisible();
  await page.getByRole("button",{name:"Save search"}).focus();await page.keyboard.press("Enter");
- await expect(page.getByRole("status")).toContainText("Search preset saved");
+ await expect(page.locator("#status")).toContainText("Search preset saved");
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
  await expect(page.locator("#saved-searches .saved-search")).toHaveCount(1);
  await page.reload();
@@ -71,7 +71,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByLabel("Search issues").fill("failure");
  await page.getByRole("button",{name:"Search GitHub"}).click();
- await expect(page.getByRole("status")).toContainText("HTTP 500");
+ await expect(page.locator("#status")).toContainText("HTTP 500");
  await expect(page.getByLabel("Search issues")).toHaveValue("crash");
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
 });
@@ -81,7 +81,7 @@ test("invalid backup import preserves existing saved references",async({page})=>
  await page.goto("/#saved");
  await expect(page.getByRole("link",{name:"Keep me"})).toBeVisible();
  await page.locator("#import-file").setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from('{"version":2,"issues":[],"searches":[]}')});
- await expect(page.getByRole("status")).toContainText("Import rejected");
+ await expect(page.locator("#status")).toContainText("Import rejected");
  await expect(page.getByRole("link",{name:"Keep me"})).toBeVisible();
 });
 
@@ -89,7 +89,7 @@ test("unknown commit metadata stays visible",async({page})=>{
  const issue={html_url:"https://github.com/acme/demo/issues/3",title:"Fix crash",body:"Crash",state:"open",number:3,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
  await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo")return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","x-ratelimit-reset":"1900000000"},json:{message:"API rate limit exceeded"}});return route.fulfill({status:404,json:{message:"not mocked"}});});
  await page.goto("/");await page.locator("details.advanced-filters summary").click();await page.getByLabel("Latest commit on or after").fill("2026-01-01");await page.getByLabel("Search issues").fill("crash");await page.getByRole("button",{name:"Search GitHub"}).click();
- await expect(page.getByRole("status")).toContainText("rate limit reached");await expect(page.getByRole("link",{name:"Fix crash"})).toBeVisible();await expect(page.getByText(/Could not evaluate selected filters: latest commit date/)).toBeVisible();await expect(page.locator("#results-meta")).toContainText("1 need metadata");
+ await expect(page.locator("#status")).toContainText("rate limit reached");await expect(page.getByRole("link",{name:"Fix crash"})).toBeVisible();await expect(page.getByText(/Could not evaluate selected filters: latest commit date/)).toBeVisible();await expect(page.locator("#results-meta")).toContainText("1 need metadata");
 });
 
 test("keyboard users can skip content, navigate, and submit a search",async({page})=>{
@@ -109,14 +109,14 @@ test("keyboard users can skip content, navigate, and submit a search",async({pag
  await expect(page.getByRole("heading",{name:"Find work worth contributing to."})).toBeFocused();
  await page.getByLabel("Search issues").fill("crash");
  await page.keyboard.press("Enter");
- await expect(page.getByRole("status")).toContainText("Loaded 0 issues");
+ await expect(page.locator("#status")).toContainText("Loaded 0 issues");
 });
 test("valid import reports accepted, rejected and duplicate items",async({page})=>{
  await page.goto("/#saved");
  const issue={url:"https://github.com/acme/demo/issues/5",title:"Imported issue",repository:"acme/demo",number:5};
  const data={version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[issue,{...issue},{url:"javascript:alert(1)"}],searches:[]};
  await page.locator("#import-file").setInputFiles({name:"backup.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(data))});
- await expect(page.getByRole("status")).toContainText("1 valid item accepted, 1 invalid item rejected, 1 duplicate merged");
+ await expect(page.locator("#status")).toContainText("1 valid item accepted, 1 invalid item rejected, 1 duplicate merged");
  await expect(page.getByRole("link",{name:"Imported issue"})).toBeVisible();
 });
 test("export downloads a versioned saved-data backup",async({page})=>{
@@ -134,7 +134,7 @@ test("storage write failures are reported and saved references remain visible",a
  });
  await page.goto("/#saved");
  await page.getByRole("button",{name:"Remove saved reference"}).click();
- await expect(page.getByRole("status")).toContainText("Could not update browser storage");
+ await expect(page.locator("#status")).toContainText("Could not update browser storage");
  await expect(page.getByRole("link",{name:"Keep this"})).toBeVisible();
 });
 
@@ -143,7 +143,7 @@ test("incomplete GitHub results remain pageable and load-more appends results",a
  const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
  await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues"){const p=Number(u.searchParams.get("page")||"1");return route.fulfill({json:{total_count:21,incomplete_results:p===1,items:p===1?Array.from({length:20},(_,i)=>issue(i+1)):[issue(21)]}});}if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});return route.fulfill({status:404,json:{message:"not mocked"}});});
  await page.goto("/");await page.getByLabel("Search issues").fill("demo");await page.getByRole("button",{name:"Search GitHub"}).click();
- await expect(page.getByRole("status")).toContainText("search incomplete");await expect(page.locator("#results .issue-card")).toHaveCount(20);await expect(page.getByRole("button",{name:/Load more/})).toBeVisible();
+ await expect(page.locator("#status")).toContainText("search incomplete");await expect(page.locator("#results .issue-card")).toHaveCount(20);await expect(page.getByRole("button",{name:/Load more/})).toBeVisible();
  await page.getByRole("button",{name:/Load more/}).click();await expect(page.getByRole("link",{name:"Issue 21"})).toBeVisible();await expect(page.locator("#results .issue-card")).toHaveCount(21);await expect(page.getByRole("button",{name:/Load more/})).toBeHidden();
 });
 test("untrusted issue markup is rendered as text rather than executable HTML",async({page})=>{
@@ -171,14 +171,14 @@ test("unreadable saved storage is never overwritten by import or export",async({
  const corrupted="{not valid json";
  await page.addInitScript(value=>localStorage.setItem("v36.saved.v1",value),corrupted);
  await page.goto("/#saved");
- await expect(page.getByRole("status")).toContainText("Saved data could not be read");
+ await expect(page.locator("#status")).toContainText("Saved data could not be read");
  await page.getByRole("button",{name:"Import backup"}).click();
  const valid=JSON.stringify({version:1,issues:[{url:"https://github.com/acme/demo/issues/5",title:"Imported"}],searches:[]});
  await page.locator("#import-file").setInputFiles({name:"valid.json",mimeType:"application/json",buffer:Buffer.from(valid)});
- await expect(page.getByRole("status")).toContainText("saving, importing, removing, and exporting are disabled");
+ await expect(page.locator("#status")).toContainText("saving, importing, removing, and exporting are disabled");
  await expect.poll(()=>page.evaluate(()=>localStorage.getItem("v36.saved.v1"))).toBe(corrupted);
  await page.getByRole("button",{name:"Export backup"}).click();
- await expect(page.getByRole("status")).toContainText("saving, importing, removing, and exporting are disabled");
+ await expect(page.locator("#status")).toContainText("saving, importing, removing, and exporting are disabled");
  await expect.poll(()=>page.evaluate(()=>localStorage.getItem("v36.saved.v1"))).toBe(corrupted);
 });
 
@@ -329,4 +329,88 @@ test("fresh detail response reflects a closed issue without losing the saved ref
  await page.getByRole("link",{name:"Saved",exact:true}).click();
  await expect(page.getByRole("link",{name:"Example issue"})).toBeVisible();
  await expect(page.getByText(/Current status has not been checked/)).toBeVisible();
+});
+
+test("result counts and detail outcomes are announced through live regions",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/3",title:"Announce this issue",body:"Body",state:"open",number:3,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",closed_at:null,comments:0,labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:12,pushed_at:"2026-01-29T00:00:00Z",default_branch:"main"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
+  if(u.pathname==="/repos/acme/demo/issues/3")return route.fulfill({json:issue});
+  if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1vIFJFQURNRQ=="}});
+  if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[{html_url:"https://github.com/acme/demo/commit/abc",commit:{committer:{date:"2026-01-29T00:00:00Z"}}}]});
+  if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("announce");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ const meta=page.locator("#results-meta");
+ await expect(meta).toHaveAttribute("role","status");
+ await expect(meta).toHaveAttribute("aria-live","polite");
+ await expect(meta).toHaveAttribute("aria-atomic","true");
+ await expect(meta).toContainText("Showing 1 loaded results");
+ await expect(page.locator("#status")).toHaveAttribute("aria-live","polite");
+ await page.getByRole("button",{name:"View details"}).click();
+ await expect(page.locator("#status")).toHaveAttribute("aria-live","polite");
+ await expect(page.locator("#status")).toContainText("Issue details refreshed from GitHub");
+});
+
+test("failed searches are announced assertively and preserve prior results",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/4",title:"Keep me visible",body:"Body",state:"open",number:4,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",closed_at:null,comments:0,labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:5,pushed_at:"2026-01-29T00:00:00Z",default_branch:"main"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues"){if((u.searchParams.get("q")||"").includes("breakdown"))return route.fulfill({status:500,json:{message:"mocked failure"}});return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});}
+  if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("keep");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("link",{name:"Keep me visible"})).toBeVisible();
+ await expect(page.locator("#status")).toHaveAttribute("aria-live","polite");
+ await page.getByLabel("Search issues").fill("breakdown");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.locator("#status")).toHaveAttribute("aria-live","assertive");
+ await expect(page.locator("#status")).toContainText("HTTP 500");
+ await expect(page.getByRole("link",{name:"Keep me visible"})).toBeVisible();
+ await expect(page.locator("#results-meta")).toContainText("Showing 1 loaded results");
+});
+
+
+
+test("results region reports busy state while a search is pending",async({page})=>{
+ let release;const gate=new Promise(resolve=>{release=resolve;});
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues"){await gate;return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});}
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("pending");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.locator("#results")).toHaveAttribute("aria-busy","true");
+ release();
+ await expect(page.locator("#results")).toHaveAttribute("aria-busy","false");
+ await expect(page.locator("#status")).toContainText("Loaded 0 issues");
+});
+
+test("detail refresh progress is announced before the refreshed evidence",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/5",title:"Slow detail issue",body:"Body",state:"open",number:5,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",closed_at:null,comments:0,labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:7,pushed_at:"2026-01-29T00:00:00Z",default_branch:"main"};
+ let release;const gate=new Promise(resolve=>{release=resolve;});
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
+  if(u.pathname==="/repos/acme/demo/issues/5"){await gate;return route.fulfill({json:issue});}
+  if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1vIFJFQURNRQ=="}});
+  if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[{html_url:"https://github.com/acme/demo/commit/abc",commit:{committer:{date:"2026-01-29T00:00:00Z"}}}]});
+  if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("slow");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.getByRole("button",{name:"View details"}).click();
+ await expect(page.locator("#detail-content").getByRole("status")).toContainText("Refreshing issue and repository evidence");
+ release();
+ await expect(page.locator("#status")).toContainText("Issue details refreshed from GitHub");
 });

@@ -13,8 +13,12 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
 | 3 — Saved/import/export | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist and are tested locally. | All storage/import edge cases verified locally; no GitHub Actions used. |
 | 4 — AI context packs | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Context-pack generation, source links, contribution guide and missing-source disclosure exist and are tested locally. | All context-pack acceptance criteria verified locally; no GitHub Actions used. |
-| 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
+| 5 — Accessibility/security/resilience | **IN PROGRESS — automated work complete, manual acceptance pending** | Announcements (results count, assertive errors, detail refresh, retry outcomes) and `aria-busy` added with four browser regression tests. Local suite: 86/86 unit, 34/34 browser, 3/3 axe. | A human reviewer must complete and sign `docs/MANUAL_ACCEPTANCE.md`; automated proxies are not proof of accessibility. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
+
+The suite now contains 34 browser tests (including the Phase 5 announcement/live-region coverage). It was re-run green on branch `cline/91jvxv68`: 86/86 unit, 34/34 browser, 3/3 standalone axe. The counts recorded in the Phase 2–4 rows and sections below are historical snapshots from those verification runs, not the current suite size.
+
+**Phase 0/CI clarification:** the Phase 0 status was earned against [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647). The consolidated workflow was later deleted in `ad8379b`, so there is no CI check on current commits. `DECISIONS.md` and `docs/ACCEPTANCE_CHECKLIST.md` still require a passing GitHub Actions run at release; that conflict is unresolved and blocks Phase 6.
 
 ## Phase 0 — Baseline and CI stabilization
 
@@ -110,22 +114,24 @@ Acceptance criteria:
 
 ## Phase 5 — Accessibility, resilience, and security
 
+**Status: IN PROGRESS — automated work complete; human manual acceptance pending.** Announcements for result counts, search outcomes, rate-limit/error states (assertive), detail-refresh progress, and retry outcomes are implemented with browser regression tests. Discover, Saved, About, and the issue-detail view pass automated axe scans locally. The only outstanding criterion is the human manual acceptance record in `docs/MANUAL_ACCEPTANCE.md`; automated proxies are not accepted as sign-off.
+
 Tasks:
-- [ ] Semantic page structure, correct heading hierarchy, labels, keyboard navigation, and visible focus.
-- [ ] Accessible announcements for loading, results count, errors, rate limits, and retry outcomes.
-- [ ] Contrast checks and responsive layout checks.
-- [ ] Automated accessibility tests for Discover, Saved, and About.
-- [ ] Manual keyboard acceptance checks documented.
-- [ ] Safely render untrusted GitHub content using text-safe DOM APIs; no executing imported/retrieved HTML or scripts.
-- [ ] Validate imports and external URLs; never store tokens, credentials, or API keys.
-- [ ] Preserve results and saved data through request failures.
-- [ ] Test rate limits, failed metadata, unavailable issue details, and browser-storage errors.
+- [x] Semantic page structure, correct heading hierarchy, labels, keyboard navigation, and visible focus. (Axe scans, role/label browser tests, skip-link and tab-order proxy tests pass locally; visual focus confirmation remains part of manual acceptance.)
+- [x] Accessible announcements for loading, results count, errors, rate limits, and retry outcomes. (Polite result-count live region, `aria-busy` during search, assertive `aria-live` for errors, polite detail-refresh progress and completion announcements; covered by four browser tests.)
+- [ ] Contrast checks and responsive layout checks. (Automated axe color-contrast passes and responsive overflow is checked at 320/375/768/1280px; human contrast and zoom review is still pending.)
+- [x] Automated accessibility tests for Discover, Saved, and About, plus the issue-detail view.
+- [ ] Manual keyboard acceptance checks documented. (The checklist exists in `docs/MANUAL_ACCEPTANCE.md` but no reviewer has recorded results; the file states NOT RUN.)
+- [x] Safely render untrusted GitHub content using text-safe DOM APIs; no executing imported/retrieved HTML or scripts.
+- [x] Validate imports and external URLs; never store tokens, credentials, or API keys.
+- [x] Preserve results and saved data through request failures.
+- [x] Test rate limits, failed metadata, unavailable issue details, and browser-storage errors.
 
 Acceptance criteria:
-- [ ] Automated accessibility checks pass.
-- [ ] Manual checks are complete and recorded; automation alone is not treated as proof of full accessibility.
-- [ ] Security-sensitive input paths have tests.
-- [ ] No silent data loss or fabricated fallback information.
+- [x] Automated accessibility checks pass (local run on this branch: 3/3 axe scans, including the issue-detail scan inside the end-to-end flow).
+- [ ] Manual checks are complete and recorded; automation alone is not treated as proof of full accessibility. **Blocked on a human reviewer.**
+- [x] Security-sensitive input paths have tests.
+- [x] No silent data loss or fabricated fallback information.
 
 ## Phase 6 — End-to-end verification and release readiness
 

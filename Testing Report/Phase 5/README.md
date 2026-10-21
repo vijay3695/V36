@@ -1,5 +1,21 @@
 # Phase 5 testing proof (automated only)
 
+## Latest automated re-run — announcements and live regions
+
+Branch: `cline/91jvxv68` (commit SHA recorded by the commit that contains this file)
+
+- Unit tests: 86 passed, 0 failed (`npm test`)
+- Browser E2E tests: 34 passed, 0 failed (`npx playwright test --workers=2`), including four new announcement/live-region tests
+- Accessibility (axe) tests: 3 passed, 0 failed (`npx playwright test tests/e2e/accessibility.spec.js`), plus the issue-detail axe scan inside the end-to-end flow
+- 200% zoom: NOT PERFORMED
+- Manual keyboard/contrast/responsive/reduced-motion checks: NOT PERFORMED
+
+See `docs/MANUAL_ACCEPTANCE.md`. Phase 5 remains IN PROGRESS pending a human reviewer's record. No GitHub Actions were triggered (no workflow exists on this branch).
+
+## Historical run — commit 6888c67
+
+The logs below belong to the earlier automated run and remain unchanged as history.
+
 Commit: 6888c67a847fe588c72bff64e68c54c6dc92ac2c
 Branch: main
 
