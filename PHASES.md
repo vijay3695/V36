@@ -8,7 +8,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 | Phase | Current status | What is done | What remains |
 |---|---|---|---|
-| 0 — Baseline and CI | **VERIFIED** | [Run #52](https://github.com/vijay3695/V36/actions/runs/39573103139): 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
+| 0 — Baseline and CI | **BLOCKED** | Historical run #52 passed 59 unit tests, 16 browser tests, and 3 standalone accessibility checks. | Current runs #53–#55 failed due to storage-module content/declaration errors; correction is in this batch and needs a green full run. |
 | 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, custom dates, push age, star bounds, share URLs and unknown-metadata messaging are implemented with tests. | Verify full behavior after Phase 0 is green; inspect remaining API/filter edge cases. |
 | 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps and related-work search links exist. | Verify inaccessible/closed/moved cases, rate-limit retry and freshness behavior. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
@@ -18,7 +18,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 ## Phase 0 — Baseline and CI stabilization
 
-**Current status: VERIFIED — [CI run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) passed 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks on commit `9f8b841`. The route-state bug is fixed. The next feature batch adds safeguards for unreadable browser storage; Phase 0 remains verified unless a later run exposes a regression.**
+**Current status: BLOCKED — Phase 0 passed on [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139), but later storage-safety commits introduced test failures. Run #53 and #54 failed because the storage module was accidentally replaced by test content; run #55 then failed on a duplicate CATEGORIES declaration. Those exact errors are being corrected before the next full run. Do not treat the current head as verified until it passes.**
 
 Tasks:
 - [x] Inspect current `.github/workflows/ci.yml`, package scripts, unit tests, E2E tests, and actual failed GitHub Actions job output.

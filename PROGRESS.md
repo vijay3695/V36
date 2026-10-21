@@ -7,7 +7,7 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** VERIFIED on [CI #52](https://github.com/vijay3695/V36/actions/runs/39573103139), exact commit [`9f8b841`](https://github.com/vijay3695/V36/commit/9f8b841c08ff0d4c5717891d84687c9e1916277c): 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Re-check after every subsequent change.
+- **Phase 0 status:** BLOCKED on current `main`. Historical run [#52](https://github.com/vijay3695/V36/actions/runs/39573103139) passed 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Subsequent runs #53–#55 failed during the storage-safety batch: #53 and #54 reported that `js/storage.js` lacked `MAX_IMPORT_BYTES` because the wrong file content was committed; #55 then reported a duplicate `CATEGORIES` declaration. Both causes are identified; this commit removes the duplicate and preserves the storage module implementation. Verify the next exact commit before restoring Phase 0 to VERIFIED.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
@@ -54,12 +54,12 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
-### 2026-10-21 — Protect unreadable browser storage (pending CI)
+### 2026-10-21 — Protect unreadable browser storage (CI failures being corrected)
 
 - Added a storage-write guard when saved data cannot be parsed. Save, remove, import, and export actions now refuse to overwrite unreadable existing local storage and report why.
 - Added an E2E regression test that attempts valid import and export against malformed existing storage and verifies the original value remains unchanged.
 - Corrected saved-search label normalization to trim whitespace before deduplication and sorting; aligned the storage regression assertion.
-- Phase 0 is marked VERIFIED based on run #52; this new storage-safety batch remains pending its own CI run.
+- CI outcomes: [run #53](https://github.com/vijay3695/V36/actions/runs/39573546241) and [run #54](https://github.com/vijay3695/V36/actions/runs/39573607069) failed because a commit accidentally put the storage test content into `js/storage.js`; [run #55](https://github.com/vijay3695/V36/actions/runs/39573683295) failed after the storage module was restored because the `CATEGORIES` declaration was duplicated. These failures are explicitly recorded, not treated as passes. The duplicate declaration is removed in the next fix; rerun all tests before marking the current head verified.
 
 
 ### 2026-10-21 — Explicit accessibility gate and saved-data normalization tests (passed CI)
