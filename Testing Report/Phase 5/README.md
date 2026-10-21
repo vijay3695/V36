@@ -2,7 +2,7 @@
 
 ## Latest automated re-run — announcements and live regions
 
-Branch: `cline/91jvxv68` (commit SHA recorded by the commit that contains this file)
+Branch: `cline/91jvxv68` (evidence commit `363fb3a`)
 
 - Unit tests: 86 passed, 0 failed (`npm test`)
 - Browser E2E tests: 34 passed, 0 failed (`npx playwright test --workers=2`), including four new announcement/live-region tests

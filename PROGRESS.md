@@ -7,7 +7,7 @@
 - **Branch:** `cline/91jvxv68` (created from `main` at `0638fb9`; not merged to `main`)
 - **Project status:** In development; not release-ready.
 - **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete; only the human manual-acceptance record remains (`docs/MANUAL_ACCEPTANCE.md` is still NOT RUN). Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
-- **Latest local evidence (this branch):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
+- **Latest local evidence (this branch):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans at commit `363fb3a`, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
 - **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
 - **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
 - **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
@@ -61,7 +61,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the unsupported "200% zoom: PASS (reported by reviewer)" entry, marked 200% zoom NOT PERFORMED, and stated that automated proxies are not sign-off. Outcome remains NOT RUN.
 - Local runs on this branch (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
 - Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`docs/ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
-- Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN.
+- Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN. Evidence commit: `363fb3a` on branch `cline/91jvxv68`.
 
 
 ### 2026-10-21 — Phase 4 verified locally (no GitHub Actions)
