@@ -33,12 +33,13 @@ The application is designed for GitHub Pages and modern browsers using static HT
 
 Before coding, read these files in order:
 
-1. [PLAN.md](PLAN.md) — instructions and guardrails for coding agents.
-2. [PHASES.md](PHASES.md) — phased work breakdown and acceptance checklists.
-3. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
-4. [Detailed project specification](docs/PROJECT_PLAN.md) — product requirements and release rules.
+1. [DECISIONS.md](DECISIONS.md) — what the maintainer explicitly decided, first-release scope, and what is deferred/excluded.
+2. [PLAN.md](PLAN.md) — instructions and guardrails for coding agents.
+3. [PHASES.md](PHASES.md) — phased work breakdown and acceptance checklists.
+4. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
+5. [Detailed project specification](docs/PROJECT_PLAN.md) — product requirements and release rules.
 
-Update `PROGRESS.md` alongside implementation work. Never mark a feature or phase complete without test evidence.
+Update `PROGRESS.md` alongside implementation work. Never mark a feature or phase complete without test evidence. Keep confirmed decisions separate from implementation status.
 
 ## Development
 
