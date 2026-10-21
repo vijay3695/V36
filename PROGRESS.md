@@ -55,6 +55,15 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Expanded filters, activity evidence, and context packs
+
+- Added custom date bounds for issue creation, update, and latest commit; exact minimum/maximum star filters; and GitHub relevance sorting.
+- Wired new filter values through form state, shareable URLs, and saved-search backups.
+- Added repository push date, issue comment count, closed date, and pull-request link to activity evidence.
+- Context packs now retrieve a repository-root file listing on demand, include identifiable root-level source links, and fetch a root `CONTRIBUTING.md` when available. Missing sources are disclosed.
+- Added unit and browser integration tests. Run `39568309050` passed all 21 unit tests and 6 browser tests; its new integration test failed because it used a text assertion on a textarea value. The assertion was corrected, and URL round-trip, detail accessibility, and invalid-import preservation coverage were added. Await the next bulk run before claiming this batch passes.
+
+
 ### 2026-10-21 — Expanded filters, activity evidence, and context packs (pending CI)
 
 - Added custom created/updated/commit date bounds, exact min/max star filters, and GitHub relevance sorting.

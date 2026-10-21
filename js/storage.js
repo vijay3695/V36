@@ -13,5 +13,16 @@ export function addSavedSearch(data,filters,name){const x=cleanSearch({filters,n
 export function removeSavedIssue(data,url){return saveSaved({...data,issues:data.issues.filter(x=>x.url!==url)});}
 export function removeSavedSearch(data,id){return saveSaved({...data,searches:data.searches.filter(x=>x.id!==id)});}
 export function exportBackup(data){return JSON.stringify({version:1,exportedAt:new Date().toISOString(),issues:data.issues,searches:data.searches},null,2);}
-export async function parseImportFile(file){if(!file)throw new Error("Choose a backup file first.");if(file.size>MAX_IMPORT_BYTES)throw new Error("Backup exceeds the 1 MB import limit.");return validateBackup(JSON.parse(await file.text()));}
+export async function parseImportFile(file){
+ if(!file)throw new Error("Choose a backup file first.");
+ if(file.size>MAX_IMPORT_BYTES)throw new Error("Backup exceeds the 1 MB import limit.");
+ const raw=JSON.parse(await file.text());
+ const valid=validateBackup(raw);
+ const cleanIssues=raw.issues.map(cleanIssue).filter(Boolean);
+ const cleanSearches=raw.searches.map(cleanSearch).filter(Boolean);
+ return {...valid,importReport:{
+  acceptedIssues:valid.issues.length,rejectedIssues:raw.issues.length-cleanIssues.length,duplicateIssues:cleanIssues.length-valid.issues.length,
+  acceptedSearches:valid.searches.length,rejectedSearches:raw.searches.length-cleanSearches.length,duplicateSearches:cleanSearches.length-valid.searches.length
+ }};
+}
 export function mergeBackup(current,incoming){return saveSaved({version:1,issues:dedupe([...current.issues,...incoming.issues],x=>x.url),searches:dedupe([...current.searches,...incoming.searches],x=>key(x.filters))});}
