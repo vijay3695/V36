@@ -33,3 +33,43 @@ test("oversized import is rejected before its contents are read",async()=>{
  await assert.rejects(parseImportFile({size:MAX_IMPORT_BYTES+1,text:async()=>{read=true;return "{}";}}),/1 MB import limit/);
  assert.equal(read,false);
 });
+
+test("unsupported saved-search categories are discarded during import",()=>{
+ const x=validateBackup({...backup,searches:[{name:"bad category",filters:{query:"bug",category:"Make up a category",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.category,"");
+});
+test("saved-search labels are trimmed, deduplicated and sorted",()=>{
+ const x=validateBackup({...backup,searches:[{name:"labels",filters:{query:"bug",labels:[" z ","a","a",""],sort:"updated"}}]});
+ assert.deepEqual(x.searches[0].filters.labels,[" z ","a"]);
+});
+test("saved-search date ranges reject impossible calendar dates",()=>{
+ const x=validateBackup({...backup,searches:[{name:"dates",filters:{createdAfter:"2026-02-31",updatedBefore:"2026-12-31",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.createdAfter,"");
+ assert.equal(x.searches[0].filters.updatedBefore,"2026-12-31");
+});
+test("saved-search invalid star bounds are discarded",()=>{
+ const x=validateBackup({...backup,searches:[{name:"stars",filters:{minStars:"-1",maxStars:"500",stars:"100-999",sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.minStars,"");
+ assert.equal(x.searches[0].filters.maxStars,"500");
+ assert.equal(x.searches[0].filters.stars,"");
+});
+test("pull request references remain portable saved items",()=>{
+ const x=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/pull/8",title:"PR",repository:"acme/demo",number:8}]});
+ assert.equal(x.issues[0].url,"https://github.com/acme/demo/pull/8");
+ assert.equal(x.issues[0].number,8);
+});
+test("trailing slash variants canonicalize to one issue identity",()=>{
+ const x=validateBackup({...backup,issues:[
+  {url:"https://github.com/acme/demo/issues/9/",title:"One"},
+  {url:"https://github.com/acme/demo/issues/9",title:"Duplicate"}
+ ]});
+ assert.equal(x.issues.length,1);
+ assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/9");
+});
+test("malformed JSON imports reject without producing a partial backup",async()=>{
+ await assert.rejects(parseImportFile({size:4,text:async()=>"nope"}));
+});
+test("import refuses item arrays over the configured cap",()=>{
+ const issues=Array.from({length:2001},(_,i)=>({url:"https://github.com/acme/demo/issues/"+(i+1),title:"Issue"}));
+ assert.throws(()=>validateBackup({version:1,issues,searches:[]}),/too many items/);
+});

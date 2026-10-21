@@ -7,10 +7,9 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** BLOCKED. Latest checked run [CI #50](https://github.com/vijay3695/V36/actions/runs/39572501176) on commit [`04cac28`](https://github.com/vijay3695/V36/commit/04cac287eb4aa4c35c9c4ed9d79dc73d3c7ac798) has 51 unit tests passing and 14/15 browser tests passing. The failed E2E assertion exposed a route-state bug: startup auto-search changed the URL hash from Saved to Discover without showing the Discover view, so the Discover link could not trigger a hash-change event.
+- **Phase 0 status:** IN PROGRESS. [CI #51](https://github.com/vijay3695/V36/actions/runs/39572800393) on commit [`a504309`](https://github.com/vijay3695/V36/commit/a504309d90f7530a5abb8621c0c47160f13f0bd1) passed 51/51 unit tests and 16/16 browser tests. The saved-route startup bug is fixed. The next batch makes the standalone accessibility script an explicit part of `test:all` and adds storage import normalization coverage; verify that new exact commit before marking Phase 0 complete.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
-- **Latest run status:** FAILED — Phase 0 is not complete until a subsequent full run is green.
-- **Failure evidence:** [Run #50 logs](https://github.com/vijay3695/V36/actions/runs/39572501176) show the saved-search flow ultimately failed to restore the previous query (`expected "crash", received "failure"`) because the test could not return to the actual Discover view. The next batch fixes the app’s startup route handling and adds a dedicated route regression test.
+- **Latest run status:** PASS — [run #51](https://github.com/vijay3695/V36/actions/runs/39572800393) completed the single CI job successfully; 51/51 unit tests and 16/16 browser tests passed. Phase 0 remains open pending the explicit standalone accessibility script and next exact-commit run.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
 - **This file's purpose:** handoff state for the next coding agent. Re-check current `main` and latest Actions run before relying on this snapshot.
 
@@ -55,7 +54,15 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
-### 2026-10-21 — E2E failure diagnosis and expanded regression batch (failed CI; fix follows)
+### 2026-10-21 — Explicit accessibility gate and saved-data normalization tests (pending CI)
+
+- Updated `test:all` to run unit tests, the full browser suite, and the standalone accessibility script as one bulk command within the existing single GitHub Actions job.
+- Tightened saved-search import normalization so unsupported inferred categories are discarded rather than retained as invalid UI state.
+- Added storage tests for invalid categories, normalized labels, invalid date/star values, canonical pull-request references, trailing-slash identity dedupe, malformed JSON, and the 2,000-item cap.
+- Latest prior run [#51](https://github.com/vijay3695/V36/actions/runs/39572800393) is green. This batch is pending its own Actions run.
+
+
+### 2026-10-21 — Saved-route regression fixed; full browser suite green
 
 - Inspected the actual job output for [run #49](https://github.com/vijay3695/V36/actions/runs/39572073815). All 41 unit tests pass; 14 of 15 browser tests pass.
 - The saved-search test times out waiting for Save search after a navigation/reload sequence. Updated the flow to load Discover explicitly before keyboard-activating Save search; dedicated keyboard navigation coverage remains in place.
