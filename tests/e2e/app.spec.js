@@ -241,12 +241,16 @@ test("issue details preserve the reference and disclose when GitHub returns 404"
  await page.goto("/");
  await page.getByLabel("Search issues").fill("unavailable");
  await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.getByRole("button",{name:"Save issue"}).click();
  await page.getByRole("button",{name:"View details"}).click();
  await expect(page.getByRole("heading",{name:"Issue moved or unavailable"})).toBeVisible();
  await expect(page.locator(".issue-body")).toHaveText("Original issue description");
  await expect(page.getByRole("heading",{name:"Unavailable data"})).toBeVisible();
  await expect(page.getByText(/Issue refresh: GitHub could not find this resource/)).toBeVisible();
  await expect(page.getByText(/Repository metadata: GitHub could not find this resource/)).toBeVisible();
+ await page.getByRole("link",{name:"Saved",exact:true}).click();
+ await expect(page.getByRole("link",{name:"Issue moved or unavailable"})).toBeVisible();
+ await expect(page.getByText(/Current status has not been checked/)).toBeVisible();
 });
 
 test("issue detail activity can be retried after a rate-limited repository refresh",async({page})=>{
@@ -306,4 +310,23 @@ test("shareable search URLs never contain saved references or credential-like da
  expect(page.url()).not.toContain("PRIVATE_SAVED_MARKER");
  expect(page.url()).not.toMatch(/[?&](?:token|access_token|authorization)=/i);
  await expect(page).toHaveURL(/q=public\+bug/);
+});
+
+test("fresh detail response reflects a closed issue without losing the saved reference",async({page})=>{
+ const searchIssue={html_url:"https://github.com/acme/demo/issues/31",title:"Example issue",body:"Old search snapshot",state:"open",number:31,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[{name:"bug"}],repository_url:"https://api.github.com/repos/acme/demo"};
+ const freshIssue={...searchIssue,body:"Latest closed issue body",state:"closed",closed_at:"2026-10-20T12:00:00Z",updated_at:"2026-10-20T12:00:00Z",labels:[{name:"bug"},{name:"fixed"}]};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-10-20T12:00:00Z"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[searchIssue]}});if(u.pathname==="/repos/acme/demo/issues/31")return route.fulfill({json:freshIssue});if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1v"}});if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[]});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("example");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.getByRole("button",{name:"Save issue"}).click();
+ await page.getByRole("button",{name:"View details"}).click();
+ await expect(page.getByText("Latest closed issue body")).toBeVisible();
+ await expect(page.getByText("Issue state: closed")).toBeVisible();
+ await expect(page.getByText(/Closed at: /)).toBeVisible();
+ await expect(page.locator(".issue-label")).toHaveText(["bug","fixed"]);
+ await page.getByRole("link",{name:"Saved",exact:true}).click();
+ await expect(page.getByRole("link",{name:"Example issue"})).toBeVisible();
+ await expect(page.getByText(/Current status has not been checked/)).toBeVisible();
 });

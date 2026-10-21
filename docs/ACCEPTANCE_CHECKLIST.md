@@ -79,3 +79,8 @@ Do not publish the first release until every applicable item below is completed 
 - [ ] Known limitations and failed/skipped checks are disclosed.
 - [ ] Verification report and checklist identify the exact release commit SHA.
 - [ ] No first release is published while any mandatory item is incomplete.
+
+
+## Manual acceptance
+
+Before first release, complete every applicable keyboard-only, screen-reader, responsive, reduced-motion, and high-zoom check in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). Automated axe checks alone are not sufficient. Record the reviewer, environment, commit SHA, outcome, and any follow-up defects; until then, manual accessibility acceptance remains pending.

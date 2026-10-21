@@ -55,12 +55,20 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
-### 2026-10-21 — Phase 2 detail evidence improvements (failed CI; retry-time fix follows)
+### 2026-10-21 — Closed/unavailable issue handling and manual acceptance guide (pending CI)
+
+- Strengthened the 404 detail scenario to save the issue first, then verify the saved reference remains visible and clearly says its current status has not been checked.
+- Added an E2E scenario where a search snapshot is open but the refreshed issue is closed; detail view must show the current closed state, close date, updated body and official labels, while the saved reference remains intact.
+- Added `docs/MANUAL_ACCEPTANCE.md` with keyboard-only, screen-reader, responsive, 200% zoom, contrast, reduced-motion and error-state checks. It is explicitly marked NOT PERFORMED until a human reviewer records actual results; automated CI cannot perform this manual sign-off.
+- Linked the manual acceptance checklist from README and the release acceptance checklist. Phase 2 remains IN PROGRESS and Phase 5 remains pending human manual acceptance.
+
+
+### 2026-10-21 — Phase 2 detail evidence improvements (retry-time verified)
 
 - Added a dedicated Official issue labels section to the detail view, separate from inferred contribution categories.
 - Rate-limited detail/activity failures now disclose GitHub retry timing when supplied, while retaining the manual retry action.
 - Added regression assertions for displayed official labels and rate-limit retry-time messaging.
-- [Run #61](https://github.com/vijay3695/V36/actions/runs/39575435286) and [run #62](https://github.com/vijay3695/V36/actions/runs/39575815864) each passed 75/75 unit tests but failed one browser assertion requiring visible retry time. The first fixture used x-ratelimit-reset; the second used Retry-After, but neither exposed the custom header through CORS. The next batch adds `Access-Control-Expose-Headers` to the mocked response and keeps the strict retry-time assertion. Phase 2 remains blocked until a green full run.
+- [Run #61](https://github.com/vijay3695/V36/actions/runs/39575435286) and [run #62](https://github.com/vijay3695/V36/actions/runs/39575815864) each passed 75/75 unit tests but failed one browser assertion requiring visible retry time. The first fixture used x-ratelimit-reset; the second used Retry-After, but neither exposed the custom header through CORS. [Run #63](https://github.com/vijay3695/V36/actions/runs/39576107714) passed after adding `Access-Control-Expose-Headers`; the retry-time assertion remains strict.
 
 
 ### 2026-10-21 — Secondary languages and safe shareable URLs (passed CI)

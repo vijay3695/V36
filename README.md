@@ -52,7 +52,7 @@ npm install
 npm test
 ```
 
-Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md` and `SECURITY.md`. A passing unit-test command alone does not establish release readiness.
+Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md`, `SECURITY.md`, and the [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md). Automated accessibility scans do not replace manual keyboard and screen-reader acceptance. A passing unit-test command alone does not establish release readiness.
 
 ## Release policy
 
