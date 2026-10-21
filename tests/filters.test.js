@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays,unknownFilterReasons} from "../js/filters.js";
+import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays,unknownFilterReasons,describeFilters} from "../js/filters.js";
 const now=Date.parse("2026-01-31T00:00:00Z");
 const issue={title:"Fix crash and add regression tests",body:"The bug crashes the app.",created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[{name:"bug"}],repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:42,latestCommitDate:"2026-01-25T00:00:00Z"}};
 test("category inference allows multiple supported categories",()=>{const c=inferCategories(issue);assert.ok(c.includes("Bug fix"));assert.ok(c.includes("Tests"));});
@@ -157,3 +157,32 @@ test("unknown language metadata is not silently treated as a mismatch",()=>{
  assert.equal(matchesFilters(unknown,f,now),true);
  assert.deepEqual(unknownFilterReasons(unknown,f),["language metadata"]);
 });
+
+test("saved-search summaries are human readable instead of raw JSON",()=>{
+ const f=normalizeFilters({query:"crash",language:"Rust",labels:["bug","help wanted"],issueType:"issue",category:"Bug fix",createdDays:"30",minStars:"100",maxStars:"999",sort:"comments"});
+ const text=describeFilters(f);
+ assert.match(text,/Search: crash/);
+ assert.match(text,/Language: Rust/);
+ assert.match(text,/Labels: bug, help wanted/);
+ assert.match(text,/Issues only/);
+ assert.match(text,/Category: Bug fix/);
+ assert.match(text,/Created: last 30 days/);
+ assert.match(text,/Stars: 100–999/);
+ assert.match(text,/Sort: Most discussed/);
+ assert.equal(text.includes("{"),false);
+});
+
+test("saved-search summaries name custom ranges and omit defaults",()=>{
+ const custom=describeFilters(normalizeFilters({createdAfter:"2026-01-01",commitBefore:"2026-06-30",pushAgeDays:"90"}));
+ assert.match(custom,/Created: 2026-01-01 to any/);
+ assert.match(custom,/Latest commit: any to 2026-06-30/);
+ assert.match(custom,/Repository push: within 90 days/);
+ assert.equal(describeFilters(normalizeFilters({})),"No filters set");
+ assert.equal(describeFilters(normalizeFilters({sort:"updated"})),"No filters set");
+});
+
+test("saved-search summaries surface star presets and pull-request choice",()=>{
+ assert.match(describeFilters(normalizeFilters({stars:"100-999"})),/Stars: 100-999/);
+ assert.match(describeFilters(normalizeFilters({issueType:"pr"})),/Pull requests only/);
+});
+

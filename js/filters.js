@@ -55,6 +55,27 @@ export function buildSearchQuery(f,now=Date.now()){
  return p.join(" ");
 }
 const dateValue=v=>typeof v==="string"&&validDate(v)?v:"";
+const SORT_LABELS={updated:"Recently updated",created:"Recently created",comments:"Most discussed",relevance:"GitHub relevance"};
+export function describeFilters(f={}){
+ const p=[];
+ if(f.query)p.push("Search: "+f.query);
+ if(f.language)p.push("Language: "+f.language);
+ if(f.labels?.length)p.push("Labels: "+f.labels.join(", "));
+ if(f.issueType)p.push(f.issueType==="pr"?"Pull requests only":"Issues only");
+ if(f.category)p.push("Category: "+f.category);
+ if(f.createdAfter||f.createdBefore)p.push("Created: "+(f.createdAfter||"any")+" to "+(f.createdBefore||"any"));
+ else if(f.createdDays)p.push("Created: last "+f.createdDays+" days");
+ if(f.updatedAfter||f.updatedBefore)p.push("Updated: "+(f.updatedAfter||"any")+" to "+(f.updatedBefore||"any"));
+ else if(f.updatedDays)p.push("Updated: last "+f.updatedDays+" days");
+ if(f.commitAfter||f.commitBefore)p.push("Latest commit: "+(f.commitAfter||"any")+" to "+(f.commitBefore||"any"));
+ else if(f.commitAgeDays)p.push("Latest commit: within "+f.commitAgeDays+" days");
+ if(f.pushAfter||f.pushBefore)p.push("Repository push: "+(f.pushAfter||"any")+" to "+(f.pushBefore||"any"));
+ else if(f.pushAgeDays)p.push("Repository push: within "+f.pushAgeDays+" days");
+ if(f.minStars||f.maxStars)p.push("Stars: "+(f.minStars||"0")+"–"+(f.maxStars||"any"));
+ else if(f.stars)p.push("Stars: "+f.stars);
+ if(f.sort&&f.sort!=="updated")p.push("Sort: "+(SORT_LABELS[f.sort]||f.sort));
+ return p.length?p.join(" · "):"No filters set";
+}
 const numberValue=v=>v!==""&&v!==null&&v!==undefined&&Number.isSafeInteger(Number(v))&&Number(v)>=0&&Number(v)<=100000000?String(Number(v)):"";
 export function normalizeFilters(f={}){
  const createdAfter=dateValue(f.createdAfter),createdBefore=dateValue(f.createdBefore),updatedAfter=dateValue(f.updatedAfter),updatedBefore=dateValue(f.updatedBefore),commitAfter=dateValue(f.commitAfter),commitBefore=dateValue(f.commitBefore),pushAfter=dateValue(f.pushAfter),pushBefore=dateValue(f.pushBefore);

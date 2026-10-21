@@ -414,3 +414,26 @@ test("detail refresh progress is announced before the refreshed evidence",async(
  release();
  await expect(page.locator("#status")).toContainText("Issue details refreshed from GitHub");
 });
+
+test("saved searches wrap long summaries without pushing actions out of the card",async({page})=>{
+ await page.setViewportSize({width:320,height:800});
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("a".repeat(200));
+ await page.getByLabel("Labels (comma-separated)").fill(Array.from({length:6},(_,i)=>"verylonglabelname"+i).join(","));
+ await page.getByRole("button",{name:"Save search"}).click();
+ await page.getByRole("link",{name:"Saved",exact:true}).click();
+ const row=page.locator("#saved-searches .saved-search").first();
+ await expect(row).toBeVisible();
+ await expect(row).toContainText("Search: "+"a".repeat(20));
+ await expect(row).toContainText("Labels: verylonglabelname0");
+ await expect(row).not.toContainText('{"query"');
+ const layout=await row.evaluate(el=>{
+  const r=el.getBoundingClientRect(),buttons=[...el.querySelectorAll("button")].map(b=>b.getBoundingClientRect());
+  return {rowOverflow:el.scrollWidth-el.clientWidth,contained:buttons.every(b=>b.left>=r.left-0.5&&b.right<=r.right+0.5&&b.top>=r.top-0.5&&b.bottom<=r.bottom+0.5),count:buttons.length};
+ });
+ expect(layout.count).toBe(2);
+ expect(layout.contained).toBe(true);
+ expect(layout.rowOverflow).toBeLessThanOrEqual(1);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+});
+
