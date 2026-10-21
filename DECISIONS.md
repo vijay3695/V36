@@ -37,7 +37,7 @@ The maintainer selected the **complete-scope release gate**. The following are n
 | Import/export | Validated saved-data file import/export, duplicate handling, and preservation of existing data | FIRST RELEASE |
 | Context packs | Copyable, provider-portable AI context pack with source links, fetch times, missing context, and limitations | FIRST RELEASE |
 | URL sharing | Share search filters only; do not encode saved/private data or credentials | FIRST RELEASE |
-| Accessibility | Automated checks plus documented manual keyboard and screen-reader acceptance checks | FIRST RELEASE |
+| Accessibility | Automated checks plus documented manual keyboard acceptance checks | FIRST RELEASE |
 | Tests and CI | Unit tests, browser E2E tests, accessibility checks, and GitHub Actions CI | FIRST RELEASE |
 | Documentation | README, contributing/security guidance, phase tracking, progress log, and release verification evidence | FIRST RELEASE |
 | Security | Safe rendering of untrusted GitHub content; validated/limited imports; no execution of imported HTML/scripts | FIRST RELEASE |
@@ -127,7 +127,7 @@ These items are not a promise to implement them after release. Reconsider them o
 The maintainer chose a strict release gate:
 - All agreed first-release features must work.
 - Unit tests, browser end-to-end tests, CI, and automated accessibility checks must pass.
-- Manual keyboard and screen-reader checks must be documented and completed.
+- Manual keyboard checks must be documented and completed.
 - Security-sensitive rendering/import paths must be tested.
 - Documentation must match actual behavior.
 - A public, auditable verification report should tie results to the exact release candidate commit and list checks, limitations, and any failed/skipped checks.

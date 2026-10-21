@@ -13,7 +13,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
 | 3 — Saved/import/export | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist and are tested locally. | All storage/import edge cases verified locally; no GitHub Actions used. |
 | 4 — AI context packs | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Context-pack generation, source links, contribution guide and missing-source disclosure exist and are tested locally. | All context-pack acceptance criteria verified locally; no GitHub Actions used. |
-| 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, screen-reader, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
+| 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
 
 ## Phase 0 — Baseline and CI stabilization
@@ -115,7 +115,7 @@ Tasks:
 - [ ] Accessible announcements for loading, results count, errors, rate limits, and retry outcomes.
 - [ ] Contrast checks and responsive layout checks.
 - [ ] Automated accessibility tests for Discover, Saved, and About.
-- [ ] Manual keyboard and screen-reader acceptance checks documented.
+- [ ] Manual keyboard acceptance checks documented.
 - [ ] Safely render untrusted GitHub content using text-safe DOM APIs; no executing imported/retrieved HTML or scripts.
 - [ ] Validate imports and external URLs; never store tokens, credentials, or API keys.
 - [ ] Preserve results and saved data through request failures.
@@ -132,7 +132,7 @@ Acceptance criteria:
 Tasks:
 - [ ] Run the complete unit-test suite.
 - [ ] Run the complete browser E2E suite.
-- [ ] Run automated accessibility checks and documented manual keyboard/screen-reader checks.
+- [ ] Run automated accessibility checks and documented manual keyboard checks.
 - [ ] Verify import/export, URL sharing, context packs, filters, load more, and failure states end to end.
 - [ ] Verify documentation matches actual behavior.
 - [ ] Audit all unchecked items in this file and `docs/PROJECT_PLAN.md`.

@@ -3,7 +3,7 @@
 ## Verification
 - [ ] Unit tests added or updated
 - [ ] Browser tests added or updated where relevant
-- [ ] Keyboard and screen-reader impact considered
+- [ ] Keyboard impact considered
 - [ ] Untrusted GitHub content remains safely rendered
 - [ ] Import/export validation and saved-data preservation considered
 - [ ] No credentials or tokens added

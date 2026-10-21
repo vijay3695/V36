@@ -114,7 +114,7 @@ Cover filters, date ranges, commit/push-age interpretation, search URL encode/de
 Cover discovery/search, filters, load more, issue details, context-pack generation, saved issues/searches, import/export, and shareable URLs.
 
 ### Accessibility
-Automated checks plus documented manual keyboard and screen-reader checks. Verify keyboard navigation, visible focus, semantic headings/structure, accessible labels, contrast, and status/error announcements. Automated checks alone do not prove full accessibility.
+Automated checks plus documented manual keyboard checks. Verify keyboard navigation, visible focus, semantic headings/structure, accessible labels, contrast, and status/error announcements. Automated checks alone do not prove full accessibility.
 
 ### Failure and edge-case tests
 Cover unknown dates, partial results, rate limits, failed metadata requests, closed/inaccessible issues, malformed/oversized imports, duplicates, and preservation of existing saved data.
@@ -133,7 +133,7 @@ A first release is blocked until all of the following are true:
 - [ ] Unit tests pass.
 - [ ] Browser end-to-end tests pass.
 - [ ] Automated accessibility checks pass.
-- [ ] Manual keyboard and screen-reader acceptance checks are documented and complete.
+- [ ] Manual keyboard acceptance checks are documented and complete.
 - [ ] Security-sensitive rendering and import handling are tested.
 - [ ] CI passes on the release candidate commit.
 - [ ] A public, auditable release verification report records the tested commit, checks run, results, limitations, and any skipped/failed checks.

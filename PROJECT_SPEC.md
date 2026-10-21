@@ -27,7 +27,7 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - Failures: preserve visible results and saved references, identify failed fields, and distinguish unavailable data from zero matches and incomplete results.
 - Freshness: GitHub is the source of truth. Refresh issue/repository data when opening details and generating context packs where practical. Show fetch times and never present saved snapshots as current.
 - Security: all GitHub content and imported files are untrusted. Render safely, never execute remote content, validate import size/schema, and never store credentials or tokens.
-- Accessibility: every agreed criterion is a release blocker. Automated checks plus documented manual keyboard and screen-reader checks are required.
+- Accessibility: every agreed criterion is a release blocker. Automated checks plus documented manual keyboard checks are required.
 - Tests: unit tests, browser end-to-end tests, accessibility checks, and GitHub Actions CI. Use mocks for routine tests; separate optional live GitHub checks.
 - Release scope: do not publish the first release until every planned feature is implemented and verified.
 - Release verification: require a release checklist and report tied to the exact release commit; never claim a check passed unless it actually ran and passed.

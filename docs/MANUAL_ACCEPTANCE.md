@@ -8,7 +8,6 @@
 - Date/time:
 - OS and version:
 - Browser and version:
-- Screen reader and version (if used):
 - Viewport / zoom:
 - Commit SHA tested:
 
@@ -22,14 +21,6 @@
 - [ ] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard.
 - [ ] Confirm focus remains visible and is not trapped; returning between views does not strand focus on a hidden element.
 - [ ] Test a failed search and rate-limit state; verify existing results and saved data remain available.
-
-## Screen-reader checks
-
-- [ ] Verify page title, landmark structure, navigation names, heading hierarchy, form labels, required/optional status, and button/link names.
-- [ ] Confirm status changes for loading, empty results, partial results, errors, rate limits, import/export, and storage failures are announced appropriately.
-- [ ] Confirm issue title, official labels, inferred categories, activity evidence, Unknown/unavailable values, and retry controls are read with their context.
-- [ ] Confirm no essential information is conveyed by color alone and decorative content does not add noisy announcements.
-- [ ] Check Discover, Saved, About, and issue detail views, including no-results and unavailable-data states.
 
 ## Visual / responsive checks
 

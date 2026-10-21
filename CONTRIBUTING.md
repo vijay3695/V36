@@ -19,7 +19,7 @@ Requires Node.js 20+.
     npm test
     npm run test:all
 
-Husky installs local Git hooks during `npm install`: the pre-commit hook runs unit tests, and the pre-push hook runs the complete bulk suite. The single GitHub Actions workflow also runs `npm run test:all` in one job; do not add separate workflows/jobs for individual test suites. The bulk suite includes the Playwright browser tests, including the automated accessibility spec. Automated accessibility scans do not replace manual keyboard and screen-reader checks.
+Husky installs local Git hooks during `npm install`: the pre-commit hook runs unit tests, and the pre-push hook runs the complete bulk suite. The single GitHub Actions workflow also runs `npm run test:all` in one job; do not add separate workflows/jobs for individual test suites. The bulk suite includes the Playwright browser tests, including the automated accessibility spec. Automated accessibility scans do not replace manual keyboard checks.
 
 ## Pull request expectations
 
@@ -31,4 +31,4 @@ Husky installs local Git hooks during `npm install`: the pre-commit hook runs un
 
 ## Release gate
 
-A release must have passing CI, automated tests, documented manual acceptance, automated accessibility results, manual keyboard and screen-reader results, a review of known limitations, and evidence tied to the exact release commit. Failed or skipped checks must be disclosed; they cannot be silently treated as passing.
+A release must have passing CI, automated tests, documented manual acceptance, automated accessibility results, manual keyboard results, a review of known limitations, and evidence tied to the exact release commit. Failed or skipped checks must be disclosed; they cannot be silently treated as passing.

@@ -60,7 +60,7 @@ Do not publish the first release until every applicable item below is completed 
 - [ ] Focus is visible and restored sensibly after navigation and dialogs/controls.
 - [ ] Semantic headings, landmarks, labels, accessible names, and status messages are correct.
 - [ ] Text and controls meet the agreed contrast criteria.
-- [ ] Manual screen-reader checks are documented for loading, results, failures, filters, and saved-item updates.
+- [ ] Manual keyboard checks are documented for loading, results, failures, filters, and saved-item updates.
 - [ ] Reduced-motion preference is respected.
 - [ ] Automated accessibility success is not described as proof of complete accessibility.
 
@@ -83,4 +83,4 @@ Do not publish the first release until every applicable item below is completed 
 
 ## Manual acceptance
 
-Before first release, complete every applicable keyboard-only, screen-reader, responsive, reduced-motion, and high-zoom check in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). Automated axe checks alone are not sufficient. Record the reviewer, environment, commit SHA, outcome, and any follow-up defects; until then, manual accessibility acceptance remains pending.
+Before first release, complete every applicable keyboard-only, responsive, reduced-motion, and high-zoom check in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). Automated axe checks alone are not sufficient. Record the reviewer, environment, commit SHA, outcome, and any follow-up defects; until then, manual accessibility acceptance remains pending.

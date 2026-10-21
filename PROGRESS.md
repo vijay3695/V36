@@ -42,7 +42,7 @@ These are **not yet verified as complete** merely because related code exists.
 | AI context packs | IMPLEMENTED, NOT VERIFIED | Verify only retrieved data is included and missing sources are disclosed |
 | Shareable search URLs | IMPLEMENTED, NOT VERIFIED | Test filter round-trip and ensure no saved data/secrets are encoded |
 | Automated accessibility | PRESENT, FAILING/NOT VERIFIED | E2E/accessibility run currently fails; inspect exact assertion output |
-| Manual keyboard/screen-reader checks | NOT VERIFIED | Perform and record manual checks |
+| Manual keyboard checks | NOT VERIFIED | Perform and record manual checks |
 | CI / release readiness | BLOCKED | Do not release until Phase 0 and all later acceptance criteria pass |
 
 ## Immediate next actions
@@ -80,7 +80,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 - Strengthened the 404 detail scenario to save the issue first, then verify the saved reference remains visible and clearly says its current status has not been checked.
 - Added an E2E scenario where a search snapshot is open but the refreshed issue is closed; detail view must show the current closed state, close date, updated body and official labels, while the saved reference remains intact.
-- Added `docs/MANUAL_ACCEPTANCE.md` with keyboard-only, screen-reader, responsive, 200% zoom, contrast, reduced-motion and error-state checks. It is explicitly marked NOT PERFORMED until a human reviewer records actual results; automated CI cannot perform this manual sign-off.
+- Added `docs/MANUAL_ACCEPTANCE.md` with keyboard-only, responsive, 200% zoom, contrast, reduced-motion and error-state checks. It is explicitly marked NOT PERFORMED until a human reviewer records actual results; automated CI cannot perform this manual sign-off.
 - Linked the manual acceptance checklist from README and the release acceptance checklist. Phase 2 remains IN PROGRESS and Phase 5 remains pending human manual acceptance.
 
 
