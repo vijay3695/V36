@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validateBackup,mergeBackup,exportBackup,MAX_IMPORT_BYTES} from "../js/storage.js";
+import {validateBackup,mergeBackup,exportBackup,parseImportFile,MAX_IMPORT_BYTES} from "../js/storage.js";
 const backup={version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[{url:"https://github.com/acme/demo/issues/1",title:"Bug",repository:"acme/demo",number:1}],searches:[{id:"one",name:"bugs",filters:{query:"bug",labels:["bug"],sort:"updated"}}]};
 test("validates versioned backup and canonical issue URLs",()=>{const x=validateBackup(backup);assert.equal(x.issues.length,1);assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/1");});
 test("rejects invalid versions and structures",()=>{assert.throws(()=>validateBackup({version:2,issues:[],searches:[]}),/Unsupported/);assert.throws(()=>validateBackup({version:1,issues:{},searches:[]}),/Unsupported/);});
@@ -16,4 +16,16 @@ test("saved custom date and exact star filters survive backup validation",()=>{
  assert.equal(x.searches[0].filters.createdAfter,"2026-01-01");
  assert.equal(x.searches[0].filters.maxStars,"500");
  assert.equal(x.searches[0].filters.sort,"relevance");
+});
+
+test("import reports accepted, rejected and duplicate records",async()=>{
+ const raw={version:1,issues:[backup.issues[0],{...backup.issues[0]},{url:"javascript:alert(1)"}],searches:[backup.searches[0],{name:"invalid"}]};
+ const json=JSON.stringify(raw);
+ const parsed=await parseImportFile({size:json.length,text:async()=>json});
+ assert.deepEqual(parsed.importReport,{acceptedIssues:1,rejectedIssues:1,duplicateIssues:1,acceptedSearches:1,rejectedSearches:1,duplicateSearches:0});
+});
+test("oversized import is rejected before its contents are read",async()=>{
+ let read=false;
+ await assert.rejects(parseImportFile({size:MAX_IMPORT_BYTES+1,text:async()=>{read=true;return "{}";}}),/1 MB import limit/);
+ assert.equal(read,false);
 });

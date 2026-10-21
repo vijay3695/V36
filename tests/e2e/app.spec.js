@@ -9,7 +9,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z",default_branch:"main"};
  await page.route("https://api.github.com/**",async route=>{
   const u=new URL(route.request().url());
-  if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
+  if(u.pathname==="/search/issues"){if((u.searchParams.get("q")||"").includes("failure"))return route.fulfill({status:500,json:{message:"mocked failure"}});return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});}
   if(u.pathname==="/repos/acme/demo/issues/1")return route.fulfill({json:issue});
   if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1vIFJFQURNRQ=="}});
   if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[{html_url:"https://github.com/acme/demo/commit/abc",commit:{committer:{date:"2026-01-29T00:00:00Z"}}}]});
@@ -44,6 +44,12 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.getByRole("button",{name:"Save issue"}).click();
  await page.getByRole("link",{name:"Saved",exact:true}).click();
  await expect(page.getByRole("heading",{name:"Saved issues"})).toBeVisible();
+ await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
+ await page.getByRole("link",{name:"Discover",exact:true}).click();
+ await page.getByLabel("Search issues").fill("failure");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("status")).toContainText("HTTP 500");
+ await expect(page.getByLabel("Search issues")).toHaveValue("crash");
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
 });
 
