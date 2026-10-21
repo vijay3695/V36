@@ -1,0 +1,17 @@
+{
+  "name": "v36",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static-first GitHub issue discovery and AI context packs",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/e2e/accessibility.spec.js"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
+    "http-server": "^14.1.1"
+  }
+}
