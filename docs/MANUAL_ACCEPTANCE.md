@@ -1,6 +1,6 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED.** The maintainer reported a **PASS** for the 200% zoom check on 2026-10-21. Every other manual check below remains **NOT RUN**. Do not mark Phase 5 or the first release verified until all required checks are recorded here.
+**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, search, failure handling, import/export, and 200% zoom passed. One defect was found in the Saved-search layout and fixed in `534bca7`; that fix needs a human re-test. Advanced-filter keyboard operation, the issue-detail keyboard pass, responsive widths, contrast, reduced motion, and long-content checks remain **NOT RUN**.
 
 ## Record the test environment
 
@@ -8,27 +8,28 @@
 - Date/time: 2026-10-21 (time not recorded)
 - OS and version: Windows (version not recorded)
 - Browser and version: Firefox (version not recorded)
-- Viewport / zoom: 200% zoom
-- Commit SHA tested: not recorded (entry written while `main` was at `cd9021b`)
+- Viewport / zoom: 200% zoom, default desktop, and 320px (Saved-search re-test target)
+- Commit SHA tested: `e381197` preview build for the first pass; Saved-search fix landed in `534bca7`
+- Assistive technology used: none recorded (keyboard and visual checks only)
 
 ## Keyboard-only checks
 
-- [ ] Load the home page and confirm the skip link is the first useful keyboard stop.
-- [ ] Tab through Discover navigation, all search fields, advanced filters, submit/reset/load-more actions, and result-card controls without a mouse.
-- [ ] Open and close the advanced filter disclosure using the keyboard.
-- [ ] Submit a search and confirm focus, loading feedback, result count, partial-result warning, and errors remain understandable.
-- [ ] Open issue details, navigate the related-work links, inspect official labels and activity evidence, and use Retry activity refresh.
-- [ ] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard.
-- [ ] Confirm focus remains visible and is not trapped; returning between views does not strand focus on a hidden element.
-- [ ] Test a failed search and rate-limit state; verify existing results and saved data remain available.
+- [x] Load the home page and confirm the skip link is the first useful keyboard stop. **PASS**
+- [x] Tab through Discover navigation, all search fields, advanced filters, submit/reset/load-more actions, and result-card controls without a mouse. **PASS** (tab order verified through the filter set and form actions)
+- [ ] Open and close the advanced filter disclosure using the keyboard. **NOT RUN** (instruction was unclear in the first pass)
+- [x] Submit a search and confirm focus, loading feedback, result count, partial-result warning, and errors remain understandable. **PASS**
+- [ ] Open issue details, navigate the related-work links, inspect official labels and activity evidence, and use Retry activity refresh. **NOT RUN**
+- [x] Save an issue and search, navigate to Saved, remove one item, and use import/export controls with the keyboard. **PASS WITH DEFECT** — saved items and import/export worked; the Saved-search row let long filter text overflow and push its actions out of the card (fixed in `534bca7`, human re-test pending)
+- [x] Confirm focus remains visible and is not trapped; returning between views does not strand focus on a hidden element. **PASS**
+- [x] Test a failed search and rate-limit state; verify existing results and saved data remain available. **PASS** — the offline search reported "Network request failed. Check your connection and retry. Existing results and saved items are preserved. You can retry manually." and restored the previous results and filters
 
 ## Visual / responsive checks
 
-- [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls.
+- [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls. **NOT RUN**
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
-- [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast.
-- [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling.
-- [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list.
+- [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast. **NOT RUN**
+- [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN**
+- [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list. **NOT RUN**
 
 ## Automated proxy results (Playwright)
 
@@ -44,11 +45,16 @@
 
 ## Results
 
-- Outcome: **PARTIAL** — 200% zoom **PASS** (maintainer-reported 2026-10-21); all other manual checks **NOT RUN**
+- Outcome: **PARTIAL** — seven checks passed (one with a now-fixed defect); six remain **NOT RUN**
 - Recorded manual results:
-  - 200% zoom: **PASS**, reported directly by the maintainer on 2026-10-21 in Firefox on Windows. Browser/OS versions and the exact commit SHA were not recorded.
+  - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
+  - Skip link, tab order, visible focus, no focus trap: **PASS**
+  - Search submit, loading, result count and errors: **PASS**
+  - Offline search failure with previous results and saved data preserved: **PASS**
+  - Saved issues/searches and import/export: **PASS** except the Saved-search layout defect below
 - Defects with reproduction steps:
-- Follow-up issue/commit links:
-- Reviewer sign-off:
+  - **Saved-search row overflow (found 2026-10-21)** — save a search with a long query/labels, open Saved: the raw filter text overflowed the card and pushed "Run search"/"Remove" outside it. Fixed in `534bca7` by wrapping the text and replacing raw JSON with a readable filter summary; regression test "saved searches wrap long summaries without pushing actions out of the card" passes at 320px. Human re-test pending.
+- Follow-up issue/commit links: `534bca7`
+- Reviewer sign-off: pending
 
 Automated axe checks are useful but do not replace these manual checks.
