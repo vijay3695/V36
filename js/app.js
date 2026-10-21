@@ -1,9 +1,9 @@
 import {buildSearchQuery,matchesFilters,inferCategories,normalizeFilters} from "./filters.js";
-import {searchIssues,getIssue,getRepo,getReadme,getLatestCommit,GitHubError} from "./github.js";
+import {searchIssues,getIssue,getRepo,getRepoLanguages,getReadme,getLatestCommit,GitHubError} from "./github.js";
 import {loadSaved,addSavedIssue,addSavedSearch,removeSavedIssue,removeSavedSearch,exportBackup,parseImportFile,mergeBackup} from "./storage.js";
 import {buildContextPack} from "./context-pack.js";
 const $=id=>document.getElementById(id),form=$("search-form"),status=$("status");
-let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;
+let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;\nconst repoCache=new Map();
 function setStatus(message,kind="info"){status.textContent=message;status.dataset.kind=kind;}
 function setBusy(v){busy=v;form.querySelector('button[type="submit"]').disabled=v;$("load-more").disabled=v;}
 function dateLabel(v){if(!v)return "Unknown";const d=new Date(v);return Number.isNaN(d.getTime())?"Unknown":d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});}
@@ -17,8 +17,28 @@ function readForm(){const f=new FormData(form);return normalizeFilters({query:f.
 function writeForm(f){$("query").value=f.query;$("language").value=f.language;$("labels").value=f.labels.join(", ");$("issue-type").value=f.issueType;$("category").value=f.category;$("created").value=f.createdDays;$("updated").value=f.updatedDays;$("commit-age").value=f.commitAgeDays;$("stars").value=f.stars;$("sort").value=f.sort;}
 function updateUrl(){const u=new URL(location.href);u.hash="discover";for(const k of ["q","lang","labels","type","category","created","updated","commit","stars","sort"])u.searchParams.delete(k);const f=currentFilters,values={q:f.query,lang:f.language,labels:f.labels.join(","),type:f.issueType,category:f.category,created:f.createdDays,updated:f.updatedDays,commit:f.commitAgeDays,stars:f.stars,sort:f.sort};for(const [k,v] of Object.entries(values))if(v)u.searchParams.set(k,v);history.replaceState(null,"",u);}
 function readUrl(){const p=new URLSearchParams(location.search);return normalizeFilters({query:p.get("q"),language:p.get("lang"),labels:(p.get("labels")||"").split(",").filter(Boolean),issueType:p.get("type"),category:p.get("category"),createdDays:p.get("created"),updatedDays:p.get("updated"),commitAgeDays:p.get("commit"),stars:p.get("stars"),sort:p.get("sort")});}
+async function enrichLoadedResults(){
+ const names=[...new Set(loadedIssues.map(i=>(i.repository_url||"").replace("https://api.github.com/repos/","")).filter(n=>/^[^/]+\/[^/]+$/.test(n)))];
+ let next=0,stopped=false,rateError=null,unavailable=0;
+ async function worker(){
+  while(next<names.length&&!stopped){
+   const name=names[next++],parts=name.split("/"),owner=parts[0],repoName=parts[1];
+   let meta=repoCache.get(name)||{};
+   try{
+    if(!meta.full_name){const r=await getRepo(owner,repoName);meta={...r.data,v36FetchedAt:r.fetchedAt};}
+    if(currentFilters.language&&!Array.isArray(meta.languages)){const r=await getRepoLanguages(owner,repoName);meta={...meta,languages:Object.keys(r.data),languagesFetchedAt:r.fetchedAt};}
+    if(currentFilters.commitAgeDays&&!Object.prototype.hasOwnProperty.call(meta,"latestCommitDate")){const r=await getLatestCommit(owner,repoName);meta={...meta,latestCommitDate:r.commitDate,commitUrl:r.url,commitFetchedAt:r.fetchedAt};}
+    repoCache.set(name,meta);
+   }catch(e){unavailable++;if(e.rateLimited){stopped=true;rateError=e;}else{repoCache.set(name,{...meta,metadataUnavailable:true,metadataError:e.message});}}
+   for(const issue of loadedIssues){if((issue.repository_url||"").endsWith("/"+name))issue.repository=repoCache.get(name)||{full_name:name,metadataUnavailable:true};}
+  }
+ }
+ await Promise.all(Array.from({length:3},()=>worker()));
+ if(rateError)setStatus(errorMessage(rateError),"error");
+ else if(unavailable)setStatus("Some repository metadata is unavailable. Those fields are unknown; loaded issues are preserved.","error");
+}
 function errorMessage(e){if(e instanceof GitHubError&&e.rateLimited)return e.message+(e.retryAt?" Retry after "+e.retryAt.toLocaleTimeString()+".":" Retry timing was not supplied by GitHub.")+" Loaded results and saved items are preserved.";return (e.message||"Request failed.")+" Existing results and saved items are preserved. You can retry manually.";}
-async function runSearch(append=false){if(busy)return;currentFilters=readForm();updateUrl();if(!append){loadedIssues=[];page=1;totalCount=0;hasMore=false;}setBusy(true);setStatus("Searching public GitHub issues…");try{const r=await searchIssues(buildSearchQuery(currentFilters),{page:append?page+1:1,sort:currentFilters.sort});const incoming=r.data.items||[],byUrl=new Map(loadedIssues.map(x=>[x.html_url,x]));for(const i of incoming){const full=i.repository_url?.replace("https://api.github.com/repos/","")||"";byUrl.set(i.html_url,{...i,repository:{full_name:full,language:null,stargazers_count:null}});}loadedIssues=[...byUrl.values()];page=append?page+1:1;totalCount=r.data.total_count||0;hasMore=!r.data.incomplete_results&&loadedIssues.length<totalCount&&incoming.length>0;setStatus(r.data.incomplete_results?"GitHub marked this search incomplete. Loaded results are shown.":"Loaded "+incoming.length+" issues. Activity data is fetched when you open details.",r.data.incomplete_results?"error":"success");renderResults();}catch(e){setStatus(errorMessage(e),"error");renderResults();}finally{setBusy(false);}}
+async function runSearch(append=false){if(busy)return;currentFilters=readForm();updateUrl();if(!append){loadedIssues=[];page=1;totalCount=0;hasMore=false;}setBusy(true);setStatus("Searching public GitHub issues…");try{const r=await searchIssues(buildSearchQuery(currentFilters),{page:append?page+1:1,sort:currentFilters.sort});const incoming=r.data.items||[],byUrl=new Map(loadedIssues.map(x=>[x.html_url,x]));for(const i of incoming){const full=i.repository_url?.replace("https://api.github.com/repos/","")||"";byUrl.set(i.html_url,{...i,repository:{full_name:full,language:null,stargazers_count:null}});}loadedIssues=[...byUrl.values()];page=append?page+1:1;totalCount=r.data.total_count||0;hasMore=!r.data.incomplete_results&&loadedIssues.length<totalCount&&incoming.length>0;await enrichLoadedResults();setStatus(r.data.incomplete_results?"GitHub marked this search incomplete. Loaded results are shown.":"Loaded "+incoming.length+" issues. Repository metadata was checked for loaded results.",r.data.incomplete_results?"error":"success");renderResults();}catch(e){setStatus(errorMessage(e),"error");renderResults();}finally{setBusy(false);}}
 function showView(name){for(const v of document.querySelectorAll(".view"))v.hidden=v.id!=="view-"+name;for(const a of document.querySelectorAll("[data-nav]")){if(a.dataset.nav===name)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");}if(name==="saved")renderSaved();}
 function saveIssue(issue){try{saved=addSavedIssue(saved,issue);setStatus("Issue reference saved in this browser.","success");renderResults();}catch(e){setStatus(e.message,"error");}}
 async function openDetail(issue){currentIssue=issue;showView("detail");const root=$("detail-content");root.replaceChildren(el("p","status","Refreshing issue and repository evidence from GitHub…"));const bits=(issue.repository_url||"").replace("https://api.github.com/repos/","").split("/"),owner=bits[0],repoName=bits[1],errors={};let fresh=null,repo=null,readme=null,commit=null;
