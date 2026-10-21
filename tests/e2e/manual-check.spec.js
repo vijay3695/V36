@@ -122,7 +122,7 @@ test("resilience: long issue content and many labels stay usable at responsive w
     await page.getByRole("button", {name: "View details"}).click();
     await expect(page.getByRole("heading", {name: longTitle})).toBeVisible();
     await expect(page.getByText("Long issue description.", {exact: false}).first()).toBeVisible();
-    await expect(page.getByText("accessibility-resilience-label-24", {exact: false})).toBeVisible();
+    await expect(page.locator("#detail-content").getByText("accessibility-resilience-label-24", {exact: true})).toBeVisible();
     const dimensions = await page.evaluate(() => ({
       viewport: window.innerWidth,
       document: document.documentElement.scrollWidth,

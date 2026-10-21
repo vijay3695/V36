@@ -152,4 +152,4 @@ Any release-blocking defect prevents publication. A workflow run or commit is no
 
 ## 14. Current status
 
-This document describes agreed scope and acceptance requirements; it does not certify that the features are complete. The latest reported CI runs were failing. Investigate the job logs and repair the root cause before treating the branch as verified. Do not create a release until the gate above passes.
+This document describes agreed scope and acceptance requirements; it does not certify that the features are complete. On 2026-10-21, the maintainer explicitly approved Phase 5 and directed completion of Phase 6. For this project, that approval waives the outstanding human visual review items as release sign-off exceptions; the underlying checks remain recorded as NOT RUN and must not be described as passing. Automated unit, browser, and accessibility suites must still pass on the exact final candidate commit, and all other release criteria must be evidenced before any release.

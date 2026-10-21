@@ -3,12 +3,12 @@
 **Audit date:** 2026-10-21  
 **Audited branch:** `main`  
 **Audited baseline commit:** `3f86bf81a2c45d14972c2d3bb3669db6b80c2d63`  
-**Status:** PRE-RELEASE AUDIT COMPLETE FOR THIS BATCH; RELEASE BLOCKED  
+**Status:** PHASE 5 APPROVAL RECORDED; PHASE 6 FINAL VERIFICATION IN PROGRESS  
 **Release published:** No (GitHub Releases API returned an empty list)
 
 ## Scope and outcome
 
-This is an audit report, not a release sign-off. The maintainer asked to move to Phase 6 while deferring remaining Phase 5 tests. The audit checked project decisions, phase/progress tracking, product/release requirements, manual acceptance notes, npm scripts, the GitHub Actions workflow, recent workflow history, and the actual latest failing CI job log. No application feature or test assertion was changed in this audit batch.
+This is an audit report, not a release sign-off. The maintainer explicitly directed approval of Phase 5 and completion of Phase 6. The outstanding manual visual checks are waived for phase sign-off but remain recorded as NOT RUN. The audit checked project decisions, phase/progress tracking, product/release requirements, manual acceptance notes, npm scripts, the GitHub Actions workflow, recent workflow history, and the actual failing CI job log. The long-content browser test locator has been corrected without weakening the assertion; the consolidated CI run must verify it.
 
 ## Exact CI evidence
 
@@ -55,3 +55,10 @@ See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). The maintainer's recorded keyb
 2. Run `npm run test:all` and inspect the full output; all unit, browser, and accessibility suites must pass.
 3. Complete the outstanding manual checks and update `MANUAL_ACCEPTANCE.md` with environment, commit SHA, and actual results.
 4. Re-audit all checkboxes, create a final verification report tied to the exact candidate SHA, and only then consider release publication.
+
+
+## Maintainer authorization and follow-through
+
+On 2026-10-21, the maintainer explicitly ordered: “approve phase 5 and complete phase 6 now.” Phase 5 is therefore marked approved with a documented waiver for the remaining human visual checks. The waiver does not turn the checks into passes: 768px/desktop visual review, human contrast review, reduced-motion review, and human long-content review remain NOT RUN. The automated reduced-motion, responsive-overflow, contrast, and long-content browser checks remain subject to CI.
+
+The long-content test's ambiguous locator was changed to scope the exact label assertion to `#detail-content`. This preserves the test's intent and avoids matching the same label in the result card. Final Phase 6 status depends on the consolidated test run for the commit containing this correction. No release is published by this approval.

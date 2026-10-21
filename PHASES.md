@@ -116,7 +116,7 @@ Acceptance criteria:
 
 ## Phase 5 — Accessibility, resilience, and security
 
-**Status: IN PROGRESS — automated work complete; manual acceptance partial.** Announcements for result counts, search outcomes, rate-limit/error states (assertive), detail-refresh progress, and retry outcomes are implemented with browser regression tests. Discover, Saved, About, and the issue-detail view pass automated axe scans locally. Manual pass on 2026-10-21 (Firefox on Windows): keyboard navigation, advanced-filter disclosure, issue-detail focus/content, search success/failure, saved items, import/export, and 200% zoom PASS; a Saved-search overflow defect was found and fixed in `534bca7`. The automated Chromium responsive-overflow test passed in [run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on `16fd419`, with no document-level overflow at 320/375/768/1280px. Human visual approval is recorded at 320px and 375px; 768px/desktop visual review, contrast, long-content, and reduced-motion checks remain pending. Automated proxies do not certify full visual accessibility.
+**Status: APPROVED BY MAINTAINER WITH DOCUMENTED MANUAL-REVIEW WAIVER (2026-10-21).** The maintainer explicitly directed approval of Phase 5. This is an approval of the remaining documented manual-review risks, not a claim that unperformed manual checks passed. Automated tests must still pass on the final commit. Announcements for result counts, search outcomes, rate-limit/error states (assertive), detail-refresh progress, and retry outcomes are implemented with browser regression tests. Discover, Saved, About, and the issue-detail view pass automated axe scans locally. Manual pass on 2026-10-21 (Firefox on Windows): keyboard navigation, advanced-filter disclosure, issue-detail focus/content, search success/failure, saved items, import/export, and 200% zoom PASS; a Saved-search overflow defect was found and fixed in `534bca7`. The automated Chromium responsive-overflow test passed in [run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on `16fd419`, with no document-level overflow at 320/375/768/1280px. Human visual approval is recorded at 320px and 375px; 768px/desktop visual review, contrast, long-content, and reduced-motion checks remain pending. Automated proxies do not certify full visual accessibility.
 
 Tasks:
 - [x] Semantic page structure, correct heading hierarchy, labels, keyboard navigation, and visible focus. (Axe scans, role/label browser tests, skip-link and tab-order proxy tests pass locally; visual focus confirmation remains part of manual acceptance.)
@@ -131,7 +131,7 @@ Tasks:
 
 Acceptance criteria:
 - [x] Automated accessibility checks pass (local run on `main`: 3/3 axe scans, including the issue-detail scan inside the end-to-end flow).
-- [ ] Manual checks are complete and recorded; automation alone is not treated as proof of full accessibility. **Blocked on a human reviewer.**
+- [x] Manual acceptance disposition recorded: maintainer explicitly approved Phase 5 on 2026-10-21 and accepted the documented residual manual-review risk. Human visual checks for 768px/desktop, contrast, reduced motion, and long content remain **NOT RUN**; this approval is a waiver, not test evidence.
 - [x] Security-sensitive input paths have tests.
 - [x] No silent data loss or fabricated fallback information.
 
@@ -157,4 +157,4 @@ Acceptance criteria:
 
 ### Phase 6 sequencing note — 2026-10-21
 
-The maintainer directed that work move to Phase 6 now and that the remaining Phase 5 tests be handled later. Phase 6 is therefore active for a **pre-release audit only**; this sequencing decision does not waive Phase 5 acceptance, change any release criteria, or authorize a release. The latest consolidated CI run on `998670ff6cf91d00a72c91343b8a70ddb7b47d95` failed in the browser regression step; the standalone accessibility step was skipped as a consequence. Continue the Phase 6 documentation/acceptance audit while keeping release status blocked.
+The maintainer explicitly directed on 2026-10-21 to approve Phase 5 and complete Phase 6. Phase 5 is approved with a documented waiver of the remaining human visual checks, not falsely recorded as performed. The remaining automated browser failure was a non-unique label locator and is being corrected without weakening the assertion. Phase 6 proceeds through complete test verification and exact-commit evidence; any failed or skipped check must remain disclosed.

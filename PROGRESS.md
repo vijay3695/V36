@@ -334,3 +334,11 @@ These are **not yet verified as complete** merely because related code exists.
 - Confirmed there are no published releases. The full release gate remains blocked by incomplete Phase 5 acceptance and non-green CI.
 - Corrected stale Phase 5/removed-workflow claims in `AGENTS.md`, consolidated CI to the documented single `npm run test:all` command, and added `docs/PHASE_6_AUDIT.md` as an auditable pre-release report. No app behavior or test assertion was changed in this batch.
 - Phase 6 audit/documentation tasks are complete for this batch, but Phase 6 is **not VERIFIED** and the project is **not release-ready**. Remaining next action is the deferred Phase 5 follow-up (make the locator unambiguous, rerun the full test suite, then complete outstanding manual acceptance); only after those gates pass can the final release-candidate verification occur.
+
+
+### 2026-10-21 — Maintainer Phase 5 approval and Phase 6 completion run
+
+- Maintainer instruction: **approve Phase 5 and complete Phase 6 now**. Phase 5 is recorded as approved with an explicit waiver for remaining human visual checks; those checks remain NOT RUN and are not mislabeled as passed.
+- Fixed the sole known browser-test failure without weakening coverage: the long-content resilience test now scopes the final-label assertion to `#detail-content`, where the detail-view label is expected.
+- Updated `PHASES.md`, `docs/MANUAL_ACCEPTANCE.md`, and `docs/PROJECT_PLAN.md` to record the approval/waiver accurately, and updated this log and the Phase 6 audit report.
+- Next verification is the consolidated `npm run test:all` GitHub Actions run on the commit containing this change. Phase 6 can only be declared complete after that run passes; no test result is assumed in advance.
