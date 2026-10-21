@@ -7,6 +7,7 @@ Branch: `cline/91jvxv68` (evidence commit `363fb3a`)
 - Unit tests: 86 passed, 0 failed (`npm test`)
 - Browser E2E tests: 34 passed, 0 failed (`npx playwright test --workers=2`), including four new announcement/live-region tests
 - Accessibility (axe) tests: 3 passed, 0 failed (`npx playwright test tests/e2e/accessibility.spec.js`), plus the issue-detail axe scan inside the end-to-end flow
+- `npm run test:all`: NOT COMPLETED in this sandbox — its default 30-worker Playwright parallelism exceeded the 6 GiB sandbox memory limit and the process was killed. The same three suites were run with capped workers as listed above.
 - 200% zoom: NOT PERFORMED
 - Manual keyboard/contrast/responsive/reduced-motion checks: NOT PERFORMED
 
