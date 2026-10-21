@@ -34,7 +34,7 @@
 <div class="form-actions"><button class="button button-primary" type="submit">Search GitHub</button><button class="button button-secondary" id="save-search" type="button">Save search</button><button class="button button-quiet" id="reset-search" type="reset">Reset filters</button></div>
 <p class="hint">Filters combine using AND logic. Some filters are evaluated only on loaded issues; results may be incomplete until you load more. Stars indicate popularity, not project health.</p>
 </form>
-<div id="status" class="status" role="status" aria-live="polite">Ready to search public GitHub issues.</div><div id="results-meta" class="results-meta"></div><div id="results" class="results" aria-label="Search results"></div><div class="center-actions"><button id="load-more" class="button button-secondary" type="button" hidden>Load more</button></div>
+<div id="status" class="status" role="status" aria-live="polite">Ready to search public GitHub issues.</div><div id="results-meta" class="results-meta"></div><div id="results" class="results" role="region" aria-label="Search results"></div><div class="center-actions"><button id="load-more" class="button button-secondary" type="button" hidden>Load more</button></div>
 </section>
 <section id="view-detail" class="view" aria-labelledby="detail-title" hidden><button id="back-to-results" class="button button-quiet" type="button">Back to results</button><div id="detail-content"></div></section>
 <section id="view-saved" class="view" aria-labelledby="saved-title" hidden>
