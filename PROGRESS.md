@@ -6,11 +6,11 @@
 
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
-- **Current phase:** Phase 2 — Issue details and activity evidence.
-- **Phase 0 and Phase 1 status:** VERIFIED on [CI #60](https://github.com/vijay3695/V36/actions/runs/39575117877), exact commit [`83d8327`](https://github.com/vijay3695/V36/commit/83d8327f819d477087912d99bd25648646ba3686): 75/75 unit tests, 24/24 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job.
-- **Current Phase 2 batch:** [CI #62](https://github.com/vijay3695/V36/actions/runs/39575815864) also FAILED in the same retry-time E2E assertion. The fixture supplied `Retry-After` but did not set `Access-Control-Expose-Headers`, so browser fetch could not read that cross-origin response header. The next fix adds the exposure header; the assertion remains strict (`Retry after` must appear). Historical failures #53–#55 are also documented below.
+- **Current work phase:** Phase 3 — Saved issues/searches and portability. Phase 2 remains IN PROGRESS for a later acceptance-criteria audit; the retry-time assertion is intentionally left unchanged for now.
+- **Phase 0 and Phase 1 status:** VERIFIED. Current main also passed [CI #64](https://github.com/vijay3695/V36/actions/runs/39576488647): 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in the single consolidated job.
+- **Phase 2 retry-time test:** Kept in place as requested. Earlier runs #61 and #62 failed; the CORS fixture correction was followed by green [CI #63](https://github.com/vijay3695/V36/actions/runs/39576107714) and [CI #64](https://github.com/vijay3695/V36/actions/runs/39576488647). Do not spend another batch on this assertion; revisit it only during the later Phase 2/5 audit. Historical failures #53–#55 remain documented below.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
-- **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
+- **Latest run status:** PASS — [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current `main`: 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks. One consolidated workflow/job.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
 - **This file's purpose:** handoff state for the next coding agent. Re-check current `main` and latest Actions run before relying on this snapshot.
 
@@ -47,11 +47,11 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Immediate next actions
 
-1. Open the latest failed Actions run for the current `main` commit; fetch the failing job logs and identify the first real assertion/error in `npm run test:e2e`.
-2. Compare the failure with the exact current implementation and tests. Do not guess from commit messages.
-3. Fix the root cause and add/update a regression test. Do not remove features or weaken assertions to force green CI.
-4. Run unit, E2E, and accessibility suites. Record exact results and the tested commit below.
-5. Update this progress file and phase checkboxes in the same logical change as code.
+1. Proceed with Phase 3 saved issues/searches/import-export edge cases; do not reopen the retry-time assertion in this batch.
+2. Inspect current implementation and tests before changing code; preserve existing saved data on invalid imports and storage errors.
+3. Bundle at least 10 meaningful checks/improvements where practical, then run the single consolidated `npm run test:all` workflow.
+4. Record exact results and the tested commit below; update `PHASES.md` and `PROGRESS.md` together.
+5. Revisit Phase 2 acceptance gaps during a later audit before any release; do not mark Phase 2 VERIFIED yet.
 
 ## Work log
 
@@ -216,3 +216,12 @@ These are **not yet verified as complete** merely because related code exists.
 - No application code or tests changed in this documentation update.
 - CI status after this documentation commit: **NOT YET CHECKED**.
 - Next owner/agent should start at Phase 0 and re-check latest `main` and GitHub Actions before coding.
+
+
+### 2026-10-21 — Corrected phase handoff; retry-time follow-up deferred
+
+- Verified current `main` commit `7d803a07daf39c7af1090d7394fc22f8c8044bed` and latest consolidated GitHub Actions run [#64](https://github.com/vijay3695/V36/actions/runs/39576488647).
+- Run #64 passed 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in one job.
+- The retry-time test remains in the suite. The earlier failures (#61/#62) and subsequent green runs (#63/#64) are recorded; no more work is being spent on this assertion in the current batch.
+- Corrected the obsolete Phase 0 BLOCKED paragraph and stale progress snapshot. Phase 2 stays IN PROGRESS until its remaining acceptance criteria are audited; current work moves to Phase 3.
+- Next: inspect saved-item/import/export behavior, address meaningful edge cases in a bundled batch, and monitor the consolidated CI run.

@@ -8,9 +8,9 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 | Phase | Current status | What is done | What remains |
 |---|---|---|---|
-| 0 — Baseline and CI | **VERIFIED** | [Run #59](https://github.com/vijay3695/V36/actions/runs/39574808517): 75/75 unit tests, 21/21 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
+| 0 — Baseline and CI | **VERIFIED** | [Run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current main passed 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
 | 1 — Discovery and filters | **VERIFIED** | [Run #60](https://github.com/vijay3695/V36/actions/runs/39575117877): 75/75 unit tests, 24/24 browser tests, and 3/3 accessibility checks passed. Standard/custom URL round-trips, secondary-language metadata, safe share URLs, partial results, and filter boundaries are covered. | Re-check after later changes; investigate any regression. |
-| 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable issue handling, and manual retry are covered by tests; [run #63](https://github.com/vijay3695/V36/actions/runs/39576107714) is green. | Verify closed/moved/deleted saved references and freshness behavior; then complete the remaining activity-evidence acceptance criteria. |
+| 2 — Issue details/activity | **IN PROGRESS — audit remaining criteria later** | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed issue handling, and manual retry are implemented; [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) passed the full suite. | Leave the retry-time assertion unchanged for now; do not spend another batch on it. During a later Phase 2/5 audit, verify moved/deleted references, freshness, and the full activity-evidence criteria before marking this phase VERIFIED. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
 | 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
 | 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, screen-reader, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
@@ -18,7 +18,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 ## Phase 0 — Baseline and CI stabilization
 
-**Current status: BLOCKED — Phase 0 passed on [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139), but later storage-safety commits introduced test failures. Run #53 and #54 failed because the storage module was accidentally replaced by test content; run #55 then failed on a duplicate CATEGORIES declaration. Those exact errors are being corrected before the next full run. Do not treat the current head as verified until it passes.**
+**Status: VERIFIED.** The historical failures in runs #53–#55 were corrected. The current consolidated run [#64](https://github.com/vijay3695/V36/actions/runs/39576488647) passed all automated suites on the current `main` commit. Keep the historical failure record in `PROGRESS.md`; do not carry the obsolete BLOCKED status forward.
 
 Tasks:
 - [x] Inspect current `.github/workflows/ci.yml`, package scripts, unit tests, E2E tests, and actual failed GitHub Actions job output.
@@ -71,6 +71,8 @@ Acceptance criteria:
 - [ ] Rate limits stop additional requests, preserve results, explain the situation, and allow manual retry.
 
 ## Phase 3 — Saved issues/searches and portability
+
+**Current work phase: IN PROGRESS.** Phase 2 remains open for a later acceptance-criteria audit; the retry-time test is intentionally left as-is so implementation can continue.
 
 Tasks:
 - [ ] Dedicated Saved view.
