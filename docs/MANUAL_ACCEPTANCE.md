@@ -25,7 +25,8 @@
 
 ## Visual / responsive checks
 
-- [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls. **PARTIAL — DEV APPROVED**: 320px: PASS, 0px overflow, no offenders; 375px: PASS, 0px overflow, no offenders. 768px and desktop: NOT RUN.
+- [ ] Human visual acceptance at 320px, 375px, 768px, and desktop width: confirm no clipped controls and that the layout remains usable. **PARTIAL — DEV APPROVED**: 320px: PASS, 0px horizontal overflow, no offenders; 375px: PASS, 0px horizontal overflow, no offenders. 768px and desktop visual review: NOT RUN.
+- [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **AUTOMATED COVERAGE PRESENT** in `tests/e2e/manual-check.spec.js`; the recorded Playwright proxy results report no horizontal overflow at all four widths. This is automated evidence, not a claim that a new run was performed against the latest documentation commit.
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
 - [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast. **NOT RUN**
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN**
@@ -38,7 +39,7 @@
 - Date: 2026-10-21
 - Command: `npx playwright test tests/e2e/manual-check.spec.js`
 - Keyboard tab order: automated tab traversal starts at the skip link and no focus trap was detected (approximation; not assistive-technology testing).
-- Responsive overflow at 320/375/768/1280px: no horizontal overflow.
+- Responsive overflow at 320/375/768/1280px: no horizontal overflow (recorded automated proxy result; not manual visual sign-off).
 - Reduced motion: transition duration 0.00001s (effectively disabled).
 - Detail view focus moves to the issue heading: pass.
 - 200% zoom: not an automated check — see the manual result above.
