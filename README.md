@@ -29,6 +29,17 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 
 The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. GitHub's unauthenticated API limits still apply.
 
+## Contributor handoff and project tracking
+
+Before coding, read these files in order:
+
+1. [PLAN.md](PLAN.md) — instructions and guardrails for coding agents.
+2. [PHASES.md](PHASES.md) — phased work breakdown and acceptance checklists.
+3. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
+4. [Detailed project specification](docs/PROJECT_PLAN.md) — product requirements and release rules.
+
+Update `PROGRESS.md` alongside implementation work. Never mark a feature or phase complete without test evidence.
+
 ## Development
 
 Prerequisites: Node.js 20 or newer.
