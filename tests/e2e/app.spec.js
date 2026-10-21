@@ -55,7 +55,8 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.reload();
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
- await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
+ await page.goto("/#discover");
+ await expect(page.getByRole("button",{name:"Save search"})).toBeVisible();
  await page.getByRole("button",{name:"Save search"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("status")).toContainText("Search preset saved");
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");

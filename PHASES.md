@@ -4,14 +4,26 @@ Use this file to plan and complete work phase by phase. Read `DECISIONS.md` firs
 
 Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark **VERIFIED** with evidence recorded in `PROGRESS.md`.
 
+## Live status snapshot — 2026-10-21
+
+| Phase | Current status | What is done | What remains |
+|---|---|---|---|
+| 0 — Baseline and CI | **BLOCKED** | One consolidated GitHub Actions workflow; 41 unit tests passed on latest run. | Fix saved-search E2E timeout, rerun and inspect until green. |
+| 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, custom dates, push age, star bounds, share URLs and unknown-metadata messaging are implemented with tests. | Verify full behavior after Phase 0 is green; inspect remaining API/filter edge cases. |
+| 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps and related-work search links exist. | Verify inaccessible/closed/moved cases, rate-limit retry and freshness behavior. |
+| 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
+| 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
+| 5 — Accessibility/security/resilience | **IN PROGRESS — not verified** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. | Green automation plus documented manual keyboard and screen-reader checks. |
+| 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
+
 ## Phase 0 — Baseline and CI stabilization
 
-**Initial status: BLOCKED — latest reported CI run has an end-to-end failure.**
+**Current status: BLOCKED — [CI run #49](https://github.com/vijay3695/V36/actions/runs/39572073815) has 41/41 unit tests passing, but 14/15 browser tests pass; the saved-search E2E test times out locating Save search after navigation.**
 
 Tasks:
-- [ ] Inspect current `.github/workflows/ci.yml`, package scripts, all unit tests, all E2E tests, and actual failed GitHub Actions job output.
-- [ ] Reproduce the E2E failure locally or in a diagnostic CI run.
-- [ ] Fix the underlying failure; do not weaken or delete meaningful tests just to get a green run.
+- [x] Inspect current `.github/workflows/ci.yml`, package scripts, unit tests, E2E tests, and actual failed GitHub Actions job output.
+- [x] Identify the E2E failure from job output: the saved-search keyboard flow cannot locate the Save search button after its navigation/reload sequence.
+- [ ] Fix the underlying E2E flow and confirm a green rerun; do not weaken or delete meaningful tests just to get a green run.
 - [ ] Run `npm test`, `npm run test:e2e`, and `npm run test:a11y` (the accessibility script may overlap with E2E; record what was actually run).
 - [ ] Ensure CI reports actionable failure output and does not rely on a missing lockfile.
 - [ ] Confirm a new run on the resulting commit and record its URL and per-job result in `PROGRESS.md`.
