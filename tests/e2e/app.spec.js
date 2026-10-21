@@ -437,3 +437,18 @@ test("saved searches wrap long summaries without pushing actions out of the card
  expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
 });
 
+test("star inputs ignore spaces instead of blocking form submission",async({page})=>{
+ await page.route("https://api.github.com/**",route=>route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}}));
+ await page.goto("/");
+ await page.locator("details.advanced-filters summary").click();
+ const min=page.getByLabel("Minimum stars");
+ await min.click();
+ await min.pressSequentially(" 100");
+ await expect(min).toHaveValue("100");
+ await page.getByLabel("Maximum stars").click();
+ await page.getByLabel("Maximum stars").pressSequentially(" 900");
+ await expect(page.getByLabel("Maximum stars")).toHaveValue("900");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.locator("#status")).toContainText("Loaded 0 issues");
+});
+
