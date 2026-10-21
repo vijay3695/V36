@@ -16,7 +16,7 @@
 
 ## How agents should work
 
-1. Read `PLAN.md`, `PHASES.md`, `PROGRESS.md`, `docs/PROJECT_PLAN.md`, and the current CI workflow.
+1. Read `DECISIONS.md`, `PLAN.md`, `PHASES.md`, `PROGRESS.md`, `docs/PROJECT_PLAN.md`, and the current CI workflow.
 2. Read the relevant implementation and tests before editing.
 3. Select the earliest incomplete phase or a clearly scoped task in the current phase.
 4. Implement the smallest complete, tested unit of work without breaking unrelated functionality.
