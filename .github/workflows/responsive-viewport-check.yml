@@ -10,7 +10,6 @@ on:
       - "tests/e2e/manual-check.spec.js"
       - "playwright.config.js"
       - "package.json"
-      - "package-lock.json"
       - ".github/workflows/responsive-viewport-check.yml"
   workflow_dispatch:
 
@@ -28,9 +27,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test responsive overflow at 320, 375, 768, and 1280 pixels
