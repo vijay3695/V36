@@ -80,3 +80,56 @@ test("manual: open detail and verify focus moves to heading", async ({page}) => 
   await page.getByRole("button", {name: "View details"}).click();
   await expect(page.getByRole("heading", {name: "Crash issue"})).toBeFocused();
 });
+
+
+test("resilience: long issue content and many labels stay usable at responsive widths", async ({page}) => {
+  const longTitle = "A very long issue title that should wrap without forcing the page wider than the viewport ".repeat(3).trim();
+  const labels = Array.from({length: 24}, (_, i) => ({name: `accessibility-resilience-label-${i + 1}`}));
+  const issue = {
+    html_url: "https://github.com/acme/demo/issues/99",
+    title: longTitle,
+    body: "Long issue description. ".repeat(500),
+    state: "open",
+    number: 99,
+    created_at: "2026-01-20T00:00:00Z",
+    updated_at: "2026-01-30T00:00:00Z",
+    labels,
+    repository_url: "https://api.github.com/repos/acme/demo"
+  };
+  const repoData = {
+    full_name: "acme/demo",
+    html_url: "https://github.com/acme/demo",
+    language: "JavaScript",
+    stargazers_count: 10,
+    pushed_at: "2026-01-29T00:00:00Z"
+  };
+
+  await page.route("https://api.github.com/**", async route => {
+    const u = new URL(route.request().url());
+    if (u.pathname === "/search/issues") return route.fulfill({json: {total_count: 1, incomplete_results: false, items: [issue]}});
+    if (u.pathname === "/repos/acme/demo/issues/99") return route.fulfill({json: issue});
+    if (u.pathname === "/repos/acme/demo") return route.fulfill({json: repoData});
+    if (u.pathname === "/repos/acme/demo/readme") return route.fulfill({json: {html_url: "https://github.com/acme/demo/blob/main/README.md", encoding: "base64", content: "IyBEZW1v"}});
+    if (u.pathname === "/repos/acme/demo/commits") return route.fulfill({json: []});
+    return route.fulfill({status: 404, json: {message: "not mocked"}});
+  });
+
+  for (const width of [320, 768, 1280]) {
+    await page.setViewportSize({width, height: 900});
+    await page.goto("http://127.0.0.1:4173/");
+    await page.getByLabel("Search issues").fill("long issue");
+    await page.getByRole("button", {name: "Search GitHub"}).click();
+    await page.getByRole("button", {name: "View details"}).click();
+    await expect(page.getByRole("heading", {name: longTitle})).toBeVisible();
+    await expect(page.getByText("Long issue description.", {exact: false}).first()).toBeVisible();
+    await expect(page.getByText("accessibility-resilience-label-24", {exact: false})).toBeVisible();
+    const dimensions = await page.evaluate(() => ({
+      viewport: window.innerWidth,
+      document: document.documentElement.scrollWidth,
+      body: document.body.scrollWidth
+    }));
+    console.log("LONG_CONTENT_LAYOUT:", JSON.stringify(dimensions));
+    expect(dimensions.document, `document overflow at ${width}px`).toBeLessThanOrEqual(width + 1);
+    expect(dimensions.body, `body overflow at ${width}px`).toBeLessThanOrEqual(width + 1);
+  }
+});
