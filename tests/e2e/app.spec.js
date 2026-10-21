@@ -32,17 +32,18 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.reload();
  await expect(page.getByLabel("Created on or after")).toHaveValue("2026-01-01");
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
- await page.getByRole("button",{name:"View details"}).click();
+ await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Fix crash on startup"})).toBeVisible();
  await expect(page.getByText(/Last repository push/)).toBeVisible();
  const accessibility=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
  expect(accessibility.violations).toEqual([]);
- await page.getByRole("button",{name:"Generate context pack"}).click();
+ await page.getByRole("button",{name:"Generate context pack"}).focus();await page.keyboard.press("Enter");
  const pack=page.getByRole("textbox",{name:"Generated AI context pack"});
  await expect(pack).toHaveValue(/Please add tests\./);
  await expect(pack).toHaveValue(/app\.js: https:\/\/github\.com\/acme\/demo\/blob\/main\/app\.js/);
- await page.getByRole("button",{name:"Save issue"}).click();
- await page.getByRole("link",{name:"Saved",exact:true}).click();
+ await page.getByRole("button",{name:"Copy context pack"}).focus();await page.keyboard.press("Enter");await expect(page.getByRole("status")).toContainText(/Context pack copied|Clipboard unavailable/);
+ await page.getByRole("button",{name:"Save issue"}).focus();await page.keyboard.press("Enter");
+ await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Saved issues"})).toBeVisible();
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByRole("link",{name:"Discover",exact:true}).click();
@@ -99,7 +100,7 @@ test("valid import reports accepted, rejected and duplicate items",async({page})
 test("export downloads a versioned saved-data backup",async({page})=>{
  await page.goto("/#saved");
  const downloadPromise=page.waitForEvent("download");
- await page.getByRole("button",{name:"Export backup"}).click();
+ await page.getByRole("button",{name:"Export backup"}).focus();await page.keyboard.press("Enter");
  const download=await downloadPromise;
  expect(download.suggestedFilename()).toBe("v36-backup.json");
 });
