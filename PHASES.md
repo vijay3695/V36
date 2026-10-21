@@ -1,6 +1,6 @@
 # V36 Phases and Acceptance Criteria
 
-Use this file to plan and complete work phase by phase. Keep status synchronized with `PROGRESS.md`. A phase is not complete because code exists; it is complete only when its acceptance criteria have been verified.
+Use this file to plan and complete work phase by phase. Read `DECISIONS.md` first so scope and deferred work are clear. Keep status synchronized with `PROGRESS.md`. A phase is not complete because code exists; it is complete only when its acceptance criteria have been verified.
 
 Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark **VERIFIED** with evidence recorded in `PROGRESS.md`.
 
