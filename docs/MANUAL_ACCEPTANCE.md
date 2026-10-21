@@ -1,15 +1,15 @@
 # V36 Manual Acceptance Checklist
 
-**Status: NOT PERFORMED by automated CI.** These checks require a human reviewer with a real browser and assistive technology. Do not mark Phase 5 or the first release verified until a reviewer records the environment, date, results, and any defects here.
+**Status: PARTIALLY PERFORMED.** The maintainer reported a **PASS** for the 200% zoom check on 2026-10-21. Every other manual check below remains **NOT RUN**. Do not mark Phase 5 or the first release verified until all required checks are recorded here.
 
 ## Record the test environment
 
-- Reviewer:
-- Date/time:
-- OS and version:
-- Browser and version:
-- Viewport / zoom:
-- Commit SHA tested:
+- Reviewer: maintainer (`vijay3695`), self-reported
+- Date/time: 2026-10-21 (time not recorded)
+- OS and version: not recorded
+- Browser and version: not recorded
+- Viewport / zoom: 200% zoom
+- Commit SHA tested: not recorded (entry written while `main` was at `cd9021b`)
 
 ## Keyboard-only checks
 
@@ -25,7 +25,7 @@
 ## Visual / responsive checks
 
 - [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls.
-- [ ] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable.
+- [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; OS/browser not recorded)
 - [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast.
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling.
 - [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list.
@@ -40,11 +40,13 @@
 - Responsive overflow at 320/375/768/1280px: no horizontal overflow.
 - Reduced motion: transition duration 0.00001s (effectively disabled).
 - Detail view focus moves to the issue heading: pass.
-- 200% zoom: **NOT PERFORMED** — requires a human reviewer; no automated substitute is recorded.
+- 200% zoom: not an automated check — see the manual result above.
 
 ## Results
 
-- Outcome: **NOT RUN** (replace with PASS or FAIL only after every manual check above is recorded)
+- Outcome: **PARTIAL** — 200% zoom **PASS** (maintainer-reported 2026-10-21); all other manual checks **NOT RUN**
+- Recorded manual results:
+  - 200% zoom: **PASS**, reported directly by the maintainer on 2026-10-21. OS/browser versions and the exact commit SHA were not recorded.
 - Defects with reproduction steps:
 - Follow-up issue/commit links:
 - Reviewer sign-off:

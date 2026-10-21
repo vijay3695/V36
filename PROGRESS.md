@@ -6,7 +6,7 @@
 
 - **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
 - **Project status:** In development; not release-ready.
-- **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete; only the human manual-acceptance record remains (`docs/MANUAL_ACCEPTANCE.md` is still NOT RUN). Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
+- **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete. Manual acceptance is **partial**: the maintainer reported 200% zoom PASS on 2026-10-21; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN. Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
 - **Latest local evidence (`main`):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans at commit `363fb3a`, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
 - **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
 - **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
@@ -41,24 +41,33 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual keyboard/contrast/zoom checks | NOT PERFORMED | Human reviewer must complete `docs/MANUAL_ACCEPTANCE.md` |
+| Manual keyboard/contrast/zoom checks | PARTIAL — 200% zoom PASS (maintainer-reported 2026-10-21); keyboard, contrast, responsive widths, long content, reduced motion NOT RUN | Remaining checks must be performed and recorded in `docs/MANUAL_ACCEPTANCE.md` |
 | CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
 
 ## Immediate next actions
 
-1. A human reviewer completes `docs/MANUAL_ACCEPTANCE.md` (keyboard-only, contrast, 200% zoom, responsive, reduced motion) and records environment, commit SHA, and outcome. Automation cannot substitute.
+1. Complete the remaining manual checks in `docs/MANUAL_ACCEPTANCE.md` (keyboard-only, contrast, responsive widths, long content, reduced motion) and record environment, commit SHA, and outcome. 200% zoom is already recorded as PASS (maintainer-reported 2026-10-21). Automation cannot substitute.
 2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
 3. Keep all work on `main`; do not create side branches for these tasks.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
 
 ## Work log
 
+### 2026-10-21 — Manual acceptance: 200% zoom recorded PASS (maintainer-reported)
+
+- The maintainer reported that the 200% zoom check passed.
+- Recorded it in `docs/MANUAL_ACCEPTANCE.md` as a maintainer-reported PASS dated 2026-10-21, with OS/browser versions and the exact commit SHA marked **not recorded** rather than invented.
+- Replaced the automated-proxy "200% zoom: NOT PERFORMED" line with a pointer to the manual result.
+- Outcome is now **PARTIAL**: 200% zoom PASS; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN.
+- Phase 5 remains IN PROGRESS; no other manual check was marked complete, and no automated suite was re-run for this documentation-only change.
+
+
 ### 2026-10-21 — Phase 5 automated completion: announcements, manual-record correction, and truth pass (commit `363fb3a` on `main`)
 
 - Added accessible announcements: `#results-meta` is now a polite `role="status"` live region for loaded-result counts; `#results` exposes `aria-busy` while a search is pending; `#status` switches to `aria-live="assertive"` for error/rate-limit messages; the detail view announces "Refreshing issue and repository evidence…" politely and announces completion or unavailable-evidence outcomes.
 - Added four browser regression tests: result-count and detail-outcome live regions, assertive failure announcements that preserve prior results, pending-search `aria-busy`, and detail-refresh progress before refreshed evidence.
 - Scoped existing status assertions to `#status` because `#results-meta` is now a second `role="status"` region; assertions were made more specific, not weaker.
-- Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the unsupported "200% zoom: PASS (reported by reviewer)" entry, marked 200% zoom NOT PERFORMED, and stated that automated proxies are not sign-off. Outcome remains NOT RUN.
+- Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the then-unrecorded "200% zoom: PASS (reported by reviewer)" entry (it had no reviewer, environment, or commit recorded) and stated that automated proxies are not sign-off. The maintainer later confirmed the 200% zoom pass directly; it is now recorded in the entry above, with the missing details marked not recorded.
 - Local runs on `main` (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. Eight full browser-suite runs passed at `--workers=2`/`--workers=4`; one other run under parallel load had a single failure in the long mocked flow whose error text was not captured, and it was not reproduced in the seven runs that followed. The documented bulk command `npm run test:all` was also attempted, but its default parallelism (30 Playwright workers on this host) exceeded the sandbox's 6 GiB memory limit and the run was killed before producing output; the same three suites were therefore verified with capped workers. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
 - Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`docs/ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
 - Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN. Evidence commit: `363fb3a` on `main`.
