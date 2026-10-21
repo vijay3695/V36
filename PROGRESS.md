@@ -41,7 +41,7 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual keyboard/contrast/zoom checks | PARTIAL — keyboard navigation, advanced-filter disclosure, focus/no-trap, search success and failure, saved items, import/export, issue detail, and 200% zoom PASS; contrast, responsive widths, long content, reduced motion NOT RUN | Continue from `docs/MANUAL_ACCEPTANCE.md`; re-test the `7bd7d45` and `28d0768` fixes |
+| Manual keyboard/contrast/zoom checks | PARTIAL — keyboard navigation, advanced-filter disclosure, focus/no-trap, search success and failure, saved items, import/export, issue detail, and 200% zoom PASS; four defects fixed and re-tested; contrast, responsive widths, long content, reduced motion NOT RUN | Continue from `docs/MANUAL_ACCEPTANCE.md` with the remaining four checks |
 | CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
 
 ## Immediate next actions
