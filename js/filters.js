@@ -8,7 +8,7 @@ export function withinDays(value,days,now=Date.now()){const date=Date.parse(valu
 export function matchesFilters(issue,f,now=Date.now()){
  const repo=issue.repository||{};const labels=(issue.labels||[]).map(x=>typeof x==="string"?x:x.name||"");const text=(String(issue.title||"")+" "+String(issue.body||"")+" "+String(repo.full_name||"")+" "+labels.join(" ")).toLowerCase();
  if(f.query&&!text.includes(f.query.trim().toLowerCase()))return false;
- if(f.language&&(repo.language||"").toLowerCase()!==f.language.toLowerCase())return false;
+ if(f.language){const langs=Array.isArray(repo.languages)?repo.languages:[repo.language].filter(Boolean);if(!langs.some(x=>String(x).toLowerCase()===f.language.toLowerCase()))return false;}
  if((f.labels||[]).some(w=>!labels.some(l=>l.toLowerCase()===w.toLowerCase())))return false;
  if(f.issueType==="issue"&&issue.pull_request)return false;if(f.issueType==="pr"&&!issue.pull_request)return false;
  if(f.category&&!inferCategories(issue).includes(f.category))return false;
@@ -18,7 +18,7 @@ export function matchesFilters(issue,f,now=Date.now()){
  if(f.commitAgeDays&&(!repo.latestCommitDate||!withinDays(repo.latestCommitDate,f.commitAgeDays,now)))return false;return true;
 }
 export function buildSearchQuery(f){
- const p=["is:open"];if(f.query)p.push(f.query.trim());if(f.language)p.push("language:"+f.language.trim());
+ const p=["is:open"];if(f.query)p.push(f.query.trim());
  for(const label of f.labels||[])p.push('label:"'+label.replaceAll('"',"")+'"');
  if(f.issueType==="issue")p.push("is:issue");if(f.issueType==="pr")p.push("is:pr");
  if(f.createdDays)p.push("created:>="+new Date(Date.now()-Number(f.createdDays)*86400000).toISOString().slice(0,10));
