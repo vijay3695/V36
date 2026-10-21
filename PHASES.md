@@ -18,12 +18,12 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 ## Phase 0 — Baseline and CI stabilization
 
-**Current status: BLOCKED — [CI run #49](https://github.com/vijay3695/V36/actions/runs/39572073815) has 41/41 unit tests passing, but 14/15 browser tests pass; the saved-search E2E test times out locating Save search after navigation.**
+**Current status: BLOCKED — [CI run #50](https://github.com/vijay3695/V36/actions/runs/39572501176) has 51 unit tests passing, but 14/15 browser tests pass. The saved-search flow exposed a route-state bug: startup auto-search rewrote the URL hash to Discover while leaving the Saved view visible. Fix is in the next batch; verify the follow-up run.**
 
 Tasks:
 - [x] Inspect current `.github/workflows/ci.yml`, package scripts, unit tests, E2E tests, and actual failed GitHub Actions job output.
-- [x] Identify the E2E failure from job output: the saved-search keyboard flow cannot locate the Save search button after its navigation/reload sequence.
-- [ ] Fix the underlying E2E flow and confirm a green rerun; do not weaken or delete meaningful tests just to get a green run.
+- [x] Identify the E2E failure from job output: startup auto-search rewrote the hash to Discover on the Saved route, so activating Discover did not emit a hash change and its controls remained hidden.
+- [ ] Fix startup route handling and confirm a green rerun; do not weaken or delete meaningful tests just to get a green run.
 - [ ] Run `npm test`, `npm run test:e2e`, and `npm run test:a11y` (the accessibility script may overlap with E2E; record what was actually run).
 - [ ] Ensure CI reports actionable failure output and does not rely on a missing lockfile.
 - [ ] Confirm a new run on the resulting commit and record its URL and per-job result in `PROGRESS.md`.

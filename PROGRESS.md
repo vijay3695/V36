@@ -7,10 +7,10 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** BLOCKED. Latest checked run [CI #49](https://github.com/vijay3695/V36/actions/runs/39572073815) on commit [`3111061`](https://github.com/vijay3695/V36/commit/311106183e37f5dfe13283624fff3e995bc07f3a) has 41/41 unit tests passing and 14/15 browser tests passing. The saved-search keyboard flow timed out waiting for the Save search button after navigating back to Discover.
+- **Phase 0 status:** BLOCKED. Latest checked run [CI #50](https://github.com/vijay3695/V36/actions/runs/39572501176) on commit [`04cac28`](https://github.com/vijay3695/V36/commit/04cac287eb4aa4c35c9c4ed9d79dc73d3c7ac798) has 51 unit tests passing and 14/15 browser tests passing. The failed E2E assertion exposed a route-state bug: startup auto-search changed the URL hash from Saved to Discover without showing the Discover view, so the Discover link could not trigger a hash-change event.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** FAILED — Phase 0 is not complete until a subsequent full run is green.
-- **Failure evidence:** [Run #49 logs](https://github.com/vijay3695/V36/actions/runs/39572073815) show failure at `tests/e2e/app.spec.js:59`, waiting for the Save search button; no unit-test failures.
+- **Failure evidence:** [Run #50 logs](https://github.com/vijay3695/V36/actions/runs/39572501176) show the saved-search flow ultimately failed to restore the previous query (`expected "crash", received "failure"`) because the test could not return to the actual Discover view. The next batch fixes the app’s startup route handling and adds a dedicated route regression test.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
 - **This file's purpose:** handoff state for the next coding agent. Re-check current `main` and latest Actions run before relying on this snapshot.
 
@@ -55,13 +55,13 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
-### 2026-10-21 — E2E failure diagnosis and expanded regression batch (pending CI)
+### 2026-10-21 — E2E failure diagnosis and expanded regression batch (failed CI; fix follows)
 
 - Inspected the actual job output for [run #49](https://github.com/vijay3695/V36/actions/runs/39572073815). All 41 unit tests pass; 14 of 15 browser tests pass.
 - The saved-search test times out waiting for Save search after a navigation/reload sequence. Updated the flow to load Discover explicitly before keyboard-activating Save search; dedicated keyboard navigation coverage remains in place.
 - Added ten filter regression tests for push-date boundaries, future push timestamps, custom-bound precedence, invalid dates, exact star bounds, unknown labels, conservative category inference, case-insensitive language metadata, and malformed star presets.
 - Updated PHASES.md with a readable live phase-by-phase done/pending snapshot. Phase 0 and release readiness remain blocked pending a green full run and manual accessibility acceptance.
-- Next: inspect this bundled batch’s Actions run and fix any failures in the next batch rather than ignoring them.
+- Run [#50](https://github.com/vijay3695/V36/actions/runs/39572501176) failed in one browser test despite all 51 unit tests passing. Root cause: the app auto-runs a URL search even when the initial hash is #saved, and `updateUrl()` rewrites that hash to #discover while the Saved view remains active. Fix the startup condition and add a regression test in the next batch; do not ignore this failure.
 
 
 ### 2026-10-21 — Final acceptance coverage expansion (pending CI)

@@ -55,7 +55,8 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.reload();
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
- await page.goto("/#discover");
+ await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
+ await expect(page).toHaveURL(/#discover$/);
  await expect(page.getByRole("button",{name:"Save search"})).toBeVisible();
  await page.getByRole("button",{name:"Save search"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("status")).toContainText("Search preset saved");
@@ -64,6 +65,8 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.reload();
  await expect(page.locator("#saved-searches .saved-search")).toHaveCount(1);
  await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByLabel("Search issues").fill("failure");
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.getByRole("status")).toContainText("HTTP 500");
@@ -148,4 +151,16 @@ test("untrusted issue markup is rendered as text rather than executable HTML",as
  await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo/issues/9")return route.fulfill({json:issue});if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBSRUFETUU="}});if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[]});if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});return route.fulfill({status:404,json:{message:"not mocked"}});});
  await page.goto("/");await page.getByLabel("Search issues").fill("unsafe");await page.getByRole("button",{name:"Search GitHub"}).click();await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
  await expect(page.locator(".issue-body")).toHaveText(body);await expect(page.locator(".issue-body img")).toHaveCount(0);expect(await page.evaluate(()=>window.__v36Xss)).toBeUndefined();
+});
+
+test("saved route keeps its hash when a shareable query is present",async({page})=>{
+ let searchRequests=0;
+ await page.route("https://api.github.com/search/issues**",async route=>{searchRequests++;return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});});
+ await page.goto("/?q=crash#saved");
+ await expect(page.getByRole("heading",{name:"Saved",exact:true})).toBeVisible();
+ await expect(page).toHaveURL(/#saved$/);
+ expect(searchRequests).toBe(0);
+ await page.getByRole("link",{name:"Discover",exact:true}).click();
+ await expect(page).toHaveURL(/#discover$/);
+ await expect(page.getByRole("button",{name:"Save search"})).toBeVisible();
 });
