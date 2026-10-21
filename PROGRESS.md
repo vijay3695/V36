@@ -225,3 +225,11 @@ These are **not yet verified as complete** merely because related code exists.
 - The retry-time test remains in the suite. The earlier failures (#61/#62) and subsequent green runs (#63/#64) are recorded; no more work is being spent on this assertion in the current batch.
 - Corrected the obsolete Phase 0 BLOCKED paragraph and stale progress snapshot. Phase 2 stays IN PROGRESS until its remaining acceptance criteria are audited; current work moves to Phase 3.
 - Next: inspect saved-item/import/export behavior, address meaningful edge cases in a bundled batch, and monitor the consolidated CI run.
+
+
+### 2026-10-21 — Phase 3 portability regression coverage (CI pending)
+
+- Moved active work to Phase 3 after correcting the phase handoff; the retry-time test remains untouched and deferred for a later audit.
+- Added 11 focused storage/import regression tests covering lookalike hosts and unsupported routes, canonical URLs, issue identity, bounded imported strings, malformed backup structures, oversized search arrays, duplicate import diagnostics, merge precedence, equivalent saved searches, invalid filter values, and preservation of unrelated saved references.
+- Local test execution: **NOT RUN** in this environment. The changes must pass the single consolidated GitHub Actions workflow before being treated as verified.
+- Next: inspect the Actions result; fix any real failure in the next coherent batch, then continue Phase 3 edge cases.

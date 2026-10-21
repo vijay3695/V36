@@ -73,3 +73,91 @@ test("import refuses item arrays over the configured cap",()=>{
  const issues=Array.from({length:2001},(_,i)=>({url:"https://github.com/acme/demo/issues/"+(i+1),title:"Issue"}));
  assert.throws(()=>validateBackup({version:1,issues,searches:[]}),/too many items/);
 });
+
+
+test("rejects GitHub lookalike hosts and non-issue routes",()=>{
+ const x=validateBackup({...backup,issues:[
+  {url:"https://github.com.evil.example/acme/demo/issues/4"},
+  {url:"https://gist.github.com/acme/demo/issues/5"},
+  {url:"https://github.com/acme/demo/discussions/6"}
+ ]});
+ assert.equal(x.issues.length,0);
+});
+
+test("canonicalizes issue URL query strings and fragments away",()=>{
+ const x=validateBackup({...backup,issues:[
+  {url:"https://github.com/acme/demo/issues/12?tab=comments#issuecomment-3"},
+  {url:"https://github.com/acme/demo/issues/12"}
+ ]});
+ assert.equal(x.issues.length,1);
+ assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/12");
+});
+
+test("normalizes numeric issue identity from the canonical URL",()=>{
+ const x=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/42",number:999}]});
+ assert.equal(x.issues[0].number,42);
+});
+
+test("truncates untrusted imported display strings to documented bounds",()=>{
+ const x=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/7",title:"t".repeat(900),repository:"r".repeat(500)}]});
+ assert.equal(x.issues[0].title.length,500);
+ assert.equal(x.issues[0].repository.length,300);
+});
+
+test("rejects non-array backup records instead of partially importing them",()=>{
+ assert.throws(()=>validateBackup({version:1,issues:null,searches:[]}),/Unsupported/);
+ assert.throws(()=>validateBackup({version:1,issues:[],searches:{}}),/Unsupported/);
+});
+
+test("rejects backup with more saved searches than the cap",()=>{
+ const searches=Array.from({length:2001},(_,i)=>({id:String(i),name:"Search "+i,filters:{query:"q"+i,sort:"updated"}}));
+ assert.throws(()=>validateBackup({version:1,issues:[],searches}),/too many items/);
+});
+
+test("import report counts canonical duplicates even when URLs differ by query",async()=>{
+ const raw={version:1,issues:[
+  {url:"https://github.com/acme/demo/issues/15?tab=activity"},
+  {url:"https://github.com/acme/demo/issues/15"}
+ ],searches:[]};
+ const json=JSON.stringify(raw);
+ const result=await parseImportFile({size:json.length,text:async()=>json});
+ assert.equal(result.issues.length,1);
+ assert.equal(result.importReport.duplicateIssues,1);
+});
+
+test("merge keeps the existing issue record when an incoming backup duplicates it",()=>{
+ const current=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/20",title:"Existing title"}]});
+ const incoming=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/20",title:"Imported title"}]});
+ const merged=mergeBackup(current,incoming);
+ assert.equal(merged.issues.length,1);
+ assert.equal(merged.issues[0].title,"Existing title");
+});
+
+test("merge keeps existing searches when incoming filters are equivalent",()=>{
+ const current=validateBackup({...backup,searches:[{id:"current",name:"My search",filters:{query:"bug",labels:["bug"],sort:"updated"}}]});
+ const incoming=validateBackup({...backup,searches:[{id:"incoming",name:"Imported duplicate",filters:{query:"bug",labels:["bug"],sort:"updated"}}]});
+ const merged=mergeBackup(current,incoming);
+ assert.equal(merged.searches.length,1);
+ assert.equal(merged.searches[0].name,"My search");
+});
+
+test("unsupported filter values are normalized to safe defaults",()=>{
+ const x=validateBackup({...backup,searches:[{name:"untrusted",filters:{query:{"toString":"bad"},language:12,issueType:"anything",sort:"arbitrary",labels:["ok",4,null]}}]});
+ const f=x.searches[0].filters;
+ assert.equal(f.query,"");
+ assert.equal(f.language,"");
+ assert.equal(f.issueType,"");
+ assert.equal(f.sort,"updated");
+ assert.deepEqual(f.labels,["ok"]);
+});
+
+test("duplicate incoming records do not displace unrelated saved issues",()=>{
+ const current=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/21",title:"Keep A"},{url:"https://github.com/acme/demo/issues/22",title:"Keep B"}]});
+ const incoming=validateBackup({...backup,issues:[{url:"https://github.com/acme/demo/issues/21",title:"Duplicate A"},{url:"https://github.com/acme/demo/issues/23",title:"New C"}]});
+ const merged=mergeBackup(current,incoming);
+ assert.deepEqual(merged.issues.map(x=>x.url),[
+  "https://github.com/acme/demo/issues/21",
+  "https://github.com/acme/demo/issues/22",
+  "https://github.com/acme/demo/issues/23"
+ ]);
+});
