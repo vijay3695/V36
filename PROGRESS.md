@@ -7,7 +7,7 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 1 — Core discovery and filtering.
-- **Phase 0 status:** VERIFIED on [CI #58](https://github.com/vijay3695/V36/actions/runs/39574476749), exact commit [`39dfc12`](https://github.com/vijay3695/V36/commit/39dfc1288666f0cc6bafc40f5e9afd4bb889dd69): 67/67 unit tests, 20/20 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
+- **Phase 0 status:** VERIFIED on [CI #59](https://github.com/vijay3695/V36/actions/runs/39574808517), exact commit [`06b4fbd`](https://github.com/vijay3695/V36/commit/06b4fbdd728e5c455f5fd01d75d50d72e55bb9ab): 75/75 unit tests, 21/21 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
@@ -54,6 +54,14 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Secondary languages and safe shareable URLs (pending CI)
+
+- Added E2E coverage proving a repository can match a non-primary language when GitHub language metadata is available.
+- Added E2E coverage proving an unavailable language-metadata response does not silently discard an issue and clearly marks the filter as uncertain.
+- Added E2E coverage that shareable search URLs contain filter settings only and never include saved issue titles or credential-like query parameters.
+- Phase 1 remains IN PROGRESS until this batch passes and the complete filter acceptance checklist is reviewed.
+
+
 ### 2026-10-21 — Filter and GitHub failure-path coverage (pending CI)
 
 - Run [#58](https://github.com/vijay3695/V36/actions/runs/39574476749) passed on the preceding commit: 67/67 unit tests, 20/20 browser tests, and 3/3 standalone accessibility checks.
@@ -62,13 +70,13 @@ These are **not yet verified as complete** merely because related code exists.
 - Expanded Phase 1 URL coverage and API failure-path tests are in the current pending batch. Verify the next consolidated run before claiming this batch passes.
 
 
-### 2026-10-21 — Phase 1 URL and GitHub failure-path coverage (pending CI)
+### 2026-10-21 — Phase 1 URL and GitHub failure-path coverage (passed CI)
 
 - Expanded browser acceptance coverage to round-trip the standard filter set and custom creation/update/commit/push date bounds plus exact star limits through shareable URLs and reloads.
 - Added an E2E scenario for a selected issue whose issue/repository refresh returns 404, verifying that the reference and original description remain visible while unavailable evidence is disclosed.
 - Added eight GitHub API unit tests for secondary-rate-limit detection, ordinary permission 403 handling, HTTP 429 retry timing, invalid JSON, abort propagation, server errors, page/sort query parameters, and nested file-path encoding.
 - Updated AGENTS.md to start from Phase 1 after the verified Phase 0 gate, and synchronized PHASES.md/PROGRESS.md with [run #57](https://github.com/vijay3695/V36/actions/runs/39574086433).
-- This batch awaits its own consolidated Actions run; do not mark Phase 1 VERIFIED until all its acceptance criteria are covered and checked.
+- Run [#59](https://github.com/vijay3695/V36/actions/runs/39574808517) passed the preceding batch: 75/75 unit tests, 21/21 browser tests, and 3/3 standalone accessibility checks. The next batch adds explicit tests for secondary-language matching, unavailable language metadata, and ensuring private saved references never enter shareable URLs.
 
 
 ### 2026-10-21 — Protect unreadable browser storage (verified by CI)

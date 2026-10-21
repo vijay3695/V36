@@ -271,3 +271,36 @@ test("issue detail activity can be retried after a rate-limited repository refre
  await expect(page.getByText("Stars (popularity only): 150")).toBeVisible();
  expect(repoCalls).toBe(3);expect(readmeCalls).toBe(1);expect(commitCalls).toBe(1);
 });
+
+test("language filter includes secondary repository languages from GitHub metadata",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/21",title:"Support Rust build",body:"Rust support",state:"open",number:21,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});if(u.pathname==="/repos/acme/demo/languages")return route.fulfill({json:{JavaScript:1000,Rust:500}});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");
+ await page.getByLabel("Language").fill("Rust");
+ await page.getByLabel("Search issues").fill("Rust");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("link",{name:"Support Rust build"})).toBeVisible();
+ await expect(page.locator("#results-meta")).toContainText("1 fully evaluated");
+});
+test("language metadata failure keeps a result visible and marks the filter uncertain",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/22",title:"Rust build support",body:"Rust support",state:"open",number:22,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});if(u.pathname==="/repos/acme/demo/languages")return route.fulfill({status:404,json:{message:"Not Found"}});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");
+ await page.getByLabel("Language").fill("Rust");
+ await page.getByLabel("Search issues").fill("Rust");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("link",{name:"Rust build support"})).toBeVisible();
+ await expect(page.getByText(/Could not evaluate selected filters: language metadata/)).toBeVisible();
+});
+test("shareable search URLs never contain saved references or credential-like data",async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem("v36.saved.v1",JSON.stringify({version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[{url:"https://github.com/acme/demo/issues/99",title:"PRIVATE_SAVED_MARKER",repository:"acme/demo",number:99}],searches:[]})));
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("public bug");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ expect(page.url()).not.toContain("PRIVATE_SAVED_MARKER");
+ expect(page.url()).not.toMatch(/[?&](?:token|access_token|authorization)=/i);
+ await expect(page).toHaveURL(/q=public\+bug/);
+});
