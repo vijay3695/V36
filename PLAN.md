@@ -10,7 +10,9 @@
 - Do not publish a release until every required release gate passes.
 - No paid services, backend, AI API, required GitHub token, or stored credentials.
 - GitHub issue/repository content and imported files are untrusted input.
-- If CI fails, inspect the failing job output and fix the root cause before stacking more implementation commits. Avoid a rapid chain of speculative commits that all trigger failing CI.
+- Use Husky for local checks: `npm test` on pre-commit and `npm run test:all` on pre-push.
+- Keep GitHub CI consolidated into one workflow, one job, and one bulk command (`npm run test:all`). Do not create a separate GitHub Actions workflow/job for each test suite.
+- If CI fails, inspect the failing job output and fix the root cause before stacking more implementation commits. Avoid a rapid chain of speculative commits that all trigger CI.
 - Keep the app static-first and compatible with GitHub Pages.
 - Use `docs/PROJECT_PLAN.md` as the source for detailed product requirements. If this file conflicts with that spec, stop and reconcile the documents instead of guessing.
 

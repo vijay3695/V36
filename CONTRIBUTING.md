@@ -17,8 +17,9 @@ Requires Node.js 20+.
 
     npm install
     npm test
+    npm run test:all
 
-The browser suite is run in CI. Automated accessibility scans do not replace manual keyboard and screen-reader checks.
+Husky installs local Git hooks during `npm install`: the pre-commit hook runs unit tests, and the pre-push hook runs the complete bulk suite. The single GitHub Actions workflow also runs `npm run test:all` in one job; do not add separate workflows/jobs for individual test suites. The bulk suite includes the Playwright browser tests, including the automated accessibility spec. Automated accessibility scans do not replace manual keyboard and screen-reader checks.
 
 ## Pull request expectations
 

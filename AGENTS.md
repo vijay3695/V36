@@ -52,6 +52,8 @@ After reading the files:
 - Respect GitHub API limits. Stop extra requests when rate limited; do not bypass limits or require a token.
 - Keep source links, fetch times, missing context, and limitations visible in generated context packs. Never fabricate evidence.
 - Keep routine tests deterministic with mocked GitHub API responses where appropriate.
+- Husky runs `npm test` before commits and `npm run test:all` before pushes. Install hooks with `npm install` (the package `prepare` script configures Husky). The single GitHub Actions workflow must also run `npm run test:all` as one job.
+- Do not create separate GitHub Actions workflows/jobs for individual test suites. Keep the GitHub-hosted check consolidated into one workflow, one job, and one bulk test command.
 - No paid services, paid AI API, server-side account system, automatic code changes, or full-repository download unless the maintainer explicitly changes the documented scope.
 - Keep the documentation synchronized: confirmed decisions in `DECISIONS.md`, phase criteria in `PHASES.md`, and actual implementation/test status in `PROGRESS.md`.
 

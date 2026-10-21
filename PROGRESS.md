@@ -7,7 +7,7 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** BLOCKED pending diagnosis/fix of the end-to-end failure.
+- **Phase 0 status:** BLOCKED pending diagnosis/fix of the end-to-end failure. CI structure has now been consolidated; test status remains unverified until the single bulk run completes.
 - **Latest run supplied by maintainer:** [CI run #17 — Preserve rate-limit and partial-metadata status messages](https://github.com/vijay3695/V36/actions/runs/39563293807).
 - **Observed in that run:** Unit tests passed; browser acceptance/E2E failed at `npm run test:e2e`.
 - **Other recent runs supplied by maintainer:** CI runs #1–#18 were reported as failing overall. Do not assume a single cause; inspect each relevant failed job and the current head commit.
@@ -18,7 +18,9 @@
 
 - [x] Repository contains a static-first app entry point (`index.html`), `package.json`, `playwright.config.js`, and `.github/workflows/ci.yml`.
 - [x] Package scripts define `npm test`, `npm run test:e2e`, and `npm run test:a11y`.
-- [x] The CI workflow runs unit tests and browser acceptance/accessibility tests.
+- [x] The CI workflow has been consolidated to one job that invokes the bulk test command `npm run test:all`.
+- [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
+- [ ] The new consolidated bulk test command has passed on the current `main` commit.
 - [x] In the reported run #17, unit tests passed.
 - [x] In the reported run #17, `npm run test:e2e` failed.
 - [ ] Root cause of the E2E failure identified.
@@ -52,6 +54,15 @@ These are **not yet verified as complete** merely because related code exists.
 5. Update this progress file and phase checkboxes in the same logical change as code.
 
 ## Work log
+
+### 2026-10-21 — Consolidated local and GitHub test execution
+
+- Added Husky local hooks: `npm test` on pre-commit and `npm run test:all` on pre-push.
+- Added `test:all` as the single bulk command for unit and Playwright browser tests.
+- Consolidated GitHub Actions into one workflow, one job, and one bulk test command.
+- Updated agent and contributor instructions to prevent separate workflows/jobs for individual test suites.
+- Tests: **NOT RUN in this editing environment**. The next single CI run must be inspected; the previous E2E failure remains unresolved until diagnosed and verified.
+
 
 ### 2026-10-21 — Project tracking files added
 
