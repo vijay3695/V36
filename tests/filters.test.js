@@ -210,3 +210,12 @@ test("related search links truncate long titles and stay valid when empty",()=>{
  assert.equal(new URL(relatedSearchUrl("not a repo","Bug","issue")).searchParams.get("q"),"Bug");
 });
 
+
+test("language aliases normalize to canonical language names while custom languages survive",()=>{
+ assert.equal(normalizeFilters({language:"js"}).language,"JavaScript");
+ assert.equal(normalizeFilters({language:"JS"}).language,"JavaScript");
+ assert.equal(normalizeFilters({language:"ts"}).language,"TypeScript");
+ assert.equal(normalizeFilters({language:"py"}).language,"Python");
+ assert.equal(normalizeFilters({language:"golang"}).language,"Go");
+ assert.equal(normalizeFilters({language:"Elixir"}).language,"Elixir");
+});
