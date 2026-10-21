@@ -1,0 +1,37 @@
+name: Responsive viewport checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "css/**"
+      - "js/**"
+      - "tests/e2e/manual-check.spec.js"
+      - "playwright.config.js"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/responsive-viewport-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  responsive-overflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test responsive overflow at 320, 375, 768, and 1280 pixels
+        run: npx playwright test tests/e2e/manual-check.spec.js -g "responsive no horizontal overflow"
