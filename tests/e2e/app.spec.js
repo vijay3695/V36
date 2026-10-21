@@ -475,5 +475,13 @@ test("related work links keep the issue repository when repository metadata is u
  expect(issueUrl.searchParams.get("type")).toBe("issues");
  expect(prUrl.searchParams.get("q")).toBe("repo:acme/demo Fix crash");
  expect(prUrl.searchParams.get("type")).toBe("pullrequests");
+ await page.getByRole("button",{name:"Generate context pack"}).click();
+ const pack=await page.getByRole("textbox",{name:"Generated AI context pack"}).inputValue();
+ expect(pack).toContain("Evidence completeness");
+ expect(pack).toContain("INCOMPLETE");
+ expect(pack).toContain("Name: acme/demo (identity from the issue URL; repository metadata was not retrieved)");
+ expect(pack).toContain("Not retrieved:");
+ expect(pack).not.toContain("undefined");
+ expect(pack).not.toContain("Retry after");
 });
 
