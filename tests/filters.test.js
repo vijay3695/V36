@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays,unknownFilterReasons,describeFilters} from "../js/filters.js";
+import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays,unknownFilterReasons,describeFilters,relatedSearchUrl} from "../js/filters.js";
 const now=Date.parse("2026-01-31T00:00:00Z");
 const issue={title:"Fix crash and add regression tests",body:"The bug crashes the app.",created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[{name:"bug"}],repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:42,latestCommitDate:"2026-01-25T00:00:00Z"}};
 test("category inference allows multiple supported categories",()=>{const c=inferCategories(issue);assert.ok(c.includes("Bug fix"));assert.ok(c.includes("Tests"));});
@@ -184,5 +184,29 @@ test("saved-search summaries name custom ranges and omit defaults",()=>{
 test("saved-search summaries surface star presets and pull-request choice",()=>{
  assert.match(describeFilters(normalizeFilters({stars:"100-999"})),/Stars: 100-999/);
  assert.match(describeFilters(normalizeFilters({issueType:"pr"})),/Pull requests only/);
+});
+
+
+test("related search links never embed an undefined repository",()=>{
+ const u=new URL(relatedSearchUrl("","test(api): cover check query parameter parsing","issue"));
+ assert.equal(u.searchParams.get("q"),"test(api): cover check query parameter parsing");
+ assert.equal(u.searchParams.get("type"),"issues");
+ assert.equal(u.toString().includes("undefined"),false);
+ assert.equal(u.toString().includes("repo%3A"),false);
+});
+
+test("related search links scope to a known repository and use the right result type",()=>{
+ const issues=new URL(relatedSearchUrl("acme/demo","Fix crash","issue"));
+ assert.equal(issues.searchParams.get("q"),"repo:acme/demo Fix crash");
+ assert.equal(issues.searchParams.get("type"),"issues");
+ const pulls=new URL(relatedSearchUrl("acme/demo","Fix crash","pr"));
+ assert.equal(pulls.searchParams.get("q"),"repo:acme/demo Fix crash");
+ assert.equal(pulls.searchParams.get("type"),"pullrequests");
+});
+
+test("related search links truncate long titles and stay valid when empty",()=>{
+ assert.equal(new URL(relatedSearchUrl("acme/demo","t".repeat(300),"issue")).searchParams.get("q"),"repo:acme/demo "+"t".repeat(100));
+ assert.equal(new URL(relatedSearchUrl("","","issue")).searchParams.get("q"),"is:open");
+ assert.equal(new URL(relatedSearchUrl("not a repo","Bug","issue")).searchParams.get("q"),"Bug");
 });
 

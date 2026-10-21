@@ -452,3 +452,28 @@ test("star inputs ignore spaces instead of blocking form submission",async({page
  await expect(page.locator("#status")).toContainText("Loaded 0 issues");
 });
 
+
+test("related work links keep the issue repository when repository metadata is unavailable",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/9",title:"Fix crash",body:"Body",state:"open",number:9,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",closed_at:null,comments:0,labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ await page.route("https://api.github.com/**",route=>{const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
+  if(u.pathname==="/repos/acme/demo/issues/9")return route.fulfill({json:issue});
+  if(u.pathname==="/repos/acme/demo")return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","x-ratelimit-reset":"1893456000"},json:{message:"API rate limit exceeded"}});
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("crash");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.getByRole("button",{name:"View details"}).click();
+ await expect(page.getByRole("heading",{name:"Fix crash"})).toBeVisible();
+ const issueHref=await page.getByRole("link",{name:"Search related issues"}).getAttribute("href");
+ const prHref=await page.getByRole("link",{name:"Search related pull requests"}).getAttribute("href");
+ expect(issueHref).not.toContain("undefined");
+ expect(prHref).not.toContain("undefined");
+ const issueUrl=new URL(issueHref),prUrl=new URL(prHref);
+ expect(issueUrl.searchParams.get("q")).toBe("repo:acme/demo Fix crash");
+ expect(issueUrl.searchParams.get("type")).toBe("issues");
+ expect(prUrl.searchParams.get("q")).toBe("repo:acme/demo Fix crash");
+ expect(prUrl.searchParams.get("type")).toBe("pullrequests");
+});
+

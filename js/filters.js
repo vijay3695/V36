@@ -56,6 +56,13 @@ export function buildSearchQuery(f,now=Date.now()){
 }
 const dateValue=v=>typeof v==="string"&&validDate(v)?v:"";
 const SORT_LABELS={updated:"Recently updated",created:"Recently created",comments:"Most discussed",relevance:"GitHub relevance"};
+export function relatedSearchUrl(repoName,title,kind="issue"){
+ const name=String(repoName||"").trim(),text=String(title||"").trim().slice(0,100);
+ const query=(/^[^/\s]+\/[^/\s]+$/.test(name)?"repo:"+name+" ":"")+text;
+ const params=new URLSearchParams({q:query.trim()||"is:open",type:kind==="pr"?"pullrequests":"issues"});
+ return "https://github.com/search?"+params.toString();
+}
+
 export function describeFilters(f={}){
  const p=[];
  if(f.query)p.push("Search: "+f.query);
