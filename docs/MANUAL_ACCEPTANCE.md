@@ -1,6 +1,6 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Responsive layout is **DEV APPROVED at 320px and 375px only**; 768px and desktop remain pending. Contrast, reduced motion, and long-content checks remain **NOT RUN**.
+**Status: PARTIALLY PERFORMED.** Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. Contrast, reduced motion, and long-content checks remain **NOT RUN**.
 
 ## Record the test environment
 
@@ -26,7 +26,7 @@
 ## Visual / responsive checks
 
 - [ ] Human visual acceptance at 320px, 375px, 768px, and desktop width: confirm no clipped controls and that the layout remains usable. **PARTIAL — DEV APPROVED**: 320px: PASS, 0px horizontal overflow, no offenders; 375px: PASS, 0px horizontal overflow, no offenders. 768px and desktop visual review: NOT RUN.
-- [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **AUTOMATED COVERAGE PRESENT** in `tests/e2e/manual-check.spec.js`; the recorded Playwright proxy results report no horizontal overflow at all four widths. This is automated evidence, not a claim that a new run was performed against the latest documentation commit.
+- [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **PASS** — [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181), commit `16fd41922033a356e7305e70f00f9edcac71702d`. Playwright logged `OVERFLOW@320: false`, `OVERFLOW@375: false`, `OVERFLOW@768: false`, and `OVERFLOW@1280: false`; 1 test passed. This measures document-level horizontal overflow, not clipped controls or visual usability.
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
 - [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast. **NOT RUN**
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN**
@@ -37,16 +37,16 @@
 **Not manual sign-off.** These are automated approximations from a headless browser. They do not replace the human checks above and must not be recorded as a reviewer result.
 
 - Date: 2026-10-21
-- Command: `npx playwright test tests/e2e/manual-check.spec.js`
-- Keyboard tab order: automated tab traversal starts at the skip link and no focus trap was detected (approximation; not assistive-technology testing).
-- Responsive overflow at 320/375/768/1280px: no horizontal overflow (recorded automated proxy result; not manual visual sign-off).
+- Command: `npx playwright test tests/e2e/manual-check.spec.js -g "responsive no horizontal overflow"` (GitHub Actions, Chromium)
+- Workflow run: [#1 — PASS](https://github.com/vijay3695/V36/actions/runs/39636965181), commit `16fd41922033a356e7305e70f00f9edcac71702d`.
+- Responsive overflow at 320/375/768/1280px: `false` at each width; 1 test passed. This is document-level overflow coverage, not manual visual sign-off.
 - Reduced motion: transition duration 0.00001s (effectively disabled).
 - Detail view focus moves to the issue heading: pass.
 - 200% zoom: not an automated check — see the manual result above.
 
 ## Results
 
-- Outcome: **PARTIAL** — prior manual checks remain recorded; responsive layout is DEV APPROVED at 320px and 375px (0px overflow, no offenders at either width); 768px and desktop widths, contrast, reduced motion, and long-content checks remain pending.
+- Outcome: **PARTIAL** — manual visual approval remains recorded at 320px and 375px; automated document-overflow test passes at 320px, 375px, 768px, and 1280px. Human visual review at 768px/desktop, contrast review, reduced-motion review, and long-content checks remain pending.
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
