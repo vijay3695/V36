@@ -161,3 +161,8 @@ test("duplicate incoming records do not displace unrelated saved issues",()=>{
   "https://github.com/acme/demo/issues/23"
  ]);
 });
+
+test("saved-search language aliases are canonicalized during backup validation",()=>{
+ const x=validateBackup({...backup,searches:[{name:"JavaScript",filters:{language:"js",labels:[],sort:"updated"}}]});
+ assert.equal(x.searches[0].filters.language,"JavaScript");
+});
