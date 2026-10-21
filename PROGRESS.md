@@ -6,8 +6,8 @@
 
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
-- **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** VERIFIED on [CI #56](https://github.com/vijay3695/V36/actions/runs/39573889300), exact commit [`eb9b890`](https://github.com/vijay3695/V36/commit/eb9b890af8a545633d33e6cb8d3645a5bcd94769): 59/59 unit tests, 17/17 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
+- **Current phase:** Phase 1 — Core discovery and filtering.
+- **Phase 0 status:** VERIFIED on [CI #57](https://github.com/vijay3695/V36/actions/runs/39574086433), exact commit [`8ebe1b3`](https://github.com/vijay3695/V36/commit/8ebe1b32dd4c7c0560725dbd592c88e9ecba2cd2): 59/59 unit tests, 17/17 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
@@ -53,6 +53,15 @@ These are **not yet verified as complete** merely because related code exists.
 5. Update this progress file and phase checkboxes in the same logical change as code.
 
 ## Work log
+
+### 2026-10-21 — Phase 1 URL and GitHub failure-path coverage (pending CI)
+
+- Expanded browser acceptance coverage to round-trip the standard filter set and custom creation/update/commit/push date bounds plus exact star limits through shareable URLs and reloads.
+- Added an E2E scenario for a selected issue whose issue/repository refresh returns 404, verifying that the reference and original description remain visible while unavailable evidence is disclosed.
+- Added eight GitHub API unit tests for secondary-rate-limit detection, ordinary permission 403 handling, HTTP 429 retry timing, invalid JSON, abort propagation, server errors, page/sort query parameters, and nested file-path encoding.
+- Updated AGENTS.md to start from Phase 1 after the verified Phase 0 gate, and synchronized PHASES.md/PROGRESS.md with [run #57](https://github.com/vijay3695/V36/actions/runs/39574086433).
+- This batch awaits its own consolidated Actions run; do not mark Phase 1 VERIFIED until all its acceptance criteria are covered and checked.
+
 
 ### 2026-10-21 — Protect unreadable browser storage (verified by CI)
 

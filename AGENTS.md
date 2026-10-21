@@ -40,7 +40,7 @@ After reading the files:
 7. Commit the coherent fix and its evidence to `main` unless the maintainer has directed otherwise. Avoid a stream of speculative commits that each trigger CI; diagnose first, then group related fixes.
 8. Re-check the resulting GitHub Actions run. Never claim a fix is complete merely because a commit was pushed.
 
-**Current starting task:** Phase 0 — baseline and CI stabilization. The latest documented evidence says unit tests passed but the browser end-to-end job failed at `npm run test:e2e`. First inspect the actual failing job output and pinpoint the first meaningful error/assertion. Reproduce it, fix the root cause, add regression coverage, run the checks, and update `PROGRESS.md`. Do not weaken/delete tests simply to make CI green. Verify whether newer runs have changed this status before acting.
+**Current starting task:** Phase 1 — core discovery and filtering. Phase 0 passed the consolidated CI gate on [run #57](https://github.com/vijay3695/V36/actions/runs/39574086433); inspect the current branch and newest run before relying on that snapshot. Expand end-to-end coverage for all shareable filter settings, custom date/star bounds, and unavailable issue details. Then continue through Phases 2–6 in `PHASES.md`, updating `PROGRESS.md` with exact evidence. Do not weaken tests or claim release readiness while manual accessibility acceptance or other required criteria remain incomplete.
 
 ## 4. Non-negotiable engineering rules
 
