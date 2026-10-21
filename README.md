@@ -1,5 +1,7 @@
 # V36
 
+**Live app:** [Open V36 on GitHub Pages](https://vijay3695.github.io/V36/) · **Source:** [GitHub repository](https://github.com/vijay3695/V36)
+
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
 **Status:** Initial development. This repository is not a verified release. Do not treat planned functionality as complete until the documented tests, accessibility checks, manual acceptance checks, and CI requirements have actually passed.
