@@ -1,0 +1,16 @@
+
+Running 5 tests using 4 workers
+
+OVERFLOW@320: false
+  ✓  1 [chromium] › tests/e2e/manual-check.spec.js:3:1 › manual: skip link is first tab stop (1.4s)
+REDUCED_MOTION_TRANSITION: 1e-05s
+OVERFLOW@375: false
+  ✓  3 [chromium] › tests/e2e/manual-check.spec.js:34:1 › manual: reduced motion disables animations (1.4s)
+OVERFLOW@768: false
+OVERFLOW@1280: false
+  ✓  4 [chromium] › tests/e2e/manual-check.spec.js:24:1 › manual: responsive no horizontal overflow (2.5s)
+TAB_STOPS: A -> A -> A -> A -> A -> INPUT#query -> INPUT#language -> INPUT#labels -> SELECT#issue-type -> SELECT#category -> SELECT#created -> SELECT#updated -> SELECT#commit-age -> SELECT#push-age -> SELECT#stars -> SELECT#sort -> SUMMARY -> BUTTON -> BUTTON#save-search -> BUTTON#reset-search -> A -> BODY -> A -> A -> A
+  ✓  5 [chromium] › tests/e2e/manual-check.spec.js:44:1 › manual: open detail and verify focus moves to heading (2.0s)
+  ✓  2 [chromium] › tests/e2e/manual-check.spec.js:9:1 › manual: tab through discover controls without trapping (3.5s)
+
+  5 passed (6.0s)

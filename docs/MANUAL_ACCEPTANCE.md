@@ -39,6 +39,15 @@
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling.
 - [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list.
 
+## Automated proxy results (Playwright)
+
+- Date: 2026-10-21
+- Commit: c90b2b836c0411938246efadaa35bd278c1ab4e3
+- Keyboard tab order: pass (skip link first; no trap observed)
+- Responsive overflow at 320/375/768/1280px: no horizontal overflow
+- Reduced motion: transition duration 0.00001s (effectively disabled)
+- Detail view focus moves to heading: pass
+
 ## Results
 
 - Outcome: NOT RUN / PASS / FAIL
