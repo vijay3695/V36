@@ -56,7 +56,7 @@ These are **not yet verified as complete** merely because related code exists.
 ### 2026-10-21 — Manual acceptance: 200% zoom recorded PASS (maintainer-reported)
 
 - The maintainer reported that the 200% zoom check passed.
-- Recorded it in `docs/MANUAL_ACCEPTANCE.md` as a maintainer-reported PASS dated 2026-10-21, with OS/browser versions and the exact commit SHA marked **not recorded** rather than invented.
+- Recorded it in `docs/MANUAL_ACCEPTANCE.md` as a maintainer-reported PASS dated 2026-10-21 in Firefox on Windows, with the browser/OS version numbers and the exact commit SHA marked **not recorded** rather than invented.
 - Replaced the automated-proxy "200% zoom: NOT PERFORMED" line with a pointer to the manual result.
 - Outcome is now **PARTIAL**: 200% zoom PASS; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN.
 - Phase 5 remains IN PROGRESS; no other manual check was marked complete, and no automated suite was re-run for this documentation-only change.

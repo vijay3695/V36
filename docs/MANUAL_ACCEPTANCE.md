@@ -6,8 +6,8 @@
 
 - Reviewer: maintainer (`vijay3695`), self-reported
 - Date/time: 2026-10-21 (time not recorded)
-- OS and version: not recorded
-- Browser and version: not recorded
+- OS and version: Windows (version not recorded)
+- Browser and version: Firefox (version not recorded)
 - Viewport / zoom: 200% zoom
 - Commit SHA tested: not recorded (entry written while `main` was at `cd9021b`)
 
@@ -25,7 +25,7 @@
 ## Visual / responsive checks
 
 - [ ] At 320px, 375px, 768px, and desktop width, confirm no horizontal page overflow or clipped controls.
-- [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; OS/browser not recorded)
+- [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
 - [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast.
 - [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling.
 - [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list.
@@ -46,7 +46,7 @@
 
 - Outcome: **PARTIAL** — 200% zoom **PASS** (maintainer-reported 2026-10-21); all other manual checks **NOT RUN**
 - Recorded manual results:
-  - 200% zoom: **PASS**, reported directly by the maintainer on 2026-10-21. OS/browser versions and the exact commit SHA were not recorded.
+  - 200% zoom: **PASS**, reported directly by the maintainer on 2026-10-21 in Firefox on Windows. Browser/OS versions and the exact commit SHA were not recorded.
 - Defects with reproduction steps:
 - Follow-up issue/commit links:
 - Reviewer sign-off:
