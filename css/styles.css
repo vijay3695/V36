@@ -4,3 +4,5 @@
 @media(max-width:760px){.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.filter-grid{grid-template-columns:1fr}.form-actions .button{width:100%;justify-content:center}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+.filter-uncertain{padding:.65rem .8rem;border-left:3px solid #d6a84f;background:#2b2415;color:#f0d9a4;border-radius:6px;font-size:.88rem;margin:.6rem 0}

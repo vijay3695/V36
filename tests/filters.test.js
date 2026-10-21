@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays} from "../js/filters.js";
+import {inferCategories,matchesFilters,buildSearchQuery,normalizeFilters,withinDays,unknownFilterReasons} from "../js/filters.js";
 const now=Date.parse("2026-01-31T00:00:00Z");
 const issue={title:"Fix crash and add regression tests",body:"The bug crashes the app.",created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[{name:"bug"}],repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:42,latestCommitDate:"2026-01-25T00:00:00Z"}};
 test("category inference allows multiple supported categories",()=>{const c=inferCategories(issue);assert.ok(c.includes("Bug fix"));assert.ok(c.includes("Tests"));});
@@ -34,4 +34,22 @@ test("relevance sort is accepted",()=>assert.equal(normalizeFilters({sort:"relev
 test("invalid custom dates and negative star counts are discarded",()=>{
  const f=normalizeFilters({createdAfter:"2026-02-31",minStars:"-2",maxStars:"not-a-number"});
  assert.equal(f.createdAfter,"");assert.equal(f.minStars,"");assert.equal(f.maxStars,"");
+});
+
+test("unknown metadata remains visible and identifies filters that could not be evaluated",()=>{
+ const f=normalizeFilters({language:"Python",labels:["bug"],createdAfter:"2026-01-01",minStars:"100",commitAfter:"2026-01-01"});
+ const incomplete={...issue,labels:undefined,created_at:null,repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:null}};
+ assert.equal(matchesFilters(incomplete,f,now),true);
+ assert.deepEqual(unknownFilterReasons(incomplete,f),["language metadata","labels","issue creation date","repository star count","latest commit date"]);
+});
+test("known mismatching metadata still rejects a result",()=>{
+ const f=normalizeFilters({language:"Python",minStars:"100",commitAfter:"2026-01-01"});
+ const known={...issue,repository:{...issue.repository,languages:["JavaScript"],stargazers_count:42,latestCommitDate:"2026-01-25T00:00:00Z"}};
+ assert.equal(matchesFilters(known,f,now),false);
+});
+test("missing star count is not treated as zero stars",()=>{
+ const f=normalizeFilters({stars:"0-99"});
+ const unknown={...issue,repository:{...issue.repository,stargazers_count:null}};
+ assert.equal(matchesFilters(unknown,f,now),true);
+ assert.deepEqual(unknownFilterReasons(unknown,f),["repository star count"]);
 });

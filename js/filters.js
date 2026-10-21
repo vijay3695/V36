@@ -13,22 +13,33 @@ export function withinDateRange(value,after="",before="",now=Date.now()){
  if(before&&(!validDate(before)||date>Date.parse(before+"T23:59:59.999Z")))return false;
  return date<=now;
 }
-function dateIsInRange(value,after,before,days,now){if(after||before)return withinDateRange(value,after,before,now);return !days||withinDays(value,days,now);}
+function dateIsInRange(value,after,before,days,now){if(!value||!Number.isFinite(Date.parse(value)))return null;if(after||before)return withinDateRange(value,after,before,now);return !days||withinDays(value,days,now);}
 export function matchesFilters(issue,f,now=Date.now()){
- const repo=issue.repository||{};const labels=(issue.labels||[]).map(x=>typeof x==="string"?x:x.name||"");const text=(String(issue.title||"")+" "+String(issue.body||"")+" "+String(repo.full_name||"")+" "+labels.join(" ")).toLowerCase();
+ const repo=issue.repository||{};const labels=Array.isArray(issue.labels)?issue.labels.map(x=>typeof x==="string"?x:x.name||""):[];const text=(String(issue.title||"")+" "+String(issue.body||"")+" "+String(repo.full_name||"")+" "+labels.join(" ")).toLowerCase();
  if(f.query&&!text.includes(f.query.trim().toLowerCase()))return false;
- if(f.language){const langs=Array.isArray(repo.languages)?repo.languages:[repo.language].filter(Boolean);if(!langs.some(x=>String(x).toLowerCase()===f.language.toLowerCase()))return false;}
- if((f.labels||[]).some(w=>!labels.some(l=>l.toLowerCase()===w.toLowerCase())))return false;
+ if(f.language){const target=f.language.toLowerCase();if(Array.isArray(repo.languages)){if(!repo.languages.some(x=>String(x).toLowerCase()===target))return false;}else if(repo.language&&String(repo.language).toLowerCase()===target){} }
+ if(Array.isArray(issue.labels)&&(f.labels||[]).some(w=>!labels.some(l=>l.toLowerCase()===w.toLowerCase())))return false;
  if(f.issueType==="issue"&&issue.pull_request)return false;if(f.issueType==="pr"&&!issue.pull_request)return false;
- if(f.category&&!inferCategories(issue).includes(f.category))return false;
- if(!dateIsInRange(issue.created_at,f.createdAfter,f.createdBefore,f.createdDays,now))return false;
- if(!dateIsInRange(issue.updated_at,f.updatedAfter,f.updatedBefore,f.updatedDays,now))return false;
- const stars=Number(repo.stargazers_count);
- if(f.stars){const a=f.stars.split("-");if(!Number.isFinite(stars)||(a[0]!==""&&stars<Number(a[0]))||(a[1]!==""&&stars>Number(a[1])))return false;}
- if(f.minStars!==""&&f.minStars!==undefined&&(!Number.isFinite(stars)||stars<Number(f.minStars)))return false;
- if(f.maxStars!==""&&f.maxStars!==undefined&&(!Number.isFinite(stars)||stars>Number(f.maxStars)))return false;
- if(!dateIsInRange(repo.latestCommitDate,f.commitAfter,f.commitBefore,f.commitAgeDays,now))return false;
+ if(f.category&&!( !issue.title&&!issue.body&&!Array.isArray(issue.labels) )&&!inferCategories(issue).includes(f.category))return false;
+ if(dateIsInRange(issue.created_at,f.createdAfter,f.createdBefore,f.createdDays,now)===false)return false;
+ if(dateIsInRange(issue.updated_at,f.updatedAfter,f.updatedBefore,f.updatedDays,now)===false)return false;
+ const stars=Number.isFinite(repo.stargazers_count)?repo.stargazers_count:NaN;
+ if(Number.isFinite(stars)&&f.stars){const a=f.stars.split("-");if((a[0]!==""&&stars<Number(a[0]))||(a[1]!==""&&stars>Number(a[1])))return false;}
+ if(Number.isFinite(stars)&&f.minStars!==""&&f.minStars!==undefined&&stars<Number(f.minStars))return false;
+ if(Number.isFinite(stars)&&f.maxStars!==""&&f.maxStars!==undefined&&stars>Number(f.maxStars))return false;
+ if(dateIsInRange(repo.latestCommitDate,f.commitAfter,f.commitBefore,f.commitAgeDays,now)===false)return false;
  return true;
+}
+export function unknownFilterReasons(issue,f){
+ const repo=issue.repository||{},reasons=[];
+ if(f.language&&!Array.isArray(repo.languages)&&(!repo.language||String(repo.language).toLowerCase()!==f.language.toLowerCase()))reasons.push("language metadata");
+ if((f.labels||[]).length&&!Array.isArray(issue.labels))reasons.push("labels");
+ if((f.createdDays||f.createdAfter||f.createdBefore)&&(!issue.created_at||!Number.isFinite(Date.parse(issue.created_at))))reasons.push("issue creation date");
+ if((f.updatedDays||f.updatedAfter||f.updatedBefore)&&(!issue.updated_at||!Number.isFinite(Date.parse(issue.updated_at))))reasons.push("issue update date");
+ if((f.stars||f.minStars!==""&&f.minStars!==undefined||f.maxStars!==""&&f.maxStars!==undefined)&&!Number.isFinite(repo.stargazers_count))reasons.push("repository star count");
+ if((f.commitAgeDays||f.commitAfter||f.commitBefore)&&(!repo.latestCommitDate||!Number.isFinite(Date.parse(repo.latestCommitDate))))reasons.push("latest commit date");
+ if(f.category&&!issue.title&&!issue.body&&!Array.isArray(issue.labels))reasons.push("category evidence");
+ return reasons;
 }
 export function buildSearchQuery(f,now=Date.now()){
  const p=["is:open"];if(f.query)p.push(f.query.trim());

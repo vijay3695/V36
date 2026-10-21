@@ -55,6 +55,16 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Unknown metadata and incomplete search results (pending CI)
+
+- Changed metadata-dependent filtering so missing language, labels, dates, stars, or latest-commit evidence does not silently remove an issue from the visible result set. Such results are visibly marked as not fully evaluated.
+- Corrected null star counts so they are not interpreted as zero stars.
+- Kept load-more available when GitHub marks a result set incomplete but provides another page.
+- Canonicalized saved-search label ordering during backup validation to improve duplicate detection.
+- Added unit and browser regression tests for unknown metadata behavior.
+- This batch has not run yet; check the single consolidated workflow before marking it verified.
+
+
 ### 2026-10-21 — API failure and import diagnostics coverage (pending CI)
 
 - Added unit coverage for rate-limit detection/retry timing, missing GitHub resources, network failures, relevance sorting, and base64 contribution-guide decoding.
@@ -69,7 +79,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Wired new filter values through form state, shareable URLs, and saved-search backups.
 - Added repository push date, issue comment count, closed date, and pull-request link to activity evidence.
 - Context packs now retrieve a repository-root file listing on demand, include identifiable root-level source links, and fetch a root `CONTRIBUTING.md` when available. Missing sources are disclosed.
-- Added unit and browser integration tests. Run `39568309050` passed all 21 unit tests and 6 browser tests; its integration test exposed a textarea-value assertion mistake. Run `39568636335` passed all 21 unit tests and 7 browser tests but revealed that the global status region was inside the hidden Discover view, making Saved-page import feedback inaccessible. The status region has been moved outside the individual views so search, save, export, and import feedback remains visible on every page. The follow-up run [39568836496](https://github.com/vijay3695/V36/actions/runs/39568836496) passed the full suite: 21 unit tests and 8 browser tests, including the sourced context-pack flow, URL restoration, detail-page axe scan, and invalid-import preservation. The next batch adds direct API error/rate-limit tests, import-report tests, and search-failure result-preservation coverage; these checks are pending.
+- Added unit and browser integration tests. Run `39568309050` passed all 21 unit tests and 6 browser tests; its integration test exposed a textarea-value assertion mistake. Run `39568636335` passed all 21 unit tests and 7 browser tests but revealed that the global status region was inside the hidden Discover view, making Saved-page import feedback inaccessible. The status region has been moved outside the individual views so search, save, export, and import feedback remains visible on every page. The follow-up run [39568836496](https://github.com/vijay3695/V36/actions/runs/39568836496) passed the full suite: 21 unit tests and 8 browser tests, including the sourced context-pack flow, URL restoration, detail-page axe scan, and invalid-import preservation. The latest consolidated run [39569098206](https://github.com/vijay3695/V36/actions/runs/39569098206) passed 28 unit tests and 8 browser tests. The current batch addresses unknown metadata semantics and partial-result pagination; its bulk test run is pending.
 
 
 ### 2026-10-21 — Expanded filters, activity evidence, and context packs (pending CI)
