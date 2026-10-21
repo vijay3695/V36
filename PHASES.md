@@ -10,7 +10,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 |---|---|---|---|
 | 0 — Baseline and CI | **VERIFIED** | [Run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current main passed 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
 | 1 — Discovery and filters | **VERIFIED** | [Run #60](https://github.com/vijay3695/V36/actions/runs/39575117877): 75/75 unit tests, 24/24 browser tests, and 3/3 accessibility checks passed. Standard/custom URL round-trips, secondary-language metadata, safe share URLs, partial results, and filter boundaries are covered. | Re-check after later changes; investigate any regression. |
-| 2 — Issue details/activity | **IN PROGRESS — audit remaining criteria later** | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed issue handling, and manual retry are implemented; [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) passed the full suite. | Leave the retry-time assertion unchanged for now; do not spend another batch on it. During a later Phase 2/5 audit, verify moved/deleted references, freshness, and the full activity-evidence criteria before marking this phase VERIFIED. |
+| 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
 | 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
 | 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, screen-reader, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
@@ -57,18 +57,20 @@ Acceptance criteria:
 
 ## Phase 2 — Issue details and activity evidence
 
+**Status: VERIFIED (local, no GitHub Actions).** Unit, browser E2E, and standalone accessibility checks passed locally (86/86, 25/25, 3/3). Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested.
+
 Tasks:
-- [ ] Dedicated issue-detail view.
-- [ ] Show issue description, canonical link, labels, issue dates, repository details, stars, and available activity evidence.
-- [ ] Fetch supplemental repository activity only for displayed results / selected details to conserve quota.
-- [ ] Show data fetch time where applicable and identify unavailable fields.
-- [ ] Provide GitHub search links for related issues and PRs; do not claim automatic duplicate detection.
-- [ ] Handle closed, moved, deleted, or inaccessible issue references honestly.
+- [x] Dedicated issue-detail view.
+- [x] Show issue description, canonical link, labels, issue dates, repository details, stars, and available activity evidence.
+- [x] Fetch supplemental repository activity only for displayed results / selected details to conserve quota.
+- [x] Show data fetch time where applicable and identify unavailable fields.
+- [x] Provide GitHub search links for related issues and PRs; do not claim automatic duplicate detection.
+- [x] Handle closed, moved, deleted, or inaccessible issue references honestly.
 
 Acceptance criteria:
-- [ ] Unknown and unavailable values are not guessed.
-- [ ] Stars are presented as popularity, not repository health.
-- [ ] Rate limits stop additional requests, preserve results, explain the situation, and allow manual retry.
+- [x] Unknown and unavailable values are not guessed.
+- [x] Stars are presented as popularity, not repository health.
+- [x] Rate limits stop additional requests, preserve results, explain the situation, and allow manual retry.
 
 ## Phase 3 — Saved issues/searches and portability
 

@@ -6,8 +6,8 @@
 
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
-- **Current work phase:** Phase 3 — Saved issues/searches and portability. Phase 2 remains IN PROGRESS for a later acceptance-criteria audit; the retry-time assertion is intentionally left unchanged for now.
-- **Phase 0 and Phase 1 status:** VERIFIED. Current main also passed [CI #64](https://github.com/vijay3695/V36/actions/runs/39576488647): 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in the single consolidated job.
+- **Current work phase:** Phase 3 — Saved issues/searches and portability. Phase 2 is now VERIFIED locally (86/86 unit, 25/25 E2E, 3/3 a11y; no GitHub Actions). The retry-time assertion remains covered by the E2E suite.
+- **Phase 0 and Phase 1 status:** VERIFIED. Phase 2 status: VERIFIED locally (see work log).
 - **Phase 2 retry-time test:** Kept in place as requested. Earlier runs #61 and #62 failed; the CORS fixture correction was followed by green [CI #63](https://github.com/vijay3695/V36/actions/runs/39576107714) and [CI #64](https://github.com/vijay3695/V36/actions/runs/39576488647). Do not spend another batch on this assertion; revisit it only during the later Phase 2/5 audit. Historical failures #53–#55 remain documented below.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current `main`: 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks. One consolidated workflow/job.
@@ -54,6 +54,14 @@ These are **not yet verified as complete** merely because related code exists.
 5. Revisit Phase 2 acceptance gaps during a later audit before any release; do not mark Phase 2 VERIFIED yet.
 
 ## Work log
+
+### 2026-10-21 — Phase 2 verified locally (no GitHub Actions)
+
+- Audited Phase 2 acceptance criteria against the implementation and tests.
+- Fixed the storage normalization bug (`js/storage.js`): issue/PR numbers are now derived from the validated canonical URL instead of trusting a conflicting imported `number`.
+- Ran the full bulk suite locally: `npm run test:all` passed — 86/86 unit tests, 25/25 browser E2E tests, 3/3 standalone accessibility checks.
+- Updated `PHASES.md` to mark Phase 2 VERIFIED with local evidence.
+- GitHub Actions were not triggered. Push remains blocked by the Actions conflict; no push performed.
 
 ### 2026-10-21 — Closed/unavailable issue handling and manual acceptance guide (pending CI)
 

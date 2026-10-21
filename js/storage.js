@@ -1,7 +1,7 @@
 const KEY="v36.saved.v1";export const MAX_IMPORT_BYTES=1048576;const LIMIT=2000;const CATEGORIES=["Bug fix","Documentation","Tests","Feature or enhancement","Refactoring","Other/No category inferred"];
 const str=(v,n=10000)=>typeof v==="string"?v.slice(0,n):"";const dateValue=v=>typeof v==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v+"T00:00:00Z"))&&new Date(v+"T00:00:00Z").toISOString().slice(0,10)===v?v:"";const numberValue=v=>v!==""&&v!==null&&v!==undefined&&Number.isSafeInteger(Number(v))&&Number(v)>=0&&Number(v)<=100000000?String(Number(v)):"";
 function issueUrl(v){try{const u=new URL(v);if(u.hostname!=="github.com"||!/^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/(issues|pull)\/\d+\/?$/.test(u.pathname))return "";return "https://github.com"+u.pathname.replace(/\/$/,"");}catch{return "";}}
-function cleanIssue(x){if(!x||typeof x!=="object")return null;const url=issueUrl(x.url||x.html_url);if(!url)return null;return {url,title:str(x.title,500),repository:str(x.repository,300),number:Number.isSafeInteger(x.number)&&x.number>0?x.number:Number(url.match(/\/(\d+)$/)?.[1]||0),savedAt:str(x.savedAt,40)||new Date().toISOString()};}
+function cleanIssue(x){if(!x||typeof x!=="object")return null;const url=issueUrl(x.url||x.html_url);if(!url)return null;return {url,title:str(x.title,500),repository:str(x.repository,300),number:Number(url.match(/\/(\d+)$/)?.[1]||0),savedAt:str(x.savedAt,40)||new Date().toISOString()};}
 function key(f){return JSON.stringify(Object.fromEntries(Object.entries(f||{}).sort(([a],[b])=>a.localeCompare(b))));}
 function cleanSearch(x){
  if(!x||typeof x!=="object"||!x.filters||typeof x.filters!=="object")return null;
