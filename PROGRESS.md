@@ -62,7 +62,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Kept load-more available when GitHub marks a result set incomplete but provides another page.
 - Canonicalized saved-search label ordering during backup validation to improve duplicate detection.
 - Added unit and browser regression tests for unknown metadata behavior.
-- This batch has not run yet; check the single consolidated workflow before marking it verified.
+- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected batch is pending its next consolidated run.
 
 
 ### 2026-10-21 — API failure and import diagnostics coverage (pending CI)
