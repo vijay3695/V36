@@ -1,6 +1,6 @@
 # V36 Project Plan
 
-**Status:** Development in progress — not a release.
+**Status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728` with explicit Phase 5 manual-review waiver; no public release published.
 **License:** MIT
 **Default branch:** `main`
 **Hosting target:** GitHub Pages (static-first; no paid backend or AI API).
@@ -152,4 +152,4 @@ Any release-blocking defect prevents publication. A workflow run or commit is no
 
 ## 14. Current status
 
-This document describes agreed scope and acceptance requirements; it does not certify that the features are complete. On 2026-10-21, the maintainer explicitly approved Phase 5 and directed completion of Phase 6. For this project, that approval waives the outstanding human visual review items as release sign-off exceptions; the underlying checks remain recorded as NOT RUN and must not be described as passing. Automated unit, browser, and accessibility suites must still pass on the exact final candidate commit, and all other release criteria must be evidenced before any release.
+This document describes agreed scope and acceptance requirements. Phase 6 was verified on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`: [CI run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) passed 101/101 unit tests, 42/42 browser tests, and 3/3 standalone accessibility scans; [responsive overflow run](https://github.com/vijay3695/V36/actions/runs/39642076859) passed at 320/375/768/1280px. On 2026-10-21, the maintainer explicitly approved Phase 5 and waived the outstanding human visual review items as sign-off exceptions. Those checks remain NOT RUN and are not described as passing. No public release was published in this task.

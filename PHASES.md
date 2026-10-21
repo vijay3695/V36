@@ -137,24 +137,25 @@ Acceptance criteria:
 
 ## Phase 6 — End-to-end verification and release readiness
 
+**Status: VERIFIED — 2026-10-21, with the maintainer-approved Phase 5 manual-review waiver recorded.** Full consolidated CI passed on candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, and 3/3 standalone accessibility scans. Responsive overflow automation also passed on the same commit at 320, 375, 768, and 1280 CSS pixels. No failed or skipped tests in the successful full-suite run. Human visual review at 768px/desktop, human contrast review, reduced-motion manual review, and long-content manual review remain NOT RUN and are explicitly waived for phase sign-off by the maintainer; automated results are not represented as human review.
+
 Tasks:
-- [ ] Run the complete unit-test suite.
-- [ ] Run the complete browser E2E suite.
-- [ ] Run automated accessibility checks and documented manual keyboard checks.
-- [ ] Verify import/export, URL sharing, context packs, filters, load more, and failure states end to end.
-- [x] Audit documentation against recorded implementation and current test evidence; stale agent handoff/CI instructions identified and corrected in this batch.
-- [x] Audit the release checklist, project plan, manual acceptance record, release list, current workflow, and latest CI failure; incomplete gates are recorded in the Phase 6 report. (Audit complete; release criteria remain incomplete.)
-- [x] Publish a pre-release audit report tied to the exact audited baseline commit, listing checks, results, limitations, and failed/skipped checks. (This is not a final release verification report; no candidate is eligible yet.)
-- [ ] Confirm CI is green on the exact candidate commit.
-- [ ] Release only after all release-blocking checks pass.
+- [x] Run the complete unit-test suite — 101/101 passed.
+- [x] Run the complete browser E2E suite — 42/42 passed.
+- [x] Run automated accessibility checks and documented manual keyboard checks — 3/3 standalone axe scans passed; maintainer-reported keyboard acceptance remains documented; residual manual visual checks waived by explicit maintainer approval.
+- [x] Verify import/export, URL sharing, context packs, filters, load more, and failure states end to end — relevant mocked browser tests passed in the complete suite.
+- [x] Audit documentation against recorded implementation and current test evidence; stale agent handoff/CI instructions corrected.
+- [x] Audit the release checklist, project plan, manual acceptance record, release list, workflow, and latest CI failure; disposition recorded in this report.
+- [x] Publish a public, auditable verification report tied to the exact tested candidate commit, listing checks, results, limitations, and waived/not-run checks.
+- [x] Confirm CI is green on the exact candidate commit — [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) on `7e91404d05e85cb24447ae5708ec21896f4a5728`.
+- [x] Enforce release policy — no public release was published as part of this task; publication remains a separate action.
 
 Acceptance criteria:
-- [ ] Every required checkbox in the plan/spec is verified with evidence.
-- [ ] No known release-blocking defects remain.
-- [ ] No failed/skipped check is described as passing.
-- [ ] No public release before explicit completion of the release gate.
-
+- [x] Every required item has a verified result or an explicit maintainer-approved exception recorded.
+- [x] No known unresolved automated release-blocking defect remains in the verified test scope.
+- [x] No failed or skipped check is described as passing; the waived manual checks remain marked NOT RUN.
+- [x] No public release is published before the release gate is explicitly completed.
 
 ### Phase 6 sequencing note — 2026-10-21
 
-The maintainer explicitly directed on 2026-10-21 to approve Phase 5 and complete Phase 6. Phase 5 is approved with a documented waiver of the remaining human visual checks, not falsely recorded as performed. The remaining automated browser failure was a non-unique label locator and is being corrected without weakening the assertion. Phase 6 proceeds through complete test verification and exact-commit evidence; any failed or skipped check must remain disclosed.
+The maintainer explicitly directed on 2026-10-21 to approve Phase 5 and complete Phase 6. Phase 5 is approved with a documented waiver of the remaining human visual checks, not falsely recorded as performed. The long-content browser locator was corrected without weakening the assertion. Full consolidated CI passed on candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101 unit tests, 42 browser tests, and 3 standalone accessibility scans; responsive overflow checks also passed at 320/375/768/1280px. Phase 6 is VERIFIED with this explicit manual-review waiver; no release was published.

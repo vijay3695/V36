@@ -4,15 +4,16 @@
 
 ## Current snapshot
 
-- **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
-- **Project status:** In development; not release-ready.
-- **Current work phase:** Phase 6 — End-to-end verification and release readiness (**pre-release audit only**). Per maintainer direction on 2026-10-21, remaining Phase 5 tests are deferred to a later pass; Phase 5 is still IN PROGRESS and this does not waive its acceptance criteria. Phases 0–4 retain their recorded VERIFIED status (0/1 with GitHub Actions history; 2–4 locally).
-- **Latest local evidence (`main`):** 95/95 unit tests, 37/37 browser tests, 3/3 standalone axe scans at commit `ac5306e`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
-- **CI / Actions reality:** `.github/workflows/ci.yml` is present on `main` and runs unit, browser, and standalone accessibility checks in one job. Latest run [#69](https://github.com/vijay3695/V36/actions/runs/39638495312) on commit `998670ff6cf91d00a72c91343b8a70ddb7b47d95` — **FAILED** during browser regression tests; unit tests passed and the standalone accessibility step was skipped. Do not treat this commit as CI-verified.
-- **Release blocker:** The release gate requires CI to pass on the exact release candidate and all Phase 5 acceptance criteria to be met. CI is active but currently red, and Phase 5 follow-up tests are explicitly deferred by the maintainer. No release is authorized.
-- **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
-- **Last documentation commit before this work:** `0638fb9` — "docs: remove screen-reader requirement per maintainer".
-- **This file's purpose:** handoff state for the next coding agent. Re-check the real branch, tree, and Actions state before relying on this snapshot.
+- **Branch:** `main` (single-branch workflow; work committed directly to `main`).
+- **Project status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`, with explicit Phase 5 manual-review waiver; no public release published.
+- **Phase 5:** APPROVED BY MAINTAINER on 2026-10-21. Remaining human visual checks are explicitly waived for phase sign-off but remain NOT RUN: 768px/desktop visual review, human contrast review, reduced-motion manual review, and human long-content review.
+- **Phase 6 candidate CI:** [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans. The long-content locator ambiguity was fixed by scoping the assertion to `#detail-content`; the assertion was not weakened.
+- **Responsive viewport CI:** [run #73 companion check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow.
+- **Known limitations:** Human visual sign-off at 768px/desktop, human contrast, reduced-motion manual, and long-content manual checks were not performed; explicit maintainer waiver is recorded. Automated checks do not substitute for those manual checks.
+- **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
+- **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
+- **Last verified application candidate:** `7e91404d05e85cb24447ae5708ec21896f4a5728`. Documentation updates in this completion batch record the verified evidence and will themselves be checked by CI.
+
 
 ## Verified observations
 
@@ -342,3 +343,13 @@ These are **not yet verified as complete** merely because related code exists.
 - Fixed the sole known browser-test failure without weakening coverage: the long-content resilience test now scopes the final-label assertion to `#detail-content`, where the detail-view label is expected.
 - Updated `PHASES.md`, `docs/MANUAL_ACCEPTANCE.md`, and `docs/PROJECT_PLAN.md` to record the approval/waiver accurately, and updated this log and the Phase 6 audit report.
 - Next verification is the consolidated `npm run test:all` GitHub Actions run on the commit containing this change. Phase 6 can only be declared complete after that run passes; no test result is assumed in advance.
+
+
+### 2026-10-21 — Phase 5 approved and Phase 6 verified
+
+- Maintainer explicitly ordered Phase 5 approval and Phase 6 completion. Phase 5 is **APPROVED BY MAINTAINER** with a documented waiver for remaining human visual checks. They remain NOT RUN and are not misreported as passing.
+- Fixed the long-content test locator ambiguity by scoping the exact label assertion to `#detail-content`, preserving the assertion.
+- Candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728`: [consolidated CI run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) passed `npm run test:all`: **101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans**. No failures or skipped suites.
+- Responsive overflow check [run #73 companion](https://github.com/vijay3695/V36/actions/runs/39642076859) passed at 320/375/768/1280px with no document-level overflow.
+- Updated the acceptance checklist, project plan, phase tracker, agent handoff, and final verification report. The report discloses the remaining manual-review waiver.
+- **Phase 6: VERIFIED.** No public release was published; the user ordered phase completion, not publication.

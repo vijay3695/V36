@@ -1,64 +1,43 @@
-# Phase 6 — Pre-release audit report
+# Phase 6 — Final verification report
 
-**Audit date:** 2026-10-21  
-**Audited branch:** `main`  
-**Audited baseline commit:** `3f86bf81a2c45d14972c2d3bb3669db6b80c2d63`  
-**Status:** PHASE 5 APPROVAL RECORDED; PHASE 6 FINAL VERIFICATION IN PROGRESS  
-**Release published:** No (GitHub Releases API returned an empty list)
+**Verification date:** 2026-10-21  
+**Branch:** `main`  
+**Tested candidate commit:** `7e91404d05e85cb24447ae5708ec21896f4a5728`  
+**Phase 5:** APPROVED BY MAINTAINER with documented manual-review waiver  
+**Phase 6:** VERIFIED  
+**Public release:** Not published
 
-## Scope and outcome
+## Final CI evidence
 
-This is an audit report, not a release sign-off. The maintainer explicitly directed approval of Phase 5 and completion of Phase 6. The outstanding manual visual checks are waived for phase sign-off but remain recorded as NOT RUN. The audit checked project decisions, phase/progress tracking, product/release requirements, manual acceptance notes, npm scripts, the GitHub Actions workflow, recent workflow history, and the actual failing CI job log. The long-content browser test locator has been corrected without weakening the assertion; the consolidated CI run must verify it.
+- [Consolidated GitHub Actions run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on exact candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728`.
+- Unit tests: **101 passed, 0 failed**.
+- Browser end-to-end suite: **42 passed, 0 failed**.
+- Standalone accessibility suite: **3 passed, 0 failed**.
+- The workflow uses one job and the bulk command `npm run test:all`.
+- [Responsive viewport check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** on the same candidate commit at 320, 375, 768, and 1280 CSS pixels; no document-level horizontal overflow.
+- The long-content test's ambiguous label locator was fixed by scoping the exact label to `#detail-content`. The assertion was not weakened. The test passed at 320, 768, and 1280px and reported equal viewport/document/body widths.
 
-## Exact CI evidence
+## Coverage verified by the passing suite
 
-- Latest run at audit time: [CI run #71](https://github.com/vijay3695/V36/actions/runs/39640377631), commit `3f86bf81a2c45d14972c2d3bb3669db6b80c2d63` — **FAILURE**.
-- Unit tests — **PASS**.
-- Browser suite — **41 passed, 1 failed**.
-- Standalone accessibility scan — **SKIPPED** because the browser step failed.
-- Failing test: `tests/e2e/manual-check.spec.js:85`, assertion at line 125.
-- Failure detail: `getByText('accessibility-resilience-label-24')` matches two visible elements: the search result card and the issue detail. Playwright strict mode rejects the ambiguous locator. This establishes a test-selector ambiguity, not a demonstrated application layout defect. The failure remains real and unresolved; it is left for the explicitly deferred Phase 5 follow-up.
-- Separate responsive overflow run [#68](https://github.com/vijay3695/V36/actions/runs/39638495831) passed the automated document-overflow test at 320, 375, 768, and 1280 CSS pixels on commit `998670ff6cf91d00a72c91343b8a70ddb7b47d95`. This is earlier-commit evidence and does not certify visual usability.
+The passing suite includes search and filter semantics, custom date/star bounds, unknown metadata handling, load-more and partial results, issue details and activity retry, related links, sourced context packs and incomplete-source disclosure, saved issues/searches, validated import/export, duplicate handling, shareable URL round-trips, preservation of saved data on failures, hostile-content safe rendering, accessibility announcements, automated contrast checks, keyboard proxies, responsive overflow, reduced-motion behavior, long titles/descriptions and many labels.
 
-## Manual acceptance status
+## Phase 5 approval and remaining manual-review waiver
 
-See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). The maintainer's recorded keyboard checks and 200% zoom check passed, and manual visual approval is recorded for 320px and 375px. The following remain incomplete: human visual review at 768px and desktop, contrast review, reduced-motion review, and long-content/manual visual review. Browser and OS versions are not fully recorded. Automated axe results are not equivalent to complete accessibility acceptance.
+The maintainer explicitly ordered Phase 5 approval on 2026-10-21. Phase 5 is approved with a documented waiver for these human visual checks:
 
-## Release-gate audit
+- Human visual review at 768px and desktop width — **NOT RUN / WAIVED**.
+- Human contrast review — **NOT RUN / WAIVED**.
+- Human OS/browser reduced-motion review — **NOT RUN / WAIVED**.
+- Human long-content visual review — **NOT RUN / WAIVED**.
 
-| Gate | Audit result | Evidence / remaining action |
-|---|---|---|
-| Product scope and documented requirements | Audited | Full-scope release remains required; see [PROJECT_PLAN.md](PROJECT_PLAN.md) and [ACCEPTANCE_CHECKLIST.md](ACCEPTANCE_CHECKLIST.md). |
-| Unit tests | Passed in latest CI | Run #71 unit-test step passed. |
-| Browser end-to-end tests | **Failed** | One ambiguous locator in the long-content resilience test; fix in deferred Phase 5 follow-up and rerun. |
-| Automated accessibility suite | **Skipped in latest CI** | Must pass on the exact candidate commit. |
-| Manual accessibility/responsive acceptance | **Partial** | Several checks listed above are pending. |
-| Security/import/failure behavior | Automated coverage exists; full gate not certified | Confirm complete suite passes and audit any remaining unchecked acceptance items. |
-| Documentation consistency | Audit performed; stale handoff and CI-command instructions corrected in this batch | Recheck after Phase 5 completion and candidate test run. |
-| CI on exact release candidate | **Not satisfied** | No release candidate exists; latest full run failed. |
-| Public release | **Not published** | Do not publish until every mandatory gate passes. |
+These are not reported as passing. Existing maintainer-reported keyboard acceptance, 200% zoom, and 320px/375px visual approval remain recorded in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). Automated axe/contrast, reduced-motion, and responsive checks passed in CI, but they are not equivalent to human visual acceptance.
 
-## Changes made during this audit batch
+## Release checklist disposition
 
-- Updated `AGENTS.md` to describe the actual Phase 6 status, the deferred Phase 5 work, and the current failure evidence rather than obsolete workflow-removal claims.
-- Consolidated `.github/workflows/ci.yml` to invoke `npm run test:all` as the one bulk test command in its single job, matching `PLAN.md` and the package scripts.
-- Updated `PHASES.md` and `PROGRESS.md` to record this audit and preserve the blocked status.
-- Added this report so the current evidence and limitations are easy to hand off.
+The full [acceptance checklist](ACCEPTANCE_CHECKLIST.md) and [project plan](PROJECT_PLAN.md) were updated to reflect test evidence and the explicit waiver. All required release items are either supported by implementation/test evidence or have a clearly documented maintainer-approved exception. No test is marked passing unless it ran and passed. The CI failure from earlier runs was resolved by correcting the locator.
 
-## Decision
+## Final decision
 
-**Phase 6 is not VERIFIED. V36 is not release-ready.** The documentation/release audit work in this batch is recorded, but the Phase 6 acceptance criteria require every mandatory gate to pass. The remaining Phase 5 checks were deferred by maintainer instruction and are not waived. No release was published.
+**Phase 5 is approved. Phase 6 is verified and complete.** The final consolidated CI run is green on the tested candidate commit, and no automated release-blocking defect remains in the verified scope. The four human visual checks listed above remain NOT RUN under the maintainer's explicit waiver.
 
-## Next actions
-
-1. When the maintainer resumes Phase 5, make the long-content test locator specific to the intended container (without weakening the assertion).
-2. Run `npm run test:all` and inspect the full output; all unit, browser, and accessibility suites must pass.
-3. Complete the outstanding manual checks and update `MANUAL_ACCEPTANCE.md` with environment, commit SHA, and actual results.
-4. Re-audit all checkboxes, create a final verification report tied to the exact candidate SHA, and only then consider release publication.
-
-
-## Maintainer authorization and follow-through
-
-On 2026-10-21, the maintainer explicitly ordered: “approve phase 5 and complete phase 6 now.” Phase 5 is therefore marked approved with a documented waiver for the remaining human visual checks. The waiver does not turn the checks into passes: 768px/desktop visual review, human contrast review, reduced-motion review, and human long-content review remain NOT RUN. The automated reduced-motion, responsive-overflow, contrast, and long-content browser checks remain subject to CI.
-
-The long-content test's ambiguous locator was changed to scope the exact label assertion to `#detail-content`. This preserves the test's intent and avoids matching the same label in the result card. Final Phase 6 status depends on the consolidated test run for the commit containing this correction. No release is published by this approval.
+No public release was created. Phase completion and public release publication are separate actions; this task completed Phase 6 and recorded release readiness without publishing a release.
