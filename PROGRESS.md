@@ -8,7 +8,7 @@
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 2 — Issue details and activity evidence.
 - **Phase 0 and Phase 1 status:** VERIFIED on [CI #60](https://github.com/vijay3695/V36/actions/runs/39575117877), exact commit [`83d8327`](https://github.com/vijay3695/V36/commit/83d8327f819d477087912d99bd25648646ba3686): 75/75 unit tests, 24/24 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job.
-- **Current Phase 2 batch:** [CI #61](https://github.com/vijay3695/V36/actions/runs/39575435286) FAILED in one E2E test: the mocked rate-limit response did not surface the expected “Retry after” text. Official-label assertions passed; the failure is limited to retry-time evidence and is being fixed in the next batch. Historical failures #53–#55 are also documented below.
+- **Current Phase 2 batch:** [CI #62](https://github.com/vijay3695/V36/actions/runs/39575815864) also FAILED in the same retry-time E2E assertion. The fixture supplied `Retry-After` but did not set `Access-Control-Expose-Headers`, so browser fetch could not read that cross-origin response header. The next fix adds the exposure header; the assertion remains strict (`Retry after` must appear). Historical failures #53–#55 are also documented below.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
@@ -60,7 +60,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Added a dedicated Official issue labels section to the detail view, separate from inferred contribution categories.
 - Rate-limited detail/activity failures now disclose GitHub retry timing when supplied, while retaining the manual retry action.
 - Added regression assertions for displayed official labels and rate-limit retry-time messaging.
-- [Run #61](https://github.com/vijay3695/V36/actions/runs/39575435286) passed 75/75 unit tests and 23/24 browser tests; the single failure was the “Retry after” assertion in the rate-limited activity retry test. The route fixture used x-ratelimit-reset, which did not produce retry text in this mocked response. The next batch switches the fixture to Retry-After and makes detail error formatting check the rateLimited property directly. Phase 2 remains blocked until the corrected full run passes.
+- [Run #61](https://github.com/vijay3695/V36/actions/runs/39575435286) and [run #62](https://github.com/vijay3695/V36/actions/runs/39575815864) each passed 75/75 unit tests but failed one browser assertion requiring visible retry time. The first fixture used x-ratelimit-reset; the second used Retry-After, but neither exposed the custom header through CORS. The next batch adds `Access-Control-Expose-Headers` to the mocked response and keeps the strict retry-time assertion. Phase 2 remains blocked until a green full run.
 
 
 ### 2026-10-21 — Secondary languages and safe shareable URLs (passed CI)

@@ -257,7 +257,7 @@ test("issue detail activity can be retried after a rate-limited repository refre
   const u=new URL(route.request().url());
   if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
   if(u.pathname==="/repos/acme/demo/issues/12")return route.fulfill({json:issue});
-  if(u.pathname==="/repos/acme/demo"){repoCalls++;if(repoCalls===2)return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","retry-after":"30"},json:{message:"API rate limit exceeded"}});return route.fulfill({json:repo});}
+  if(u.pathname==="/repos/acme/demo"){repoCalls++;if(repoCalls===2)return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","retry-after":"30","access-control-expose-headers":"x-ratelimit-remaining, retry-after"},json:{message:"API rate limit exceeded"}});return route.fulfill({json:repo});}
   if(u.pathname==="/repos/acme/demo/readme"){readmeCalls++;return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1v"}});}
   if(u.pathname==="/repos/acme/demo/commits"){commitCalls++;return route.fulfill({json:[]});}
   return route.fulfill({status:404,json:{message:"not mocked"}});
