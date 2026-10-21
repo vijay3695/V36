@@ -37,7 +37,11 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Fix crash on startup"})).toBeVisible();
+ await expect(page.getByText(/Issue comments: 2/)).toBeVisible();
+ await expect(page.getByText(/Issue data fetched/)).toBeVisible();
  await expect(page.getByText(/Last repository push/)).toBeVisible();
+ await expect(page.getByRole("link",{name:"Search related issues"})).toHaveAttribute("href",/github\.com\/search/);
+ await expect(page.getByRole("link",{name:"Search related pull requests"})).toHaveAttribute("href",/github\.com\/search/);
  const accessibility=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
  expect(accessibility.violations).toEqual([]);
  await page.getByRole("button",{name:"Generate context pack"}).focus();await page.keyboard.press("Enter");
@@ -49,10 +53,14 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Saved issues"})).toBeVisible();
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
+ await page.reload();
+ await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
  await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
  await page.getByRole("button",{name:"Save search"}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("status")).toContainText("Search preset saved");
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
+ await expect(page.locator("#saved-searches .saved-search")).toHaveCount(1);
+ await page.reload();
  await expect(page.locator("#saved-searches .saved-search")).toHaveCount(1);
  await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
  await page.getByLabel("Search issues").fill("failure");

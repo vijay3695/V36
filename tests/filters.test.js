@@ -37,10 +37,10 @@ test("invalid custom dates and negative star counts are discarded",()=>{
 });
 
 test("unknown metadata remains visible and identifies filters that could not be evaluated",()=>{
- const f=normalizeFilters({language:"Python",labels:["bug"],createdAfter:"2026-01-01",minStars:"100",commitAfter:"2026-01-01"});
+ const f=normalizeFilters({language:"Python",labels:["bug"],createdAfter:"2026-01-01",updatedAfter:"2026-01-01",minStars:"100",commitAfter:"2026-01-01"});
  const incomplete={...issue,labels:undefined,created_at:null,repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:null}};
  assert.equal(matchesFilters(incomplete,f,now),true);
- assert.deepEqual(unknownFilterReasons(incomplete,f),["language metadata","labels","issue creation date","repository star count","latest commit date"]);
+ assert.deepEqual(unknownFilterReasons(incomplete,f),["language metadata","labels","issue creation date","issue update date","repository star count","latest commit date"]);
 });
 test("known mismatching metadata still rejects a result",()=>{
  const f=normalizeFilters({language:"Python",minStars:"100",commitAfter:"2026-01-01"});
@@ -93,4 +93,10 @@ test("repository push date filters are distinct from latest commit filters",()=>
 test("repository push age preset rejects known stale repositories",()=>{
  const f=normalizeFilters({pushAgeDays:"30"});
  assert.equal(matchesFilters({...issue,repository:{...issue.repository,pushed_at:"2025-12-01T00:00:00Z"}},f,now),false);
+});
+
+test("all age filters are opt-in so older projects remain visible by default",()=>{
+ const f=normalizeFilters({});
+ assert.equal(f.createdDays,"");assert.equal(f.updatedDays,"");assert.equal(f.commitAgeDays,"");assert.equal(f.pushAgeDays,"");
+ assert.equal(f.createdAfter,"");assert.equal(f.updatedAfter,"");assert.equal(f.commitAfter,"");assert.equal(f.pushAfter,"");
 });
