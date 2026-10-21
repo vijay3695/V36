@@ -39,7 +39,7 @@ async function enrichLoadedResults(){
  return {rateError,unavailable};
 }
 function errorMessage(e){if(e instanceof GitHubError&&e.rateLimited)return e.message+(e.retryAt?" Retry after "+e.retryAt.toLocaleTimeString()+".":" Retry timing was not supplied by GitHub.")+" Loaded results and saved items are preserved.";return (e.message||"Request failed.")+" Existing results and saved items are preserved. You can retry manually.";}
-function detailError(e){return e instanceof GitHubError&&e.rateLimited?e.message+(e.retryAt?" Retry after "+e.retryAt.toLocaleTimeString()+".":" Retry timing was not supplied by GitHub."):e.message||"Request failed.";}
+function detailError(e){if(e?.rateLimited)return (e.message||"GitHub API rate limit reached.")+(e.retryAt?" Retry after "+e.retryAt.toLocaleTimeString()+".":" Retry timing was not supplied by GitHub.");return e?.message||"Request failed.";}
 async function runSearch(append=false){
  if(busy)return;
  const requestedFilters=readForm(),previous={loadedIssues,totalCount,page,hasMore,currentFilters};
