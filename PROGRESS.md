@@ -55,6 +55,13 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Keyboard-accessible import control (pending CI)
+
+- Replaced the styled label used as an import control with a real button that opens the hidden file picker, making the action keyboard-focusable.
+- Expanded keyboard regression coverage to include the import control and keyboard-submitted search.
+- The preceding full suite passed on [39570184135](https://github.com/vijay3695/V36/actions/runs/39570184135): 33 unit tests and 13 browser tests. This batch awaits its own CI result.
+
+
 ### 2026-10-21 — Keyboard focus, source bounds, and portability verification (pending CI)
 
 - Added focus movement to destination headings after navigation and issue-detail opening; advanced filters open automatically when shared/saved custom filters are present.
@@ -70,7 +77,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Kept load-more available when GitHub marks a result set incomplete but provides another page.
 - Canonicalized saved-search label ordering during backup validation to improve duplicate detection.
 - Added unit and browser regression tests for unknown metadata behavior.
-- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. The current batch adds keyboard focus management, accessible keyboard navigation, bounded source excerpts, valid import/export checks, and browser-storage failure coverage; its first run [39569974281](https://github.com/vijay3695/V36/actions/runs/39569974281) passed 33 unit tests and 12 browser tests but failed the new keyboard test: automatic focus on the Discover heading during initial load prevented the skip link from being the first tab stop. The startup call now suppresses programmatic heading focus while in-session navigation still moves focus. The corrected run is pending.
+- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. The current batch adds keyboard focus management, accessible keyboard navigation, bounded source excerpts, valid import/export checks, and browser-storage failure coverage; its first run [39569974281](https://github.com/vijay3695/V36/actions/runs/39569974281) passed 33 unit tests and 12 browser tests but failed the new keyboard test: automatic focus on the Discover heading during initial load prevented the skip link from being the first tab stop. The startup call now suppresses programmatic heading focus while in-session navigation still moves focus. The corrected run [39570184135](https://github.com/vijay3695/V36/actions/runs/39570184135) passed 33 unit tests and 13 browser tests. The current batch replaces a non-focusable file-input label with a real Import button and expands keyboard coverage; its consolidated run is pending.
 
 
 ### 2026-10-21 — API failure and import diagnostics coverage (pending CI)

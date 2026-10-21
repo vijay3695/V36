@@ -69,7 +69,8 @@ test("unknown commit metadata stays visible",async({page})=>{
  await expect(page.getByRole("status")).toContainText("rate limit reached");await expect(page.getByRole("link",{name:"Fix crash"})).toBeVisible();await expect(page.getByText(/Could not evaluate selected filters: latest commit date/)).toBeVisible();await expect(page.locator("#results-meta")).toContainText("1 need metadata");
 });
 
-test("keyboard skip link and page navigation move focus to the destination",async({page})=>{
+test("keyboard users can skip content, navigate, and submit a search",async({page})=>{
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});return route.fulfill({status:404,json:{message:"not mocked"}});});
  await page.goto("/");
  await page.keyboard.press("Tab");
  await expect(page.locator(".skip-link")).toBeFocused();
@@ -78,6 +79,14 @@ test("keyboard skip link and page navigation move focus to the destination",asyn
  await page.getByRole("link",{name:"Saved",exact:true}).focus();
  await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Saved",exact:true})).toBeFocused();
+ await page.getByRole("button",{name:"Import backup"}).focus();
+ await expect(page.getByRole("button",{name:"Import backup"})).toBeFocused();
+ await page.getByRole("link",{name:"Discover",exact:true}).focus();
+ await page.keyboard.press("Enter");
+ await expect(page.getByRole("heading",{name:"Find work worth contributing to."})).toBeFocused();
+ await page.getByLabel("Search issues").fill("crash");
+ await page.keyboard.press("Enter");
+ await expect(page.getByRole("status")).toContainText("Loaded 0 issues");
 });
 test("valid import reports accepted, rejected and duplicate items",async({page})=>{
  await page.goto("/#saved");
