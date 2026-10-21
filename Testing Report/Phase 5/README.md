@@ -2,7 +2,7 @@
 
 ## Latest automated re-run — announcements and live regions
 
-Branch: `cline/91jvxv68` (evidence commit `363fb3a`)
+Branch: `main` (evidence commit `363fb3a`)
 
 - Unit tests: 86 passed, 0 failed (`npm test`)
 - Browser E2E tests: 34 passed, 0 failed (`npx playwright test --workers=2`), including four new announcement/live-region tests
@@ -11,7 +11,7 @@ Branch: `cline/91jvxv68` (evidence commit `363fb3a`)
 - 200% zoom: NOT PERFORMED
 - Manual keyboard/contrast/responsive/reduced-motion checks: NOT PERFORMED
 
-See `docs/MANUAL_ACCEPTANCE.md`. Phase 5 remains IN PROGRESS pending a human reviewer's record. No GitHub Actions were triggered (no workflow exists on this branch).
+See `docs/MANUAL_ACCEPTANCE.md`. Phase 5 remains IN PROGRESS pending a human reviewer's record. No GitHub Actions were triggered (no workflow exists on `main`).
 
 ## Historical run — commit 6888c67
 

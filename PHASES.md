@@ -16,7 +16,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 5 — Accessibility/security/resilience | **IN PROGRESS — automated work complete, manual acceptance pending** | Announcements (results count, assertive errors, detail refresh, retry outcomes) and `aria-busy` added with four browser regression tests. Local suite: 86/86 unit, 34/34 browser, 3/3 axe. | A human reviewer must complete and sign `docs/MANUAL_ACCEPTANCE.md`; automated proxies are not proof of accessibility. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
 
-The suite now contains 34 browser tests (including the Phase 5 announcement/live-region coverage). It was re-run green on branch `cline/91jvxv68`: 86/86 unit, 34/34 browser, 3/3 standalone axe. The counts recorded in the Phase 2–4 rows and sections below are historical snapshots from those verification runs, not the current suite size.
+The suite now contains 34 browser tests (including the Phase 5 announcement/live-region coverage). It was re-run green on `main`: 86/86 unit, 34/34 browser, 3/3 standalone axe. The counts recorded in the Phase 2–4 rows and sections below are historical snapshots from those verification runs, not the current suite size.
 
 **Phase 0/CI clarification:** the Phase 0 status was earned against [run #64](https://github.com/vijay3695/V36/actions/runs/39576488647). The consolidated workflow was later deleted in `ad8379b`, so there is no CI check on current commits. `DECISIONS.md` and `docs/ACCEPTANCE_CHECKLIST.md` still require a passing GitHub Actions run at release; that conflict is unresolved and blocks Phase 6.
 
@@ -128,7 +128,7 @@ Tasks:
 - [x] Test rate limits, failed metadata, unavailable issue details, and browser-storage errors.
 
 Acceptance criteria:
-- [x] Automated accessibility checks pass (local run on this branch: 3/3 axe scans, including the issue-detail scan inside the end-to-end flow).
+- [x] Automated accessibility checks pass (local run on `main`: 3/3 axe scans, including the issue-detail scan inside the end-to-end flow).
 - [ ] Manual checks are complete and recorded; automation alone is not treated as proof of full accessibility. **Blocked on a human reviewer.**
 - [x] Security-sensitive input paths have tests.
 - [x] No silent data loss or fabricated fallback information.

@@ -4,10 +4,10 @@
 
 ## Current snapshot
 
-- **Branch:** `cline/91jvxv68` (created from `main` at `0638fb9`; not merged to `main`)
+- **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
 - **Project status:** In development; not release-ready.
 - **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete; only the human manual-acceptance record remains (`docs/MANUAL_ACCEPTANCE.md` is still NOT RUN). Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
-- **Latest local evidence (this branch):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans at commit `363fb3a`, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
+- **Latest local evidence (`main`):** 86/86 unit tests, 34/34 browser tests, 3/3 standalone axe scans at commit `363fb3a`, including four new announcement/live-region regression tests and the issue-detail axe scan inside the end-to-end flow.
 - **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
 - **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
 - **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
@@ -20,9 +20,9 @@
 - [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
 - [ ] `main` no longer contains a CI workflow; the CI requirement and its removal conflict (see snapshot).
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
-- [x] Local `npm test` passes 86/86 on this branch.
-- [x] Local browser suite passes 34/34 on this branch.
-- [x] Local standalone axe scans pass 3/3 on this branch; the issue-detail view is scanned inside the end-to-end flow.
+- [x] Local `npm test` passes 86/86 on `main`.
+- [x] Local browser suite passes 34/34 on `main`.
+- [x] Local standalone axe scans pass 3/3 on `main`; the issue-detail view is scanned inside the end-to-end flow.
 - [x] The last recorded CI failure (#67) was superseded by `53907b9`; its test passes locally.
 
 ## Feature status
@@ -31,7 +31,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 | Area | Status | Evidence / next action |
 |---|---|---|
-| App shell and Discover/Saved/About navigation | IMPLEMENTED, VERIFIED LOCALLY | Browser suite and axe scans pass on this branch |
+| App shell and Discover/Saved/About navigation | IMPLEMENTED, VERIFIED LOCALLY | Browser suite and axe scans pass on `main` |
 | GitHub issue search and load-more | IMPLEMENTED, VERIFIED LOCALLY | Mocked search, pagination, partial-result and empty states covered |
 | Search filters and category inference | IMPLEMENTED, VERIFIED LOCALLY | Unit filter tests and URL round-trip browser tests pass |
 | Issue details and activity metadata | IMPLEMENTED, VERIFIED LOCALLY | Detail refresh, fetch times, unavailable/closed/404 paths covered |
@@ -48,20 +48,20 @@ These are **not yet verified as complete** merely because related code exists.
 
 1. A human reviewer completes `docs/MANUAL_ACCEPTANCE.md` (keyboard-only, contrast, 200% zoom, responsive, reduced motion) and records environment, commit SHA, and outcome. Automation cannot substitute.
 2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
-3. After review, merge this branch to `main` (or replay the commits there) before Phase 6 verification.
+3. Keep all work on `main`; do not create side branches for these tasks.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
 
 ## Work log
 
-### 2026-10-21 — Phase 5 automated completion: announcements, manual-record correction, and truth pass (branch `cline/91jvxv68`)
+### 2026-10-21 — Phase 5 automated completion: announcements, manual-record correction, and truth pass (commit `363fb3a` on `main`)
 
 - Added accessible announcements: `#results-meta` is now a polite `role="status"` live region for loaded-result counts; `#results` exposes `aria-busy` while a search is pending; `#status` switches to `aria-live="assertive"` for error/rate-limit messages; the detail view announces "Refreshing issue and repository evidence…" politely and announces completion or unavailable-evidence outcomes.
 - Added four browser regression tests: result-count and detail-outcome live regions, assertive failure announcements that preserve prior results, pending-search `aria-busy`, and detail-refresh progress before refreshed evidence.
 - Scoped existing status assertions to `#status` because `#results-meta` is now a second `role="status"` region; assertions were made more specific, not weaker.
 - Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the unsupported "200% zoom: PASS (reported by reviewer)" entry, marked 200% zoom NOT PERFORMED, and stated that automated proxies are not sign-off. Outcome remains NOT RUN.
-- Local runs on this branch (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. Eight full browser-suite runs passed at `--workers=2`/`--workers=4`; one other run under parallel load had a single failure in the long mocked flow whose error text was not captured, and it was not reproduced in the seven runs that followed. The documented bulk command `npm run test:all` was also attempted, but its default parallelism (30 Playwright workers on this host) exceeded the sandbox's 6 GiB memory limit and the run was killed before producing output; the same three suites were therefore verified with capped workers. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
+- Local runs on `main` (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. Eight full browser-suite runs passed at `--workers=2`/`--workers=4`; one other run under parallel load had a single failure in the long mocked flow whose error text was not captured, and it was not reproduced in the seven runs that followed. The documented bulk command `npm run test:all` was also attempted, but its default parallelism (30 Playwright workers on this host) exceeded the sandbox's 6 GiB memory limit and the run was killed before producing output; the same three suites were therefore verified with capped workers. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
 - Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`docs/ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
-- Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN. Evidence commit: `363fb3a` on branch `cline/91jvxv68`.
+- Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN. Evidence commit: `363fb3a` on `main`.
 
 
 ### 2026-10-21 — Phase 4 verified locally (no GitHub Actions)
