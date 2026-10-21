@@ -8,8 +8,8 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 
 | Phase | Current status | What is done | What remains |
 |---|---|---|---|
-| 0 — Baseline and CI | **VERIFIED** | [Run #57](https://github.com/vijay3695/V36/actions/runs/39574086433): 59/59 unit tests, 17/17 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
-| 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, custom dates, push age, star bounds, share URLs and unknown-metadata messaging are implemented with tests. | Verify full filter URL round-trip and remaining API/filter edge cases in this batch. |
+| 0 — Baseline and CI | **VERIFIED** | [Run #58](https://github.com/vijay3695/V36/actions/runs/39574476749): 67/67 unit tests, 20/20 browser tests, and 3/3 standalone accessibility checks passed in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
+| 1 — Discovery and filters | **IN PROGRESS — not verified** | Search, pagination, all standard/custom filter URL round-trips, push age, star bounds, and unknown-metadata messaging have unit/E2E coverage. | Finish reviewing all filter semantics and known/missing-data boundaries; do not mark verified until acceptance criteria are checked. |
 | 2 — Issue details/activity | **IN PROGRESS — not verified** | Detail view, source links, activity fields, fetch timestamps and related-work search links exist. | Verify inaccessible/closed/moved cases, rate-limit retry and freshness behavior. |
 | 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
 | 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |

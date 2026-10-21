@@ -246,3 +246,28 @@ test("issue details preserve the reference and disclose when GitHub returns 404"
  await expect(page.getByText(/Issue refresh: GitHub could not find this resource/)).toBeVisible();
  await expect(page.getByText(/Repository metadata: GitHub could not find this resource/)).toBeVisible();
 });
+
+test("issue detail activity can be retried after a rate-limited repository refresh",async({page})=>{
+ const issue={html_url:"https://github.com/acme/demo/issues/12",title:"Retry activity evidence",body:"Evidence can be refreshed.",state:"open",number:12,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
+ let repoCalls=0,readmeCalls=0,commitCalls=0;
+ await page.route("https://api.github.com/**",async route=>{
+  const u=new URL(route.request().url());
+  if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});
+  if(u.pathname==="/repos/acme/demo/issues/12")return route.fulfill({json:issue});
+  if(u.pathname==="/repos/acme/demo"){repoCalls++;if(repoCalls===2)return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","x-ratelimit-reset":"1900000000"},json:{message:"API rate limit exceeded"}});return route.fulfill({json:repo});}
+  if(u.pathname==="/repos/acme/demo/readme"){readmeCalls++;return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBEZW1v"}});}
+  if(u.pathname==="/repos/acme/demo/commits"){commitCalls++;return route.fulfill({json:[]});}
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.getByLabel("Search issues").fill("retry");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.getByRole("button",{name:"View details"}).click();
+ await expect(page.getByRole("heading",{name:"Unavailable data"})).toBeVisible();
+ await expect(page.getByText(/Repository metadata: GitHub API rate limit reached/)).toBeVisible();
+ expect(readmeCalls).toBe(0);expect(commitCalls).toBe(0);
+ await page.getByRole("button",{name:"Retry activity refresh"}).click();
+ await expect(page.getByText("Stars (popularity only): 150")).toBeVisible();
+ expect(repoCalls).toBe(3);expect(readmeCalls).toBe(1);expect(commitCalls).toBe(1);
+});

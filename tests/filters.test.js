@@ -111,3 +111,49 @@ test("unknown labels stay visible with explicit uncertainty instead of being dis
 test("category inference requires evidence and does not infer from unrelated text",()=>{assert.deepEqual(inferCategories({title:"Hello world",body:"A friendly greeting",labels:[]}),["Other/No category inferred"]);assert.ok(inferCategories({title:"Fix regression",body:"",labels:[]}).includes("Bug fix"));});
 test("language matching is case-insensitive across repository language metadata",()=>{const f=normalizeFilters({language:"python"});assert.equal(matchesFilters({...issue,repository:{...issue.repository,languages:["JavaScript","Python"]}},f,now),true);});
 test("malformed star ranges are normalized to no preset",()=>{assert.equal(normalizeFilters({stars:"100-999999"}).stars,"");assert.equal(normalizeFilters({stars:"100-999"}).stars,"100-999");});
+
+test("custom update date range applies inclusive start and end boundaries",()=>{
+ const f=normalizeFilters({updatedAfter:"2026-01-20",updatedBefore:"2026-01-30"});
+ assert.equal(matchesFilters({...issue,updated_at:"2026-01-20T00:00:00Z"},f,now),true);
+ assert.equal(matchesFilters({...issue,updated_at:"2026-01-30T23:59:59Z"},f,now),true);
+ assert.equal(matchesFilters({...issue,updated_at:"2026-01-31T00:00:00Z"},f,now),false);
+});
+test("custom latest-commit date range applies inclusive boundaries",()=>{
+ const f=normalizeFilters({commitAfter:"2026-01-20",commitBefore:"2026-01-30"});
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,latestCommitDate:"2026-01-20T00:00:00Z"}},f,now),true);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,latestCommitDate:"2026-01-30T23:59:59Z"}},f,now),true);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,latestCommitDate:"2026-01-31T00:00:00Z"}},f,now),false);
+});
+test("future update, commit and push dates never satisfy custom bounds",()=>{
+ const f=normalizeFilters({updatedBefore:"2026-01-30",commitBefore:"2026-01-30",pushBefore:"2026-01-30"});
+ assert.equal(matchesFilters({...issue,updated_at:"2026-02-01T00:00:00Z"},f,now),false);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,latestCommitDate:"2026-02-01T00:00:00Z",pushed_at:"2026-02-01T00:00:00Z"}},f,now),false);
+});
+test("inverted custom date bounds cannot match an issue",()=>{
+ const f=normalizeFilters({createdAfter:"2026-01-30",createdBefore:"2026-01-20"});
+ assert.equal(matchesFilters(issue,f,now),false);
+});
+test("unknown latest commit metadata remains visible and is disclosed",()=>{
+ const f=normalizeFilters({commitAfter:"2026-01-01"});
+ const unknown={...issue,repository:{...issue.repository,latestCommitDate:null}};
+ assert.equal(matchesFilters(unknown,f,now),true);
+ assert.deepEqual(unknownFilterReasons(unknown,f),["latest commit date"]);
+});
+test("unknown repository push metadata remains visible and is disclosed",()=>{
+ const f=normalizeFilters({pushAgeDays:"90"});
+ const unknown={...issue,repository:{...issue.repository,pushed_at:undefined}};
+ assert.equal(matchesFilters(unknown,f,now),true);
+ assert.deepEqual(unknownFilterReasons(unknown,f),["repository last push date"]);
+});
+test("known category filter distinguishes a matching category from unrelated evidence",()=>{
+ const bug=normalizeFilters({category:"Bug fix"});
+ const docs=normalizeFilters({category:"Documentation"});
+ assert.equal(matchesFilters({...issue,title:"Fix regression",body:"",labels:[]},bug,now),true);
+ assert.equal(matchesFilters({...issue,title:"Fix regression",body:"",labels:[]},docs,now),false);
+});
+test("unknown language metadata is not silently treated as a mismatch",()=>{
+ const f=normalizeFilters({language:"Rust"});
+ const unknown={...issue,repository:{full_name:"demo/project",language:null}};
+ assert.equal(matchesFilters(unknown,f,now),true);
+ assert.deepEqual(unknownFilterReasons(unknown,f),["language metadata"]);
+});

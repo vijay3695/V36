@@ -7,7 +7,7 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 1 — Core discovery and filtering.
-- **Phase 0 status:** VERIFIED on [CI #57](https://github.com/vijay3695/V36/actions/runs/39574086433), exact commit [`8ebe1b3`](https://github.com/vijay3695/V36/commit/8ebe1b32dd4c7c0560725dbd592c88e9ecba2cd2): 59/59 unit tests, 17/17 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
+- **Phase 0 status:** VERIFIED on [CI #58](https://github.com/vijay3695/V36/actions/runs/39574476749), exact commit [`39dfc12`](https://github.com/vijay3695/V36/commit/39dfc1288666f0cc6bafc40f5e9afd4bb889dd69): 67/67 unit tests, 20/20 browser tests, and 3/3 standalone accessibility checks passed in the single consolidated job. Historical failures #53–#55 are documented below and were corrected; continue checking every subsequent commit.
 - **CI shape:** One workflow (`.github/workflows/ci.yml`), one job (`Full test suite`), one bulk command (`npm run test:all`). Husky pre-commit runs unit tests; pre-push runs the bulk suite.
 - **Latest run status:** PASS — [run #52](https://github.com/vijay3695/V36/actions/runs/39573103139) completed the single CI job successfully: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. Phase 0 acceptance criteria are satisfied on that commit.
 - **Last known documentation commit:** [03d1a6e](https://github.com/vijay3695/V36/commit/03d1a6e9b094cc6760f96ad675d72cd822dd1c20) — added `docs/PROJECT_PLAN.md`.
@@ -54,6 +54,14 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Filter and GitHub failure-path coverage (pending CI)
+
+- Run [#58](https://github.com/vijay3695/V36/actions/runs/39574476749) passed on the preceding commit: 67/67 unit tests, 20/20 browser tests, and 3/3 standalone accessibility checks.
+- Added eight filter tests for custom update/commit boundaries, future timestamps, inverted ranges, unknown commit/push metadata, category matching, and unknown language metadata.
+- Added a browser test for manual activity retry after a rate limit; it verifies no README/commit requests occur after the limit and that a user-triggered retry can recover evidence.
+- Expanded Phase 1 URL coverage and API failure-path tests are in the current pending batch. Verify the next consolidated run before claiming this batch passes.
+
+
 ### 2026-10-21 — Phase 1 URL and GitHub failure-path coverage (pending CI)
 
 - Expanded browser acceptance coverage to round-trip the standard filter set and custom creation/update/commit/push date bounds plus exact star limits through shareable URLs and reloads.
@@ -76,7 +84,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Updated `test:all` to run unit tests, the full browser suite, and the standalone accessibility script as one bulk command within the existing single GitHub Actions job.
 - Tightened saved-search import normalization so unsupported inferred categories are discarded rather than retained as invalid UI state.
 - Added storage tests for invalid categories, normalized labels, invalid date/star values, canonical pull-request references, trailing-slash identity dedupe, malformed JSON, and the 2,000-item cap.
-- Run [#52](https://github.com/vijay3695/V36/actions/runs/39573103139) passed on the preceding commit: 59/59 unit tests, 16/16 browser tests, and 3/3 standalone accessibility checks. This batch itself adds additional storage safeguards and needs its own run.
+- Run [#56](https://github.com/vijay3695/V36/actions/runs/39573889300) passed the storage-safety batch: 59/59 unit tests, 17/17 browser tests, and 3/3 standalone accessibility checks. Documentation-only follow-up [#57](https://github.com/vijay3695/V36/actions/runs/39574086433) also passed.
 
 
 ### 2026-10-21 — Saved-route regression fixed; full browser suite green
