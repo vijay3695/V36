@@ -6,10 +6,10 @@
 
 - **Branch:** `main` (the repository keeps a single branch; all work is committed directly to `main`)
 - **Project status:** In development; not release-ready.
-- **Current work phase:** Phase 5 — Accessibility, resilience, and security. Automated work is complete. Manual acceptance is **partial**: the maintainer reported 200% zoom PASS on 2026-10-21; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN. Phases 0–4 are VERIFIED (0/1 with GitHub Actions history; 2–4 locally).
+- **Current work phase:** Phase 6 — End-to-end verification and release readiness (**pre-release audit only**). Per maintainer direction on 2026-10-21, remaining Phase 5 tests are deferred to a later pass; Phase 5 is still IN PROGRESS and this does not waive its acceptance criteria. Phases 0–4 retain their recorded VERIFIED status (0/1 with GitHub Actions history; 2–4 locally).
 - **Latest local evidence (`main`):** 95/95 unit tests, 37/37 browser tests, 3/3 standalone axe scans at commit `ac5306e`, including four announcement/live-region tests, the Saved-search layout test, the star-input space test, and the issue-detail axe scan inside the end-to-end flow.
-- **CI / Actions reality:** `main` has **no** `.github/workflows/` directory. The consolidated workflow was deleted in `ad8379b` ("admin approved disable: remove GitHub Actions workflow to comply with no-Actions rule"). The newest Actions run is [#67](https://github.com/vijay3695/V36/actions/runs/39577451148) — FAILED on `e35d421` in the storage identity test; that defect was fixed in `53907b9` and the test passes locally, but no later commit has a CI run because the workflow is gone.
-- **Open decision conflict:** `DECISIONS.md` (lines 41, 129) and `docs/ACCEPTANCE_CHECKLIST.md` (line 73) require a passing GitHub Actions CI run on the release commit, while `ad8379b` removed the workflow. Resolve with the maintainer before Phase 6; do not guess.
+- **CI / Actions reality:** `.github/workflows/ci.yml` is present on `main` and runs unit, browser, and standalone accessibility checks in one job. Latest run [#69](https://github.com/vijay3695/V36/actions/runs/39638495312) on commit `998670ff6cf91d00a72c91343b8a70ddb7b47d95` — **FAILED** during browser regression tests; unit tests passed and the standalone accessibility step was skipped. Do not treat this commit as CI-verified.
+- **Release blocker:** The release gate requires CI to pass on the exact release candidate and all Phase 5 acceptance criteria to be met. CI is active but currently red, and Phase 5 follow-up tests are explicitly deferred by the maintainer. No release is authorized.
 - **Husky hooks:** pre-commit runs `npm test`; pre-push runs `npm run test:all`.
 - **Last documentation commit before this work:** `0638fb9` — "docs: remove screen-reader requirement per maintainer".
 - **This file's purpose:** handoff state for the next coding agent. Re-check the real branch, tree, and Actions state before relying on this snapshot.
@@ -18,12 +18,12 @@
 
 - [x] Repository contains the static-first app (`index.html`), `package.json`, `playwright.config.js`, and unit/browser tests.
 - [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
-- [ ] `main` no longer contains a CI workflow; the CI requirement and its removal conflict (see snapshot).
+- [x] `main` contains the consolidated `.github/workflows/ci.yml`; latest run is recorded as failed in the current snapshot.
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
 - [x] Local `npm test` passes 95/95 on `main`.
 - [x] Local browser suite passes 37/37 on `main`.
 - [x] Local standalone axe scans pass 3/3 on `main`; the issue-detail view is scanned inside the end-to-end flow.
-- [x] The last recorded CI failure (#67) was superseded by `53907b9`; its test passes locally.
+- [x] The historical storage-identity failure (#67) was fixed in `53907b9`; the current distinct failure is browser regression coverage on `998670f`.
 
 ## Feature status
 
@@ -312,3 +312,14 @@ These are **not yet verified as complete** merely because related code exists.
 - Added 11 focused storage/import regression tests covering lookalike hosts and unsupported routes, canonical URLs, issue identity, bounded imported strings, malformed backup structures, oversized search arrays, duplicate import diagnostics, merge precedence, equivalent saved searches, invalid filter values, and preservation of unrelated saved references.
 - Local test execution: **NOT RUN** in this environment. The changes must pass the single consolidated GitHub Actions workflow before being treated as verified.
 - Next: inspect the Actions result; fix any real failure in the next coherent batch, then continue Phase 3 edge cases.
+
+
+### 2026-10-21 — Phase 6 pre-release audit started; Phase 5 follow-up deferred
+
+- Maintainer direction: move to Phase 6 now and defer remaining Phase 5 tests to a later pass. Phase 5 remains **IN PROGRESS**; its acceptance criteria have not been waived.
+- Audited current repository phase records, acceptance checklist, manual acceptance record, package scripts, and CI workflow on `main`.
+- Current consolidated workflow: `.github/workflows/ci.yml`; one job runs unit tests, browser regression tests, then standalone accessibility scans.
+- Latest CI: [run #69](https://github.com/vijay3695/V36/actions/runs/39638495312), commit `998670ff6cf91d00a72c91343b8a70ddb7b47d95`. Unit tests **PASS**; browser regression tests **FAIL**; standalone accessibility scans **SKIPPED** because the prior step failed. No green full-suite result on this commit.
+- No Phase 5 test failure was fixed in this batch; the failure is intentionally left for the deferred Phase 5 follow-up rather than being misreported as passed.
+- Phase 6 is active for the documentation and release-acceptance audit only. Release readiness remains **BLOCKED** until Phase 5 acceptance is completed and a consolidated CI run passes on the exact candidate commit.
+- Next: continue the Phase 6 audit of the acceptance checklist and documentation against actual implementation/test evidence, without publishing a release or marking incomplete criteria as verified.
