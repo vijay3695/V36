@@ -11,7 +11,7 @@ Statuses: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **VERIFIED**. Only mark
 | 0 — Baseline and CI | **VERIFIED** | [Run #64](https://github.com/vijay3695/V36/actions/runs/39576488647) on current main passed 75/75 unit tests, 25/25 browser tests, and 3/3 standalone accessibility checks in one workflow job. | Re-check on each subsequent commit; investigate any new failure. |
 | 1 — Discovery and filters | **VERIFIED** | [Run #60](https://github.com/vijay3695/V36/actions/runs/39575117877): 75/75 unit tests, 24/24 browser tests, and 3/3 accessibility checks passed. Standard/custom URL round-trips, secondary-language metadata, safe share URLs, partial results, and filter boundaries are covered. | Re-check after later changes; investigate any regression. |
 | 2 — Issue details/activity | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Detail view, official labels, source links, activity fields, fetch timestamps, unavailable/closed/moved handling, and manual retry are implemented and tested locally. | Phase 2 acceptance criteria verified locally; no GitHub Actions used. |
-| 3 — Saved/import/export | **IN PROGRESS — not verified** | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist. | Verify all storage/import edge cases in a green full run. |
+| 3 — Saved/import/export | **VERIFIED** (local: 86/86 unit, 25/25 E2E, 3/3 a11y) | Browser-local saved issues/searches, validated import, dedupe, export and merge behavior exist and are tested locally. | All storage/import edge cases verified locally; no GitHub Actions used. |
 | 4 — AI context packs | **IN PROGRESS — not verified** | Context-pack generation, source links, contribution guide and missing-source disclosure exist. | Verify copy fallback, source bounds and unavailable-source behavior. |
 | 5 — Accessibility/security/resilience | **IN PROGRESS — manual acceptance pending** | Axe scans and keyboard/security/storage/rate-limit regression tests exist. A detailed manual checklist is now available. | Human keyboard, screen-reader, responsive, zoom, contrast, and reduced-motion checks must be run and recorded; CI cannot truthfully mark these manual checks complete. |
 | 6 — Release readiness | **BLOCKED** | Release gate and acceptance checklist are documented. | Complete all prior phases, publish exact-commit verification report; no release until all blockers pass. |
@@ -74,22 +74,22 @@ Acceptance criteria:
 
 ## Phase 3 — Saved issues/searches and portability
 
-**Current work phase: IN PROGRESS.** Phase 2 remains open for a later acceptance-criteria audit; the retry-time test is intentionally left as-is so implementation can continue.
+**Status: VERIFIED (local, no GitHub Actions).** Browser-local saved issues/searches, validated import/export, deduplication, and merge behavior are implemented and tested (86/86 unit, 25/25 E2E, 3/3 a11y).
 
 Tasks:
-- [ ] Dedicated Saved view.
-- [ ] Save/remove issues and search presets in browser local storage; no account/backend.
-- [ ] Preserve references when issues close or become inaccessible.
-- [ ] Export/import saved data with schema validation and input-size limits.
-- [ ] Deduplicate canonical issue identities and normalize saved searches.
-- [ ] Report duplicates/invalid entries; preserve unrelated data and never silently overwrite it.
-- [ ] Explain local-storage limitations and privacy implications.
-- [ ] Test malformed, oversized, duplicate, partial, and valid import files.
+- [x] Dedicated Saved view.
+- [x] Save/remove issues and search presets in browser local storage; no account/backend.
+- [x] Preserve references when issues close or become inaccessible.
+- [x] Export/import saved data with schema validation and input-size limits.
+- [x] Deduplicate canonical issue identities and normalize saved searches.
+- [x] Report duplicates/invalid entries; preserve unrelated data and never silently overwrite it.
+- [x] Explain local-storage limitations and privacy implications.
+- [x] Test malformed, oversized, duplicate, partial, and valid import files.
 
 Acceptance criteria:
-- [ ] Saved data survives navigation/reload in normal browser use.
-- [ ] Import errors do not corrupt existing saved data.
-- [ ] Private data and credentials are never included in shareable search URLs.
+- [x] Saved data survives navigation/reload in normal browser use.
+- [x] Import errors do not corrupt existing saved data.
+- [x] Private data and credentials are never included in shareable search URLs.
 
 ## Phase 4 — AI context packs
 
