@@ -59,7 +59,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 - Confirmed separate repository push-age filtering and custom bounds pass the bulk suite on [39571468560](https://github.com/vijay3695/V36/actions/runs/39571468560): 40 unit tests and 15 browser tests.
 - Added explicit coverage that age filters are opt-in, missing update dates remain unknown, activity timestamps and related-search links are visible, and saved issues/searches survive reload.
-- The current verification batch is pending the consolidated workflow.
+- Run [39571893981](https://github.com/vijay3695/V36/actions/runs/39571893981) passed 40 of 41 unit tests; the missing-update-metadata test fixture accidentally retained the base issue's valid `updated_at` timestamp. The fixture now sets it to `null` to exercise the intended unknown-data case. No product assertion was weakened; the corrected run is pending.
 
 
 ### 2026-10-21 — Separate repository last-push filtering (pending CI)

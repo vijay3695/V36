@@ -38,7 +38,7 @@ test("invalid custom dates and negative star counts are discarded",()=>{
 
 test("unknown metadata remains visible and identifies filters that could not be evaluated",()=>{
  const f=normalizeFilters({language:"Python",labels:["bug"],createdAfter:"2026-01-01",updatedAfter:"2026-01-01",minStars:"100",commitAfter:"2026-01-01"});
- const incomplete={...issue,labels:undefined,created_at:null,repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:null}};
+ const incomplete={...issue,labels:undefined,created_at:null,updated_at:null,repository:{full_name:"demo/project",language:"JavaScript",stargazers_count:null}};
  assert.equal(matchesFilters(incomplete,f,now),true);
  assert.deepEqual(unknownFilterReasons(incomplete,f),["language metadata","labels","issue creation date","issue update date","repository star count","latest commit date"]);
 });
