@@ -10,3 +10,5 @@ export function getIssue(owner,repo,n,options={}){return apiGet("/repos/"+encode
 export function getRepo(owner,repo,options={}){return apiGet("/repos/"+encodeURIComponent(owner)+"/"+encodeURIComponent(repo),options);}
 export async function getReadme(owner,repo,options={}){const r=await apiGet("/repos/"+encodeURIComponent(owner)+"/"+encodeURIComponent(repo)+"/readme",options);let content="";if(r.data.content&&r.data.encoding==="base64"){try{content=decodeURIComponent(escape(atob(r.data.content.replace(/\n/g,""))));}catch{content=atob(r.data.content.replace(/\n/g,""));}}return {...r,content,url:r.data.html_url||r.data.download_url||""};}
 export async function getLatestCommit(owner,repo,options={}){const r=await apiGet("/repos/"+encodeURIComponent(owner)+"/"+encodeURIComponent(repo)+"/commits?per_page=1",options);const c=Array.isArray(r.data)?r.data[0]:null;return {...r,commitDate:c?.commit?.committer?.date||c?.commit?.author?.date||null,url:c?.html_url||""};}
+
+export async function getRepoLanguages(owner,repo,options={}){return apiGet("/repos/"+encodeURIComponent(owner)+"/"+encodeURIComponent(repo)+"/languages",options);}
