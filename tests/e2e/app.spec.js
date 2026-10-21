@@ -46,7 +46,12 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Saved issues"})).toBeVisible();
  await expect(page.getByRole("link",{name:"Fix crash on startup"})).toBeVisible();
- await page.getByRole("link",{name:"Discover",exact:true}).click();
+ await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
+ await page.getByRole("button",{name:"Save search"}).focus();await page.keyboard.press("Enter");
+ await expect(page.getByRole("status")).toContainText("Search preset saved");
+ await page.getByRole("link",{name:"Saved",exact:true}).focus();await page.keyboard.press("Enter");
+ await expect(page.locator("#saved-searches .saved-search")).toHaveCount(1);
+ await page.getByRole("link",{name:"Discover",exact:true}).focus();await page.keyboard.press("Enter");
  await page.getByLabel("Search issues").fill("failure");
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.getByRole("status")).toContainText("HTTP 500");
@@ -114,4 +119,21 @@ test("storage write failures are reported and saved references remain visible",a
  await page.getByRole("button",{name:"Remove saved reference"}).click();
  await expect(page.getByRole("status")).toContainText("Could not update browser storage");
  await expect(page.getByRole("link",{name:"Keep this"})).toBeVisible();
+});
+
+test("incomplete GitHub results remain pageable and load-more appends results",async({page})=>{
+ const issue=n=>({html_url:"https://github.com/acme/demo/issues/"+n,title:"Issue "+n,body:"demo issue",state:"open",number:n,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"});
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues"){const p=Number(u.searchParams.get("page")||"1");return route.fulfill({json:{total_count:21,incomplete_results:p===1,items:p===1?Array.from({length:20},(_,i)=>issue(i+1)):[issue(21)]}});}if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");await page.getByLabel("Search issues").fill("demo");await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.getByRole("status")).toContainText("search incomplete");await expect(page.locator("#results .issue-card")).toHaveCount(20);await expect(page.getByRole("button",{name:/Load more/})).toBeVisible();
+ await page.getByRole("button",{name:/Load more/}).click();await expect(page.getByRole("link",{name:"Issue 21"})).toBeVisible();await expect(page.locator("#results .issue-card")).toHaveCount(21);await expect(page.getByRole("button",{name:/Load more/})).toBeHidden();
+});
+test("untrusted issue markup is rendered as text rather than executable HTML",async({page})=>{
+ const body='<img src=x onerror="window.__v36Xss=true">';
+ const issue={html_url:"https://github.com/acme/demo/issues/9",title:"Unsafe HTML",body,state:"open",number:9,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
+ const repo={full_name:"acme/demo",html_url:"https://github.com/acme/demo",language:"JavaScript",stargazers_count:150,pushed_at:"2026-01-29T00:00:00Z"};
+ await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo/issues/9")return route.fulfill({json:issue});if(u.pathname==="/repos/acme/demo/readme")return route.fulfill({json:{html_url:"https://github.com/acme/demo/blob/main/README.md",encoding:"base64",content:"IyBSRUFETUU="}});if(u.pathname==="/repos/acme/demo/commits")return route.fulfill({json:[]});if(u.pathname==="/repos/acme/demo")return route.fulfill({json:repo});return route.fulfill({status:404,json:{message:"not mocked"}});});
+ await page.goto("/");await page.getByLabel("Search issues").fill("unsafe");await page.getByRole("button",{name:"Search GitHub"}).click();await page.getByRole("button",{name:"View details"}).focus();await page.keyboard.press("Enter");
+ await expect(page.locator(".issue-body")).toHaveText(body);await expect(page.locator(".issue-body img")).toHaveCount(0);expect(await page.evaluate(()=>window.__v36Xss)).toBeUndefined();
 });

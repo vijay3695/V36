@@ -53,3 +53,29 @@ test("missing star count is not treated as zero stars",()=>{
  assert.equal(matchesFilters(unknown,f,now),true);
  assert.deepEqual(unknownFilterReasons(unknown,f),["repository star count"]);
 });
+
+test("language filter checks all known repository languages",()=>{
+ const f=normalizeFilters({language:"Python"});
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,languages:["JavaScript","Python"]}},f,now),true);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,languages:["JavaScript"]}},f,now),false);
+});
+test("official label filters require every selected label and ignore case",()=>{
+ assert.equal(matchesFilters(issue,normalizeFilters({labels:["BUG"]}),now),true);
+ assert.equal(matchesFilters(issue,normalizeFilters({labels:["bug","enhancement"]}),now),false);
+});
+test("issue type filter distinguishes issues from pull requests",()=>{
+ assert.equal(matchesFilters(issue,normalizeFilters({issueType:"issue"}),now),true);
+ assert.equal(matchesFilters(issue,normalizeFilters({issueType:"pr"}),now),false);
+ assert.equal(matchesFilters({...issue,pull_request:{html_url:"https://github.com/demo/project/pull/2"}},normalizeFilters({issueType:"pr"}),now),true);
+});
+test("known out-of-range creation, update, and commit dates are rejected",()=>{
+ assert.equal(matchesFilters({...issue,created_at:"2025-10-01T00:00:00Z"},normalizeFilters({createdDays:"30"}),now),false);
+ assert.equal(matchesFilters({...issue,updated_at:"2025-12-01T00:00:00Z"},normalizeFilters({updatedDays:"7"}),now),false);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,latestCommitDate:"2025-12-01T00:00:00Z"}},normalizeFilters({commitAgeDays:"30"}),now),false);
+});
+test("star preset boundaries are inclusive",()=>{
+ const f=normalizeFilters({stars:"0-99"});
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,stargazers_count:0}},f,now),true);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,stargazers_count:99}},f,now),true);
+ assert.equal(matchesFilters({...issue,repository:{...issue.repository,stargazers_count:100}},f,now),false);
+});

@@ -55,6 +55,13 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Work log
 
+### 2026-10-21 — Pagination, saved-search, and hostile-content coverage (pending CI)
+
+- Added filter tests for language metadata, official labels, issue-vs-PR type, age presets, and star preset boundaries.
+- Added mocked browser tests for incomplete-result pagination, load-more append behavior, saved-search persistence, and rendering hostile issue markup as text.
+- The preceding keyboard-flow run [39570653737](https://github.com/vijay3695/V36/actions/runs/39570653737) passed. The current test batch awaits the consolidated workflow.
+
+
 ### 2026-10-21 — Keyboard activation regression coverage (pending CI)
 
 - Expanded the mocked browser flow to activate issue details, context-pack generation/copy, save, navigation, and export using keyboard focus and Enter.
@@ -83,7 +90,7 @@ These are **not yet verified as complete** merely because related code exists.
 - Kept load-more available when GitHub marks a result set incomplete but provides another page.
 - Canonicalized saved-search label ordering during backup validation to improve duplicate detection.
 - Added unit and browser regression tests for unknown metadata behavior.
-- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. The current batch adds keyboard focus management, accessible keyboard navigation, bounded source excerpts, valid import/export checks, and browser-storage failure coverage; its first run [39569974281](https://github.com/vijay3695/V36/actions/runs/39569974281) passed 33 unit tests and 12 browser tests but failed the new keyboard test: automatic focus on the Discover heading during initial load prevented the skip link from being the first tab stop. The startup call now suppresses programmatic heading focus while in-session navigation still moves focus. The corrected run [39570184135](https://github.com/vijay3695/V36/actions/runs/39570184135) passed 33 unit tests and 13 browser tests. The current batch replaces a non-focusable file-input label with a real Import button and expands keyboard coverage; the consolidated run [39570467026](https://github.com/vijay3695/V36/actions/runs/39570467026) passed 33 unit tests and 13 browser tests. The next test-only change exercises detail navigation, context-pack copy, save, and export using keyboard activation; it awaits its own CI result.
+- Run [39569510803](https://github.com/vijay3695/V36/actions/runs/39569510803) exposed two outdated assertions that still treated unknown language/date metadata as a definite mismatch. The tests now distinguish known mismatches from unavailable metadata; no product assertion was removed. The corrected run [39569657260](https://github.com/vijay3695/V36/actions/runs/39569657260) passed 31 unit tests and 9 browser tests. The current batch adds keyboard focus management, accessible keyboard navigation, bounded source excerpts, valid import/export checks, and browser-storage failure coverage; its first run [39569974281](https://github.com/vijay3695/V36/actions/runs/39569974281) passed 33 unit tests and 12 browser tests but failed the new keyboard test: automatic focus on the Discover heading during initial load prevented the skip link from being the first tab stop. The startup call now suppresses programmatic heading focus while in-session navigation still moves focus. The corrected run [39570184135](https://github.com/vijay3695/V36/actions/runs/39570184135) passed 33 unit tests and 13 browser tests. The current batch replaces a non-focusable file-input label with a real Import button and expands keyboard coverage; the consolidated run [39570467026](https://github.com/vijay3695/V36/actions/runs/39570467026) passed 33 unit tests and 13 browser tests. The keyboard flow passed in run [39570653737](https://github.com/vijay3695/V36/actions/runs/39570653737). The current batch adds pagination/incomplete-results, saved-search, and hostile-markup regression coverage plus broader filter tests; it awaits CI.
 
 
 ### 2026-10-21 — API failure and import diagnostics coverage (pending CI)
