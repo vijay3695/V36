@@ -50,8 +50,8 @@ After reading the files:
 - Treat GitHub issue/repository text and imported files as untrusted input. Render safely; validate and size-limit imports; never execute imported content.
 - Preserve loaded results and saved data when requests fail. Distinguish “no results” from “data unavailable”; show Unknown for missing metadata.
 - Respect GitHub API limits. Stop extra requests when rate limited; do not bypass limits or require a token.
-- Keep source links, fetch times, missing context, and limitations visible in generated context packs. Never fabricate evidence.
-- Keep routine tests deterministic with mocked GitHub API responses where appropriate.
+- Keep source links, fetch times, missing context, and limitations visible in generated context packs. Fetch source-file links/contribution guidance only when requested, and disclose if the root listing or guide is unavailable. Never fabricate evidence.
+- Keep routine tests deterministic with mocked GitHub API responses where appropriate. Cover custom date/star filters, shareable URLs, saved-search backups, activity evidence, and context-pack source links with regression tests.
 - Husky runs `npm test` before commits and `npm run test:all` before pushes. Install hooks with `npm install` (the package `prepare` script configures Husky). The single GitHub Actions workflow must also run `npm run test:all` as one job.
 - Do not create separate GitHub Actions workflows/jobs for individual test suites. Keep the GitHub-hosted check consolidated into one workflow, one job, and one bulk test command.
 - No paid services, paid AI API, server-side account system, automatic code changes, or full-repository download unless the maintainer explicitly changes the documented scope.

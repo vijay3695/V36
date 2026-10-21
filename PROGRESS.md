@@ -7,7 +7,7 @@
 - **Branch:** `main`
 - **Project status:** In development; not release-ready.
 - **Current phase:** Phase 0 — Baseline and CI stabilization.
-- **Phase 0 status:** BLOCKED pending diagnosis/fix of the end-to-end failure. CI structure has now been consolidated; test status remains unverified until the single bulk run completes.
+- **Phase 0 status:** Consolidated CI passed on commit `914928c`; expanded implementation in the current batch is pending its own bulk test run. CI structure has now been consolidated; test status remains unverified until the single bulk run completes.
 - **Latest run supplied by maintainer:** [CI run #17 — Preserve rate-limit and partial-metadata status messages](https://github.com/vijay3695/V36/actions/runs/39563293807).
 - **Observed in that run:** Unit tests passed; browser acceptance/E2E failed at `npm run test:e2e`.
 - **Other recent runs supplied by maintainer:** CI runs #1–#18 were reported as failing overall. Do not assume a single cause; inspect each relevant failed job and the current head commit.
@@ -54,6 +54,16 @@ These are **not yet verified as complete** merely because related code exists.
 5. Update this progress file and phase checkboxes in the same logical change as code.
 
 ## Work log
+
+### 2026-10-21 — Expanded filters, activity evidence, and context packs (pending CI)
+
+- Added custom created/updated/commit date bounds, exact min/max star filters, and GitHub relevance sorting.
+- Wired new filter values through form state, shareable URLs, and validated saved-search backups.
+- Added repository last-push date, issue comment count, close date, and PR link to activity evidence.
+- Context-pack generation now optionally retrieves root-level source links and a root `CONTRIBUTING.md`, disclosing when the guide or listing is unavailable.
+- Added filter/storage/context-pack unit tests and a deterministic mocked browser flow for search, details, context packs, and saved issues.
+- This batch's checks: **NOT RUN locally** because this environment cannot clone from GitHub. Verify the single consolidated GitHub Actions run before treating these changes as complete.
+
 
 ### 2026-10-21 — Consolidated local and GitHub test execution
 

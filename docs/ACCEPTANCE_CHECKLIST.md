@@ -5,7 +5,7 @@ Do not publish the first release until every applicable item below is completed 
 ## Discovery and filters
 
 - [ ] Search public GitHub issues using supported search qualifiers.
-- [ ] Language, labels, issue type, issue creation date, issue update date, commit age, star ranges, categories, and sorting behave as specified.
+- [ ] Language, labels, issue type, issue creation date/custom bounds, issue update date/custom bounds, commit age/custom bounds, star presets and exact min/max, categories, and sorting behave as specified.
 - [ ] Custom date ranges are supported where planned or the specification is explicitly updated before release.
 - [ ] AND behavior is consistent and explained.
 - [ ] Metadata-dependent filters never silently exclude items merely because metadata is not yet fetched; unknown data is identified.

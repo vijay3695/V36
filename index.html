@@ -29,8 +29,20 @@
 <div class="field"><label for="updated">Issue last updated</label><select id="updated" name="updated"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
 <div class="field"><label for="commit-age">Latest commit age</label><select id="commit-age" name="commitAge"><option value="">No commit-age filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div>
 <div class="field"><label for="stars">Repository popularity</label><select id="stars" name="stars"><option value="">Any star count</option><option value="0-99">Under 100 stars</option><option value="100-999">100–999 stars</option><option value="1000-9999">1,000–9,999 stars</option><option value="10000-">10,000 or more stars</option></select></div>
-<div class="field"><label for="sort">Sort by</label><select id="sort" name="sort"><option value="updated">Recently updated</option><option value="created">Recently created</option><option value="comments">Most discussed</option></select></div>
+<div class="field"><label for="sort">Sort by</label><select id="sort" name="sort"><option value="updated">Recently updated</option><option value="created">Recently created</option><option value="comments">Most discussed</option><option value="relevance">GitHub relevance</option></select></div>
 </div>
+<details class="advanced-filters"><summary>Custom date ranges and exact star counts</summary>
+<div class="filter-grid custom-filter-grid">
+<div class="field"><label for="created-after">Created on or after</label><input id="created-after" name="createdAfter" type="date"></div>
+<div class="field"><label for="created-before">Created on or before</label><input id="created-before" name="createdBefore" type="date"></div>
+<div class="field"><label for="updated-after">Updated on or after</label><input id="updated-after" name="updatedAfter" type="date"></div>
+<div class="field"><label for="updated-before">Updated on or before</label><input id="updated-before" name="updatedBefore" type="date"></div>
+<div class="field"><label for="commit-after">Latest commit on or after</label><input id="commit-after" name="commitAfter" type="date"></div>
+<div class="field"><label for="commit-before">Latest commit on or before</label><input id="commit-before" name="commitBefore" type="date"></div>
+<div class="field"><label for="min-stars">Minimum stars</label><input id="min-stars" name="minStars" type="number" min="0" max="100000000" step="1" inputmode="numeric" placeholder="No minimum"></div>
+<div class="field"><label for="max-stars">Maximum stars</label><input id="max-stars" name="maxStars" type="number" min="0" max="100000000" step="1" inputmode="numeric" placeholder="No maximum"></div>
+</div><p class="hint">Custom dates override the corresponding age preset. Date and star filters that need metadata are evaluated on loaded results; load more to evaluate more issues.</p>
+</details>
 <div class="form-actions"><button class="button button-primary" type="submit">Search GitHub</button><button class="button button-secondary" id="save-search" type="button">Save search</button><button class="button button-quiet" id="reset-search" type="reset">Reset filters</button></div>
 <p class="hint">Filters combine using AND logic. Some filters are evaluated only on loaded issues; results may be incomplete until you load more. Stars indicate popularity, not project health.</p>
 </form>

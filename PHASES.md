@@ -28,7 +28,7 @@ Acceptance criteria:
 Tasks:
 - [ ] Search open GitHub issues and support pagination/load-more.
 - [ ] Compact result cards and explicit loading, empty, partial-results, unavailable-data, error, and rate-limit states.
-- [ ] Filters: language metadata, official labels, issue type, creation age, last-update age, latest commit/push age, popularity, inferred contribution category, and sort order.
+- [ ] Filters: language metadata, official labels, issue type, creation age/custom bounds, last-update age/custom bounds, latest commit/push age/custom bounds, popularity presets and exact min/max stars, inferred contribution category, and sorting.
 - [ ] AND semantics for selected filters and visible explanation of partial coverage.
 - [ ] Preserve older projects by default; unknown dates remain Unknown.
 - [ ] Clearly separate official labels from conservative inferred categories.

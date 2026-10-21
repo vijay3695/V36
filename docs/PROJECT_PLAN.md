@@ -38,7 +38,8 @@ Issue result cards show repository, issue title, language metadata where availab
 - Issue creation age and last-updated age are separate filters. Support 7-, 30-, 90-, and 365-day presets and custom ranges where practical.
 - Optional latest-commit/push-age filter with 30-, 90-, 180-, and 365-day presets and custom range where supported. GitHub's repository `pushed` metadata is not necessarily the exact latest commit date.
 - Popularity filters: minimum/maximum stars and presets under 100, 100–999, 1,000–9,999, and 10,000+. No popularity filter is selected by default.
-- Sorting: recently updated by default; recently created and GitHub relevance where supported.
+- Sorting: recently updated by default; recently created, most discussed, and GitHub relevance where supported.
+- Provide custom date bounds for issue creation, last update, and latest commit where available, plus exact minimum/maximum stars. Custom date bounds override the corresponding age preset; exact star bounds override star presets.
 - Filters combine with AND logic by default. Explain the behavior to users.
 
 Older repositories remain visible unless a user explicitly filters them out. Unknown dates and unavailable metadata are shown as **Unknown**, never guessed. Stars indicate popularity, not health.
