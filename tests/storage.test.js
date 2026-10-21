@@ -1,0 +1,11 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {validateBackup,mergeBackup,exportBackup,MAX_IMPORT_BYTES} from "../js/storage.js";
+const backup={version:1,exportedAt:"2026-01-01T00:00:00Z",issues:[{url:"https://github.com/acme/demo/issues/1",title:"Bug",repository:"acme/demo",number:1}],searches:[{id:"one",name:"bugs",filters:{query:"bug",labels:["bug"],sort:"updated"}}]};
+test("validates versioned backup and canonical issue URLs",()=>{const x=validateBackup(backup);assert.equal(x.issues.length,1);assert.equal(x.issues[0].url,"https://github.com/acme/demo/issues/1");});
+test("rejects invalid versions and structures",()=>{assert.throws(()=>validateBackup({version:2,issues:[],searches:[]}),/Unsupported/);assert.throws(()=>validateBackup({version:1,issues:{},searches:[]}),/Unsupported/);});
+test("discards unsafe URLs and deduplicates issues",()=>{const x=validateBackup({...backup,issues:[...backup.issues,{...backup.issues[0]},{url:"javascript:alert(1)"}]});assert.equal(x.issues.length,1);});
+test("deduplicates equivalent saved searches",()=>{const x=validateBackup({...backup,searches:[...backup.searches,{...backup.searches[0],id:"other"}]});assert.equal(x.searches.length,1);});
+test("merging preserves unrelated references",()=>{const other={version:1,issues:[{url:"https://github.com/acme/demo/issues/2",title:"Other"}],searches:[]};const x=mergeBackup(validateBackup(backup),validateBackup(other));assert.equal(x.issues.length,2);});
+test("exports versioned JSON",()=>{assert.equal(JSON.parse(exportBackup(validateBackup(backup))).version,1);});
+test("import size is capped at one megabyte",()=>assert.equal(MAX_IMPORT_BYTES,1048576));
