@@ -1,5 +1,10 @@
 # Phase 6 — Final verification report
 
+<!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
+
+> **Current verified status (2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](../tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
+
+
 **Verification record updated:** 2026-10-24  
 **Branch:** `main`  
 **Latest documentation/CI commit:** `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`  
@@ -24,7 +29,7 @@ The passing suite includes search and filter semantics, custom date/star bounds,
 
 ## Phase 5 approval and completed manual checks
 
-The maintainer approved Phase 5 on 2026-10-21. On 2026-10-24, the maintainer subsequently confirmed PASS for the redesigned UI's manual checks, including 320/375/768/1280px layouts, 200% zoom, light/dark theme contrast, reduced motion, long-content stress, and screen reader/keyboard checks. The maintainer also reported PASS for search/filter/sort/load-more/details, Saved/sharing/import-export, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md) for the recorded outcomes and scope. These are maintainer-reported results; the browser/OS and assistive-technology versions were not supplied. Numeric per-component contrast ratios remain unconfirmed. Automated axe/contrast and browser checks are recorded separately from manual acceptance.
+The maintainer approved Phase 5 on 2026-10-21. On 2026-10-24, the maintainer subsequently confirmed PASS for the redesigned UI's manual checks, including 320/375/768/1280px layouts, 200% zoom, light/dark theme contrast, reduced motion, long-content stress, and screen reader/keyboard checks. The maintainer also reported PASS for search/filter/sort/load-more/details, Saved/sharing/import-export, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md) for the recorded outcomes and scope. These are maintainer-reported results; the browser/OS and assistive-technology versions were not supplied. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report. Automated axe/contrast and browser checks are recorded separately from manual acceptance.
 
 ## Release checklist disposition
 

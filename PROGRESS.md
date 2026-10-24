@@ -1,5 +1,10 @@
 ### 2026-10-24 — Final documentation verification closed
 
+<!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
+
+> **Current verified status (2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](../tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
+
+
 - Latest documentation commit before this entry: `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`.
 - Consolidated GitHub Actions CI run [#136](https://github.com/vijay3695/V36/actions/runs/40085468160): **PASS**.
 - GitHub Pages deployment [#63](https://github.com/vijay3695/V36/actions/runs/40085467930): **SUCCESS**.
@@ -22,7 +27,7 @@
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
 - Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
-- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
+- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
 - Previous automated redesign evidence remains recorded below.
 
 ### 2026-10-24 — Approved UI redesign implemented and verified
@@ -36,14 +41,14 @@
 - **Responsive overflow passed:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — no horizontal overflow at 320, 375, 768, or 1280px. The 640px CSS viewport used as a 200% zoom equivalent on a 1280px display also passed (document/body width both 640px).
 - **GitHub Pages build/deployment succeeded:** [run](https://github.com/vijay3695/V36/actions/runs/40080705112).
 - Earlier test failures were not hidden: the first post-change run found outdated contrast-test assumptions, a theme-toggle accessible-name mismatch, and a hidden-label serialization expectation mismatch. The tests/code were corrected; the final full run passed.
-- **Manual follow-up complete:** the maintainer explicitly confirmed PASS for reduced motion, long-content stress, light/dark theme contrast, and screen reader/keyboard. The earlier statement that these checks were not performed is superseded by this later confirmation. Numeric per-component contrast ratios remain unconfirmed.
+- **Manual follow-up complete:** the maintainer explicitly confirmed PASS for reduced motion, long-content stress, light/dark theme contrast, and screen reader/keyboard. The earlier statement that these checks were not performed is superseded by this later confirmation. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
 - Local execution was unavailable because the container could not resolve `github.com`; authoritative verification was performed by GitHub Actions.
 
 ## Current snapshot
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
-- **Project status:** Phases 0–6 VERIFIED; manual acceptance outcomes recorded in `docs/MANUAL_ACCEPTANCE.md`; no public release published.
-- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
+- **Project status:** Phases 0–6 VERIFIED; manual acceptance outcomes recorded in `docs/MANUAL_ACCEPTANCE.md`; This was true at the time of the earlier snapshot; `v0.1.0` has since been published successfully.
+- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
 - **Latest CI:** [run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the verified application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
 - **Responsive viewport CI:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow; the 640px CSS viewport used as a 200% zoom equivalent also passed.
 - **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.

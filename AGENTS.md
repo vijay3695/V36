@@ -1,5 +1,12 @@
 # V36 — AI Agent Entry Guide
 
+<!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
+
+> **Current verified status (2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](../tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
+
+**Current starting task:** No current V36 phase is open. `v0.1.0` is public, all three release/CI/Pages checks passed, and numeric contrast ratios are recorded and regression-tested. For future tasks, inspect current `main`, latest CI, release state, and this document before making changes.
+
+
 **Start here.** This file is the single entry point for any AI coding agent, autonomous agent, or new contributor. Read it first, then follow the required reading order below. You should be able to understand the project, its decisions, current state, and next coding task without access to the maintainer's chat history.
 
 ## 1. Understand the project in one minute
@@ -11,7 +18,7 @@ V36 is a free, static-first website for discovering GitHub issues that may suit 
 - **Hosting goal:** GitHub Pages; no paid backend or database.
 - **AI:** No paid AI API or built-in autonomous coding. V36 prepares portable context packs for users to paste into their own assistant.
 - **Credentials:** Never require or store GitHub tokens, secrets, or credentials.
-- **Release state:** Development only. Do not call the project release-ready until every required feature and release gate is verified.
+- **Release state:** Public preview `v0.1.0` is published after the full test suite passed on the exact release commit. See `docs/RELEASE_VERIFICATION.md`.
 - **Product principle:** Show source-backed evidence and uncertainty. Do not assign an overall repository health score or declare projects “dead” based on incomplete signals.
 
 ## 2. Required reading order
@@ -40,7 +47,7 @@ After reading the files:
 7. Commit the coherent fix and its evidence to `main` unless the maintainer has directed otherwise. Avoid a stream of speculative commits that each trigger CI; diagnose first, then group related fixes.
 8. Re-check the resulting GitHub Actions run. Never claim a fix is complete merely because a commit was pushed.
 
-**Current starting task:** Phase 6 is VERIFIED and complete on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`. Consolidated CI run [#73](https://github.com/vijay3695/V36/actions/runs/39642076673) passed 101/101 unit tests, 42/42 browser tests, and 3/3 standalone accessibility scans; responsive viewport run [#73 companion](https://github.com/vijay3695/V36/actions/runs/39642076859) passed at 320/375/768/1280px. The maintainer approved Phase 5 with an explicit waiver for outstanding human visual checks, which remain NOT RUN and must not be described as passing. The long-content test locator was fixed without weakening its assertion. No public release was published. Next action is only a separately authorized release/deployment task or additional manual acceptance if the maintainer requests it.
+**Previous starting task (historical):** Phase 6 and the then-current candidate were verified before the contrast audit and public v0.1.0 release. The current starting state is summarized at the top of this file.
 
 ## 4. Non-negotiable engineering rules
 
