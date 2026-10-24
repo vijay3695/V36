@@ -31,6 +31,34 @@ test("manual: responsive no horizontal overflow", async ({page}) => {
   }
 });
 
+test("reflow at a 640px CSS viewport (200% zoom equivalent on a 1280px display)", async ({page}) => {
+  await page.setViewportSize({width: 640, height: 900});
+  await page.route("https://api.github.com/**", async route => {
+    const u = new URL(route.request().url());
+    if (u.pathname === "/search/issues") return route.fulfill({json: {total_count: 0, incomplete_results: false, items: []}});
+    return route.fulfill({status: 404, json: {message: "not mocked"}});
+  });
+  await page.goto("http://127.0.0.1:4173/");
+  await expect(page.getByLabel("Search issues")).toBeVisible();
+  await expect(page.getByLabel("Language")).toBeVisible();
+  await expect(page.locator("#labels-picker > summary")).toBeVisible();
+  await page.locator(".advanced-filters > summary").click();
+  await page.locator(".custom-date-filters > summary").click();
+  await expect(page.getByLabel("Created on or after")).toBeVisible();
+  await expect(page.getByLabel("Minimum stars")).toBeVisible();
+  await page.getByLabel("Search issues").fill("zoom reflow");
+  await page.getByRole("button", {name: "Search GitHub"}).click();
+  await expect(page.locator("#status")).toContainText("Loaded 0 issues");
+  const dimensions = await page.evaluate(() => ({
+    viewport: window.innerWidth,
+    document: document.documentElement.scrollWidth,
+    body: document.body.scrollWidth
+  }));
+  console.log("ZOOM_EQUIVALENT_LAYOUT:", JSON.stringify(dimensions));
+  expect(dimensions.document).toBeLessThanOrEqual(641);
+  expect(dimensions.body).toBeLessThanOrEqual(641);
+});
+
 test("manual: reduced motion disables transitions, animations and smooth scrolling", async ({page}) => {
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.goto("http://127.0.0.1:4173/");
