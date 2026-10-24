@@ -5,6 +5,29 @@ import {buildContextPack} from "./context-pack.js";
 const $=id=>document.getElementById(id),form=$("search-form"),status=$("status");
 let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;
 const repoCache=new Map();
+
+const THEME_STORAGE_KEY="v36-theme";
+function getInitialTheme(){
+ try{
+  const stored=localStorage.getItem(THEME_STORAGE_KEY);
+  if(stored==="light"||stored==="dark")return stored;
+ }catch{}
+ return window.matchMedia?.("(prefers-color-scheme: light)").matches?"light":"dark";
+}
+function applyTheme(theme,persist=false){
+ const selected=theme==="light"?"light":"dark";
+ document.documentElement.dataset.theme=selected;
+ const toggle=$("theme-toggle");
+ if(toggle){
+  const next=selected==="dark"?"light":"dark";
+  toggle.textContent=next==="light"?"Light mode":"Dark mode";
+  toggle.setAttribute("aria-label","Switch to "+next+" theme");
+  toggle.title="Switch to "+next+" theme";
+ }
+ if(persist){try{localStorage.setItem(THEME_STORAGE_KEY,selected);}catch{}}
+}
+applyTheme(getInitialTheme());
+$("theme-toggle")?.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark",true));
 function setStatus(message,kind="info"){status.textContent=message;status.dataset.kind=kind;status.setAttribute("aria-live",kind==="error"?"assertive":"polite");}
 function ensureStorageWritable(){if(saved.storageWarning)throw new Error("Browser storage could not be read; saving, importing, removing, and exporting are disabled to avoid overwriting existing data.");}
 function setBusy(v){busy=v;form.querySelector('button[type="submit"]').disabled=v;$("load-more").disabled=v;$("results").setAttribute("aria-busy",v?"true":"false");}
