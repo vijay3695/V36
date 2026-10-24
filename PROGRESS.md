@@ -1,11 +1,11 @@
 # V36 Progress Log
 
-### 2026-10-24 — Follow-up manual checks reported performed; outcomes unspecified
+### 2026-10-24 — Follow-up manual checks confirmed PASS
 
-- The maintainer reported performing four checks: reduced-motion preference; long-content stress; light/dark theme contrast; and screen reader plus keyboard.
-- The supplied result for each was “Tested; result not specified.” Record each as **performed, outcome unspecified**—not PASS and not FAIL.
-- Formal per-component contrast measurement was not explicitly confirmed. Do not infer that it occurred from the broader “light/dark theme contrast” label.
-- Updated detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md). Ask the maintainer for the outcomes before changing these to PASS/FAIL.
+- The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader plus keyboard.
+- These are maintainer-reported results. Browser/OS and screen-reader versions, detailed measurements, and exact test data were not supplied and are not inferred.
+- Formal per-component contrast measurement remains unconfirmed; the reported theme-contrast PASS is not treated as numeric component-by-component contrast evidence.
+- Updated detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
@@ -14,7 +14,7 @@
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
 - Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
-- Follow-up report: reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks were reported as performed, but outcomes were not specified. Do not mark them PASS or FAIL without outcomes; formal per-component contrast measurement remains unconfirmed.
+- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
 - Previous automated redesign evidence remains recorded below.
 
 ### 2026-10-24 — Approved UI redesign implemented and verified
