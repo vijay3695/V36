@@ -1,7 +1,8 @@
 # V36 UI Redesign Plan
 
 **Status:** Approved by maintainer — implementation authorized  
-**Scope:** Planning only. No application code, styles, tests, or existing project status records are changed by this plan.  
+**Scope:** UI-only redesign. Preserve every existing feature and behavior; no feature removal is authorized.  
+**Implementation status:** In progress — Discover layout, theme system, and regression coverage have been updated; verification remains pending.  
 **Target repository:** `vijay3695/V36`  
 **Implementation baseline:** Existing HTML, CSS, and vanilla JavaScript application hosted on GitHub Pages.
 
