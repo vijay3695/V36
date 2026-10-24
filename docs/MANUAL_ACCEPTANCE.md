@@ -1,6 +1,23 @@
 # V36 Manual Acceptance Checklist
 
-**Status: PARTIALLY PERFORMED — MAINTAINER APPROVED WITH EXPLICIT WAIVER (2026-10-21).** The maintainer directed that Phase 5 be approved. This accepts the remaining manual-review risk for project phase sign-off; it does not convert checks marked NOT RUN into PASS or claim full human accessibility verification. Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. A fresh human visual review of contrast, reduced motion, and long-content after the redesign remains **NOT RUN**. The 2026-10-24 automated checks for contrast, reduced motion, and long-content passed; see the verified redesign record below.
+## New maintainer manual verification — 2026-10-24 (after UI redesign)
+
+The maintainer manually checked the live V36 UI and reported PASS for every item below. The browser/OS version and exact deployed commit were not supplied for this review, so they are not inferred here.
+
+- [x] Discover: search/load issues; single-language filtering; multi-label and custom-label filtering; quick and advanced filters; sorting, Load more, and issue details.
+- [x] Saved/sharing: save and revisit an issue; save/reload a search; export/import saved data; restore filters from a shared URL.
+- [x] Responsive layout: 320px, 375px, 768px, and 1280px.
+- [x] Browser zoom: 200%, with no horizontal overflow reported.
+- [x] Light and dark themes.
+- [x] Keyboard-only navigation and visible focus.
+- [x] Readability and disabled controls.
+- [x] No-results and unavailable/rate-limit states.
+- [x] About page and issue-detail navigation.
+
+**Not claimed as passed:** a dedicated OS/browser reduced-motion preference check; a dedicated long-content stress test (very long title/body, many labels, empty description, and unavailable-data list); a formal per-component contrast measurement in both themes; and assistive-technology testing. Automated tests and the maintainer's reported checks are distinct evidence types.
+
+
+**Status: PARTIALLY PERFORMED — latest maintainer-reported review 2026-10-24; remaining checks are explicitly listed below.** The maintainer directed that Phase 5 be approved. This accepts the remaining manual-review risk for project phase sign-off; it does not convert checks marked NOT RUN into PASS or claim full human accessibility verification. Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. A fresh human visual review of contrast, reduced motion, and long-content after the redesign remains **NOT RUN**. The 2026-10-24 automated checks for contrast, reduced motion, and long-content passed; see the verified redesign record below.
 
 ## Approved UI redesign — automated verification (2026-10-24)
 
@@ -35,12 +52,12 @@
 
 ## Visual / responsive checks
 
-- [ ] Human visual acceptance at 320px, 375px, 768px, and desktop width: confirm no clipped controls and that the layout remains usable. **PARTIAL — DEV APPROVED**: 320px: PASS, 0px horizontal overflow, no offenders; 375px: PASS, 0px horizontal overflow, no offenders. 768px and desktop visual review: NOT RUN.
+- [x] Human visual acceptance at 320px, 375px, 768px, and desktop width: **PASS — maintainer-reported 2026-10-24** for the redesigned live UI. Browser/OS versions and exact deployed commit were not supplied. This new result supersedes the earlier 768px/desktop NOT RUN entry.
 - [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **PASS** — [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181), commit `16fd41922033a356e7305e70f00f9edcac71702d`. Playwright logged `OVERFLOW@320: false`, `OVERFLOW@375: false`, `OVERFLOW@768: false`, and `OVERFLOW@1280: false`; 1 test passed. This measures document-level horizontal overflow, not clipped controls or visual usability.
-- [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS** (maintainer-reported 2026-10-21; Firefox on Windows, versions not recorded)
-- [ ] Check dark-theme text, borders, focus indicators, status messages, inferred-label styling, and disabled controls for adequate contrast. **NOT RUN**
-- [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN**
-- [ ] Check a long issue title/body, many labels, an empty description, and an unavailable-data list. **NOT RUN**
+- [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS — maintainer-reported 2026-10-24** for the redesigned live UI; environment/version details were not supplied.
+- [ ] Formal per-component contrast review in both themes (text, borders, focus indicators, status messages, inferred labels, and disabled controls). **NOT RUN as a dedicated contrast measurement**. Maintainer separately reported readable text and disabled controls PASS on 2026-10-24.
+- [ ] Enable reduced motion in the OS/browser and confirm no disruptive animations or smooth scrolling. **NOT RUN manually** (automated reduced-motion coverage is recorded separately).
+- [ ] Dedicated long-content stress test: long issue title/body, many labels, empty description, and unavailable-data list. **NOT RUN manually** (automated long-content coverage is recorded separately).
 
 ## Automated proxy results (Playwright)
 
@@ -56,7 +73,7 @@
 
 ## Results
 
-- Outcome: **PARTIAL** — manual visual approval remains recorded at 320px and 375px; automated document-overflow test passes at 320px, 375px, 768px, and 1280px. Human visual review at 768px/desktop, contrast review, reduced-motion review, and long-content checks remain pending.
+- Outcome: **PARTIAL** — the maintainer reported PASS on 2026-10-24 for the redesigned live UI at 320/375/768/1280px, 200% zoom, light/dark themes, keyboard-only navigation, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain pending.
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
