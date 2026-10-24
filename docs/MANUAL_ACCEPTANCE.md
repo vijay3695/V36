@@ -2,14 +2,14 @@
 
 ## Latest maintainer follow-up — 2026-10-24
 
-The maintainer subsequently reported that the following checks were performed. For all four, the supplied result was exactly “Tested; result not specified.” They are recorded as **performed, outcome unspecified**—not as PASS or FAIL. This follow-up supersedes earlier statements in this document that these checks had not yet been performed, but it does not supply missing outcomes or evidence.
+The maintainer confirmed PASS for all four checks in a subsequent message. These are maintainer-reported outcomes; browser/OS and assistive-technology versions, detailed measurements, and the exact test data were not supplied and are not inferred.
 
-- [x] Reduced-motion preference — **TESTED; OUTCOME NOT SPECIFIED**.
-- [x] Long-content stress test (long title/body, many labels, empty description, unavailable-data list) — **TESTED; OUTCOME NOT SPECIFIED**.
-- [x] Light/dark theme contrast — **TESTED; OUTCOME NOT SPECIFIED**. No claim is made that a formal per-component contrast measurement was completed.
-- [x] Screen reader and keyboard — **TESTED; OUTCOME NOT SPECIFIED**. No pass/fail result or assistive-technology details were supplied.
+- [x] Reduced-motion preference — **PASS**.
+- [x] Long-content stress test (long title/body, many labels, empty description, unavailable-data list) — **PASS**.
+- [x] Light/dark theme contrast — **PASS** for the reported theme contrast check. A formal per-component contrast measurement (numeric ratios for each relevant component) is **not separately confirmed**.
+- [x] Screen reader and keyboard — **PASS**, as reported by the maintainer. The specific screen reader, browser/OS combination, and detailed announcement results were not supplied.
 
-Do not infer a pass from a checked box. Ask the maintainer for each outcome and any failures before recording PASS/FAIL or closing related follow-up.
+The pass statuses above reflect the maintainer's explicit report; they do not imply unreported measurements, test configurations, or additional coverage.
 
 ## New maintainer manual verification — 2026-10-24 (after UI redesign)
 
@@ -25,10 +25,10 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 - [x] No-results and unavailable/rate-limit states.
 - [x] About page and issue-detail navigation.
 
-**Latest follow-up:** the maintainer reports performing the reduced-motion, long-content, light/dark contrast, and screen-reader/keyboard checks, but supplied no outcomes. They are therefore recorded as TESTED — OUTCOME NOT SPECIFIED, not PASS. Formal per-component contrast measurement remains unconfirmed. Automated tests and maintainer-reported checks are distinct evidence types.
+**Latest follow-up:** the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed. Automated tests and maintainer-reported checks are distinct evidence types.
 
 
-**Status: PARTIALLY PERFORMED — latest maintainer-reported review 2026-10-24.** The maintainer directed that Phase 5 be approved. This accepts the remaining manual-review risk for project phase sign-off; it does not convert checks with unspecified outcomes into PASS or claim full human accessibility verification. Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. The maintainer's 2026-10-24 manual review passed the listed redesigned UI checks, including the four requested viewport widths and 200% zoom. In a later follow-up, the maintainer reported performing reduced-motion, long-content stress, light/dark contrast, and screen-reader/keyboard checks, but outcomes were not specified. These are recorded as performed, outcome unspecified—not PASS or FAIL. Formal per-component contrast measurement remains unconfirmed.
+**Status: PARTIALLY PERFORMED — latest maintainer-reported review 2026-10-24.** The maintainer directed that Phase 5 be approved. The documented approval includes an explicit waiver for residual manual-review risks; it does not imply coverage beyond the recorded checks. Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. The maintainer's 2026-10-24 manual review passed the listed redesigned UI checks, including the four requested viewport widths and 200% zoom. In a later follow-up, the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
 
 ## Approved UI redesign — automated verification (2026-10-24)
 
@@ -38,7 +38,7 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 - The browser suite also tested a 640px CSS viewport as the reflow equivalent of 200% zoom on a 1280px display; document and body widths both remained 640px. This is an automated viewport proxy, not a fresh manual browser-zoom check.
 - Automated contrast checks cover light and dark theme tokens; accessibility scans cover Discover, Saved, and About in both themes, and the issue-detail view in the end-to-end flow. Reduced motion, keyboard focus, long content, theme persistence, filter behavior, and context-pack button text are covered by passing tests.
 - [GitHub Pages build/deployment](https://github.com/vijay3695/V36/actions/runs/40080705112) succeeded.
-- **Manual-review record:** the maintainer reported PASS for the listed redesigned UI checks on 2026-10-24; a later follow-up reports reduced-motion, long-content stress, light/dark contrast, and screen-reader/keyboard checks as performed with outcomes unspecified. See the latest follow-up at the top of this file. Automated success is not represented as human review.
+- **Manual-review record:** the maintainer reported PASS for the listed redesigned UI checks on 2026-10-24 and subsequently confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. See the latest follow-up at the top of this file. Formal per-component contrast measurement is not separately confirmed. Automated success is not represented as human review.
 
 ## Record the test environment
 
