@@ -2,7 +2,7 @@
 
 **Status:** Approved by maintainer — implementation authorized  
 **Scope:** UI-only redesign. Preserve every existing feature and behavior; no feature removal is authorized.  
-**Implementation status:** COMPLETE — automated verification passed on commit `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`. [Full CI](https://github.com/vijay3695/V36/actions/runs/40080705257): 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans passed. [Responsive checks](https://github.com/vijay3695/V36/actions/runs/40080705237) passed at 320/375/768/1280px; a 640px CSS viewport (200% zoom equivalent for a 1280px display) passed with no horizontal overflow. [GitHub Pages build/deployment](https://github.com/vijay3695/V36/actions/runs/40080705112) succeeded.  
+**Implementation status:** COMPLETE — automated verification passed on commit `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`; maintainer-reported manual verification of the listed UI flows passed on 2026-10-24 (see `docs/MANUAL_ACCEPTANCE.md`). [Full CI](https://github.com/vijay3695/V36/actions/runs/40080705257): 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans passed. [Responsive checks](https://github.com/vijay3695/V36/actions/runs/40080705237) passed at 320/375/768/1280px; a 640px CSS viewport (200% zoom equivalent for a 1280px display) passed with no horizontal overflow. [GitHub Pages build/deployment](https://github.com/vijay3695/V36/actions/runs/40080705112) succeeded.  
 **Target repository:** `vijay3695/V36`  
 **Implementation baseline:** Existing HTML, CSS, and vanilla JavaScript application hosted on GitHub Pages.
 
@@ -247,7 +247,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - Report actual pass/fail evidence and remaining manual checks. Do not mark unperformed checks complete.
 - Update project status and acceptance documents only to reflect verified facts.
 
-**Exit gate:** No unresolved automated regressions remain. Manual visual review after the redesign was not performed; the existing maintainer-approved manual-review waiver remains explicit.
+**Exit gate:** No unresolved automated regressions remain. The maintainer reported PASS for the listed manual UI checks after the redesign on 2026-10-24. Dedicated reduced-motion, long-content stress, formal per-component contrast measurement, and assistive-technology checks remain NOT RUN.
 
 ## 12. Acceptance checklist
 
