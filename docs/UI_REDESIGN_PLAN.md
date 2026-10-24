@@ -1,6 +1,6 @@
 # V36 UI Redesign Plan
 
-**Status:** Proposed — awaiting maintainer approval  
+**Status:** Approved by maintainer — implementation authorized  
 **Scope:** Planning only. No application code, styles, tests, or existing project status records are changed by this plan.  
 **Target repository:** `vijay3695/V36`  
 **Implementation baseline:** Existing HTML, CSS, and vanilla JavaScript application hosted on GitHub Pages.
@@ -265,6 +265,6 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 
 ## 13. Approval and change control
 
-This document is a proposal, not implementation authorization. No source files, styles, tests, dependencies, workflows, or existing status records should be changed until the maintainer approves the design structure and this plan.
+The maintainer has approved this plan and authorized implementation. Proceed in the documented sequence, beginning with a baseline audit. Preserve every existing feature and behavior; this is a UI upgrade, not a feature-removal exercise. If an implementation step appears to require removing or changing a feature, stop and obtain explicit approval before doing so.
 
 Any suggested behavior change discovered during implementation must be called out separately for approval rather than silently bundled into the visual redesign.
