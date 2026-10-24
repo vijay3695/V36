@@ -1,6 +1,6 @@
 # V36 release acceptance checklist and disposition
 
-**Phase 6 disposition:** VERIFIED. The latest consolidated CI run [#132](https://github.com/vijay3695/V36/actions/runs/40084825503) passed on main commit `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the [Pages deployment](https://github.com/vijay3695/V36/actions/runs/40084825549) also succeeded. The latest application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans. Manual acceptance outcomes confirmed by the maintainer on 2026-10-24 are recorded in `MANUAL_ACCEPTANCE.md`. Numeric per-component contrast ratios remain unconfirmed. No public release has been published.
+**Phase 6 disposition:** VERIFIED. Latest documentation commit `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a` is verified by [CI run #136](https://github.com/vijay3695/V36/actions/runs/40085468160) (**PASS**) and [Pages deployment #63](https://github.com/vijay3695/V36/actions/runs/40085467930) (**SUCCESS**). The application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans. The latest application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans. Manual acceptance outcomes confirmed by the maintainer on 2026-10-24 are recorded in `MANUAL_ACCEPTANCE.md`. Numeric per-component contrast ratios remain unconfirmed. No public release has been published.
 
 Do not publish the first release until every applicable item below is completed and evidenced against the exact release commit, with any approved exception clearly disclosed.
 
