@@ -1,6 +1,6 @@
 # V36 release acceptance checklist and disposition
 
-**Phase 6 disposition:** VERIFIED against tested candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728` and [consolidated CI run #73](https://github.com/vijay3695/V36/actions/runs/39642076673). The maintainer explicitly approved Phase 5 and waived the remaining human visual checks for phase sign-off. A checked item means it was verified by implementation/test evidence or resolved by that explicit waiver; waived checks are identified inline and remain **NOT RUN**, not PASS. No public release was published in this task.
+**Phase 6 disposition:** VERIFIED. The latest consolidated CI run [#132](https://github.com/vijay3695/V36/actions/runs/40084825503) passed on main commit `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the [Pages deployment](https://github.com/vijay3695/V36/actions/runs/40084825549) also succeeded. The latest application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans. Manual acceptance outcomes confirmed by the maintainer on 2026-10-24 are recorded in `MANUAL_ACCEPTANCE.md`. Numeric per-component contrast ratios remain unconfirmed. No public release has been published.
 
 Do not publish the first release until every applicable item below is completed and evidenced against the exact release commit, with any approved exception clearly disclosed.
 
@@ -61,9 +61,9 @@ Do not publish the first release until every applicable item below is completed 
 - [x] Full keyboard-only navigation works, including filters, results, details, import/export, and context-pack copy.
 - [x] Focus is visible and restored sensibly after navigation and dialogs/controls.
 - [x] Semantic headings, landmarks, labels, accessible names, and status messages are correct.
-- [x] Text and controls meet the agreed contrast criteria: unit contrast tests passed and automated axe scans reported 0 violations (1 incomplete result); human contrast review remains NOT RUN and is explicitly waived by the maintainer for Phase 5 sign-off.
+- [x] Theme contrast review — **PASS**, explicitly confirmed by the maintainer on 2026-10-24. Automated contrast tests and axe scans also passed. Numeric contrast ratios for each individual text/control/border/focus/status/inferred/disabled component are not separately recorded.
 - [x] Manual keyboard checks are documented for loading, results, failures, filters, and saved-item updates.
-- [x] Reduced-motion preference is respected by the automated browser check; human OS/browser review remains NOT RUN and is explicitly waived by the maintainer for Phase 5 sign-off.
+- [x] Reduced-motion preference — automated browser check **PASS** and manual OS/browser preference check **PASS**, explicitly confirmed by the maintainer on 2026-10-24.
 - [x] Automated accessibility success is not described as proof of complete accessibility.
 
 ## Automated tests and CI
@@ -85,4 +85,4 @@ Do not publish the first release until every applicable item below is completed 
 
 ## Manual acceptance
 
-Manual acceptance is documented in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). The maintainer explicitly approved Phase 5 and waived the remaining human visual checks for phase sign-off on 2026-10-21. The outstanding human visual checks (768px/desktop, contrast, reduced motion, long-content) remain NOT RUN and are accepted as documented exceptions; automated proxy checks passed and are not represented as human sign-off. Keyboard and 200% zoom checks remain maintainer-reported PASS.
+Manual acceptance is documented in [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md). On 2026-10-24 the maintainer reported PASS for Discover/search/filter/sort/load-more/details, Saved/sharing/import-export, 320/375/768/1280px layouts, 200% zoom, light/dark themes, keyboard/focus, readability/disabled controls, no-results/rate-limit states, About/detail navigation, reduced motion, long-content stress, theme contrast, and screen reader/keyboard checks. Numeric per-component contrast ratios are not separately confirmed. Phase 5's earlier waiver remains historical sign-off context, not a statement that these later-confirmed checks are still NOT RUN.
