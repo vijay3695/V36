@@ -445,7 +445,7 @@ test("saved searches wrap long summaries without pushing actions out of the card
  await page.getByLabel("Search issues").fill("a".repeat(200));
  await page.locator("#labels-picker > summary").click();
  for(let i=0;i<6;i++){await page.getByLabel("Custom label").fill("verylonglabelname"+i);await page.getByRole("button",{name:"Add",exact:true}).click();}
- await expect(page.locator("#labels")).toHaveValue(Array.from({length:6},(_,i)=>"verylonglabelname"+i).join(", "));
+ await expect(page.locator("#labels")).toHaveValue(Array.from({length:6},(_,i)=>"verylonglabelname"+i).join(","));
  await page.getByRole("button",{name:"Save search"}).click();
  await page.getByRole("link",{name:"Saved",exact:true}).click();
  const row=page.locator("#saved-searches .saved-search").first();
