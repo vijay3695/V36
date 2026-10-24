@@ -2,7 +2,7 @@
 
 **Verification record updated:** 2026-10-24  
 **Branch:** `main`  
-**Latest documentation/CI commit:** `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`  
+**Latest documentation/CI commit:** `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`  
 **Verified application candidate:** `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`  
 **Phase 5:** APPROVED; manual outcomes subsequently confirmed by maintainer  
 **Phase 6:** VERIFIED  
@@ -10,7 +10,7 @@
 
 ## Final CI evidence
 
-- [Latest consolidated GitHub Actions run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on main commit `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`. The latest application candidate's full suite passed: 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
+- [Latest consolidated GitHub Actions run #136](https://github.com/vijay3695/V36/actions/runs/40085468160) — **PASS** on main commit `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`. [Pages deployment #63](https://github.com/vijay3695/V36/actions/runs/40085467930) — **SUCCESS** on the same commit. The latest application candidate's full suite passed: 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
 - Unit tests: **101 passed, 0 failed**.
 - Browser end-to-end suite: **42 passed, 0 failed**.
 - Standalone accessibility suite: **3 passed, 0 failed**.
@@ -32,6 +32,6 @@ The full [acceptance checklist](ACCEPTANCE_CHECKLIST.md) and [project plan](PROJ
 
 ## Final decision
 
-**Phase 5 is approved. Phase 6 is verified and complete.** The latest consolidated CI run is green and the latest Pages deployment succeeded. The manual checks listed in `MANUAL_ACCEPTANCE.md` are recorded as maintainer-reported PASS. The remaining evidence limitation is that numeric per-component contrast ratios were not separately recorded.
+**Phase 5 is approved. Phase 6 is verified and complete.** The latest consolidated CI run is green and the latest Pages deployment succeeded. The manual checks listed in `MANUAL_ACCEPTANCE.md` are recorded as maintainer-reported PASS. The only remaining evidence limitation is that numeric per-component contrast ratios were not separately recorded. This is not an active CI failure or an unfinished phase; no public release is published.
 
 No public release was created. Phase completion and public release publication are separate actions; this task completed Phase 6 and recorded release readiness without publishing a release.
