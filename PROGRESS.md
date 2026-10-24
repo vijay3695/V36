@@ -2,6 +2,16 @@
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
+### 2026-10-24 — Approved UI redesign implementation started
+
+- Maintainer approved `docs/UI_REDESIGN_PLAN.md`; approval is recorded in that plan. Work is scoped to visual/UI improvements only. No feature removals or behavior changes are authorized.
+- Updated `index.html` to prioritize search/results, keep Language, Labels, Issue type, and Updated as quick filters, and move existing advanced filters into a disclosure. Existing element IDs were compared with the pre-redesign baseline: **no existing IDs were removed**; the theme toggle is the only added ID.
+- Replaced `css/styles.css` with shared light/dark theme tokens and compact responsive styling, while retaining styles for issue details, evidence, saved items, notices, labels, and context packs.
+- Updated `js/app.js` to respect system theme on first visit, persist an explicit theme choice locally, and toggle themes without resetting filters/results.
+- Updated browser tests to cover theme toggling and filter preservation, the existing searchable multi-select label UI, nested advanced filters, a singular “Generate context pack” button after generation, and automated accessibility scans in both themes.
+- **Tests:** NOT RUN locally. The execution container cannot resolve `github.com`, so a local clone/install/run was unavailable. GitHub Actions results for these direct-to-main commits have not been independently retrieved in this session; do not treat them as passing until verified.
+- **Next action:** Verify the consolidated CI run and fix any failures before declaring the UI redesign verified. Then inspect responsive behavior at 320/375/768/1280 px, 200% zoom, keyboard navigation, contrast, reduced motion, long content, and every existing view/state. Do not mark unperformed manual checks complete.
+
 ## Current snapshot
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
