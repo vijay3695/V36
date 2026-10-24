@@ -28,32 +28,32 @@
 - **Responsive overflow passed:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — no horizontal overflow at 320, 375, 768, or 1280px. The 640px CSS viewport used as a 200% zoom equivalent on a 1280px display also passed (document/body width both 640px).
 - **GitHub Pages build/deployment succeeded:** [run](https://github.com/vijay3695/V36/actions/runs/40080705112).
 - Earlier test failures were not hidden: the first post-change run found outdated contrast-test assumptions, a theme-toggle accessible-name mismatch, and a hidden-label serialization expectation mismatch. The tests/code were corrected; the final full run passed.
-- **Not performed after redesign:** a fresh human visual review at 200% browser zoom, 768px/desktop, and a manual assistive-technology review. Automated proxies passed. The existing maintainer-approved manual-review waiver remains recorded; these manual checks are not claimed as performed.
+- **Manual follow-up complete:** the maintainer explicitly confirmed PASS for reduced motion, long-content stress, light/dark theme contrast, and screen reader/keyboard. The earlier statement that these checks were not performed is superseded by this later confirmation. Numeric per-component contrast ratios remain unconfirmed.
 - Local execution was unavailable because the container could not resolve `github.com`; authoritative verification was performed by GitHub Actions.
 
 ## Current snapshot
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
-- **Project status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`, with explicit Phase 5 manual-review waiver; no public release published.
+- **Project status:** Phases 0–6 VERIFIED; manual acceptance outcomes recorded in `docs/MANUAL_ACCEPTANCE.md`; no public release published.
 - **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
-- **Phase 6 candidate CI:** [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans. The long-content locator ambiguity was fixed by scoping the assertion to `#detail-content`; the assertion was not weakened.
-- **Responsive viewport CI:** [run #73 companion check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow.
+- **Latest CI:** [run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the verified application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
+- **Responsive viewport CI:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow; the 640px CSS viewport used as a 200% zoom equivalent also passed.
 - **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
-- **Last verified application candidate:** `7e91404d05e85cb24447ae5708ec21896f4a5728`. Documentation updates in this completion batch record the verified evidence and will themselves be checked by CI.
+- **Latest main commit before this documentation update:** `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`. Its CI and Pages deployment both passed; this documentation-only update should be verified by the subsequent CI run.
 
 
 ## Verified observations
 
 - [x] Repository contains the static-first app (`index.html`), `package.json`, `playwright.config.js`, and unit/browser tests.
 - [x] Package scripts define `npm test`, `npm run test:e2e`, `npm run test:a11y`, and `npm run test:all`.
-- [x] `main` contains the consolidated `.github/workflows/ci.yml`; latest run is recorded as failed in the current snapshot.
+- [x] `main` contains the consolidated `.github/workflows/ci.yml`; latest verified run #132 passed all automated suites.
 - [x] Husky local hooks are configured: unit tests before commit, bulk tests before push.
-- [x] Local `npm test` passes 95/95 on `main`.
-- [x] Local browser suite passes 37/37 on `main`.
-- [x] Local standalone axe scans pass 3/3 on `main`; the issue-detail view is scanned inside the end-to-end flow.
-- [x] The historical storage-identity failure (#67) was fixed in `53907b9`; the current distinct failure is browser regression coverage on `998670f`.
+- [x] Historical local `npm test` passes 95/95 on `main` at the time of that check; see the latest full CI result above for current suite counts.
+- [x] Historical local browser suite passes 37/37 on `main` at the time of that check; see the latest full CI result above for current suite counts.
+- [x] Historical local standalone axe scans passed 3/3 on `main`; the latest full CI result above records 6/6 accessibility scans.
+- [x] Historical storage-identity and browser-regression failures were diagnosed and resolved; the latest consolidated CI run is green.
 
 ## Feature status
 
@@ -72,14 +72,14 @@ These are **not yet verified as complete** merely because related code exists.
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
 | Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component contrast ratios not separately confirmed | No known functional or automated-test work pending; optional remaining evidence is numeric per-component contrast measurement |
-| CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
+| CI / verification readiness | PASS | Latest CI run #132 and Pages deployment passed; manual acceptance outcomes recorded. Numeric per-component contrast ratios remain optional unrecorded evidence. No public GitHub Release has been published. |
 
-## Immediate next actions
+## Current next actions
 
-1. The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader/keyboard checks on 2026-10-24. Formal numeric per-component contrast measurement remains unconfirmed. The Phase 5 waiver remains documented.
-2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
-3. Keep all work on `main`; do not create side branches for these tasks.
-4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
+1. No known implementation or automated-test defect remains in the verified scope; the latest CI and Pages deployment passed.
+2. Manual acceptance PASS outcomes are recorded in `docs/MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are not separately documented.
+3. No public GitHub Release has been published. Release publication is a separate decision, not a failed test.
+4. Continue working directly on `main`, consistent with the project workflow.
 
 ## Work log
 
