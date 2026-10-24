@@ -9,9 +9,12 @@ test("theme toggle changes appearance without clearing current filters",async({p
  await page.locator("#language-picker").fill("TypeScript");
  await expect(page.locator("#language")).toHaveValue("TypeScript");
  await page.locator("#theme-toggle").click();
- await expect(root).not.toHaveAttribute("data-theme",before);
+ const after=await root.getAttribute("data-theme");
+ expect(after).not.toBe(before);
  await expect(page.locator("#query")).toHaveValue("improve error handling");
  await expect(page.locator("#language-picker")).toHaveValue("TypeScript");
+ await page.reload();
+ await expect(root).toHaveAttribute("data-theme",after);
  await page.locator("#theme-toggle").click();
  await expect(root).toHaveAttribute("data-theme",before);
 });
