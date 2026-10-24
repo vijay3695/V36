@@ -66,9 +66,9 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 - [x] Human visual acceptance at 320px, 375px, 768px, and desktop width: **PASS — maintainer-reported 2026-10-24** for the redesigned live UI. Browser/OS versions and exact deployed commit were not supplied. This new result supersedes the earlier 768px/desktop NOT RUN entry.
 - [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **PASS** — [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181), commit `16fd41922033a356e7305e70f00f9edcac71702d`. Playwright logged `OVERFLOW@320: false`, `OVERFLOW@375: false`, `OVERFLOW@768: false`, and `OVERFLOW@1280: false`; 1 test passed. This measures document-level horizontal overflow, not clipped controls or visual usability.
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS — maintainer-reported 2026-10-24** for the redesigned live UI; environment/version details were not supplied.
-- [x] Light/dark theme contrast check. **TESTED — OUTCOME NOT SPECIFIED** in the latest maintainer follow-up. A formal per-component contrast measurement (text, borders, focus indicators, status messages, inferred labels, and disabled controls) is not confirmed.
-- [x] Reduced-motion preference check. **TESTED — OUTCOME NOT SPECIFIED** in the latest maintainer follow-up; no pass/fail conclusion is recorded.
-- [x] Dedicated long-content stress test: long issue title/body, many labels, empty description, and unavailable-data list. **TESTED — OUTCOME NOT SPECIFIED** in the latest maintainer follow-up.
+- [x] Light/dark theme contrast check — **PASS**, explicitly confirmed by the maintainer on 2026-10-24. A formal numeric per-component contrast measurement (text, borders, focus indicators, status messages, inferred labels, and disabled controls) is not separately confirmed.
+- [x] Reduced-motion preference check — **PASS**, explicitly confirmed by the maintainer on 2026-10-24.
+- [x] Dedicated long-content stress test: long issue title/body, many labels, empty description, and unavailable-data list — **PASS**, explicitly confirmed by the maintainer on 2026-10-24.
 
 ## Automated proxy results (Playwright)
 
@@ -84,7 +84,7 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 
 ## Results
 
-- Outcome: **PARTIAL** — the maintainer reported PASS on 2026-10-24 for the redesigned live UI at 320/375/768/1280px, 200% zoom, light/dark themes, keyboard-only navigation, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. In a later follow-up, the maintainer reported performing reduced-motion, long-content, light/dark contrast, and screen-reader/keyboard checks, but supplied no outcomes; those checks are not marked PASS or FAIL. Formal per-component contrast measurement remains unconfirmed.
+- Outcome: **PASS WITH DOCUMENTED LIMITATION** — the maintainer reported PASS for the redesigned live UI at 320/375/768/1280px, 200% zoom, light/dark themes, keyboard-only navigation, readability/disabled controls, no-results/rate-limit states, About/detail navigation, reduced motion, long-content stress, theme contrast, and screen reader/keyboard checks. Formal numeric per-component contrast measurement remains unconfirmed.
 - Recorded manual results:
   - 200% zoom: **PASS** (2026-10-21, Firefox on Windows)
   - Skip link, tab order, visible focus, no focus trap: **PASS**
@@ -97,6 +97,6 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
   - **Related-work links contained `repo:undefined` (found 2026-10-21)** — when repository metadata could not be retrieved, the detail view built search links as `repo:undefined <title>`, and the pull-request link pointed at the issues filter. Fixed in `28d0768`: repository identity falls back to the issue's own URL, the `repo:` qualifier is omitted when no repository is known, and the PR link uses `type=pullrequests`. Covered by unit and browser tests. Maintainer re-tested and confirmed the fix on 2026-10-21.
   - **Context pack did not state its completeness (found 2026-10-21)** — under a rate limit the pack showed `Repository Name: Unavailable` even though the issue URL identified the repository, buried the incompleteness in two raw API error bullets (including a transient "Retry after 8:59:32 pm"), and did not distinguish "not fetched" from "unknown". Fixed in `ac5306e`: a new **Evidence completeness** section reports `COMPLETE` or `INCOMPLETE — not retrieved: …` with a neutral reason, the repository identity from the issue URL is shown and labelled as such, issue-data provenance is stated, and raw API error strings are replaced by a neutral "Not retrieved: <sources>" list. Maintainer re-tested and confirmed the fix on 2026-10-21.
 - Follow-up issue/commit links: `534bca7`, `7bd7d45`, `28d0768`, `ac5306e`
-- Reviewer sign-off: Phase 5 approval/waiver authorized by maintainer on 2026-10-21. Outstanding visual checks remain NOT RUN and are accepted as documented residual risk, not as passing test results.
+- Reviewer sign-off: Phase 5 approval/waiver authorized by maintainer on 2026-10-21. The listed manual checks were subsequently reported PASS on 2026-10-24. The remaining evidence limitation is formal numeric per-component contrast measurement; the waiver remains documented for any residual review risk.
 
 Automated axe checks are useful but do not replace these manual checks. The maintainer's phase approval is an explicit waiver of the outstanding manual review, not a claim that those checks were performed. The waiver is recorded to keep the acceptance evidence honest.
