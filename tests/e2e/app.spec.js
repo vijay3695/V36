@@ -1,6 +1,21 @@
 import {test,expect} from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 test("discover view exposes labelled filters and navigation",async({page})=>{await page.goto("/");await expect(page.getByRole("heading",{name:"Find work worth contributing to."})).toBeVisible();await expect(page.getByLabel("Language")).toBeVisible();await expect(page.getByRole("navigation",{name:"Main navigation"}).getByRole("link",{name:"Saved"})).toBeVisible();});
+test("theme toggle changes appearance without clearing current filters",async({page})=>{
+ await page.goto("/");
+ const root=page.locator("html");
+ const before=await root.getAttribute("data-theme");
+ await page.locator("#query").fill("improve error handling");
+ await page.locator("#language-picker").fill("TypeScript");
+ await expect(page.locator("#language")).toHaveValue("TypeScript");
+ await page.locator("#theme-toggle").click();
+ await expect(root).not.toHaveAttribute("data-theme",before);
+ await expect(page.locator("#query")).toHaveValue("improve error handling");
+ await expect(page.locator("#language-picker")).toHaveValue("TypeScript");
+ await page.locator("#theme-toggle").click();
+ await expect(root).toHaveAttribute("data-theme",before);
+});
+
 test("saved page explains browser-local storage",async({page})=>{await page.goto("/#saved");await expect(page.getByRole("heading",{name:"Saved",exact:true})).toBeVisible();await expect(page.getByText(/Saved locally in this browser only/)).toBeVisible();});
 test("about page documents evidence and API limits",async({page})=>{await page.goto("/#about");await expect(page.getByText(/does not label projects dead or calculate an overall health score/)).toBeVisible();await expect(page.getByText(/Unauthenticated API limits apply/)).toBeVisible();});
 
