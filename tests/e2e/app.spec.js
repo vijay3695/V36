@@ -202,7 +202,12 @@ test("shareable URL round-trips the standard filter set",async({page})=>{
  await page.goto("/");
  await page.getByLabel("Search issues").fill("memory leak");
  await page.getByLabel("Language").fill("Rust");
- await page.getByLabel("Labels (comma-separated)").fill("good first issue,help wanted");
+ await page.locator("#labels-picker > summary").click();
+ await page.getByRole("searchbox",{name:"Search available labels"}).fill("good first issue");
+ await page.getByLabel("good first issue").check();
+ await page.getByRole("searchbox",{name:"Search available labels"}).fill("help wanted");
+ await page.getByLabel("help wanted").check();
+ await expect(page.locator("#labels")).toHaveValue("good first issue,help wanted");
  await page.locator(".advanced-filters > summary").click();
  await page.locator("#issue-type").selectOption("issue");
  await page.locator("#category").selectOption("Documentation");
