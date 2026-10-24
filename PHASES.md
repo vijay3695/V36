@@ -121,7 +121,7 @@ Acceptance criteria:
 Tasks:
 - [x] Semantic page structure, correct heading hierarchy, labels, keyboard navigation, and visible focus. (Axe scans, role/label browser tests, skip-link and tab-order proxy tests pass locally; visual focus confirmation remains part of manual acceptance.)
 - [x] Accessible announcements for loading, results count, errors, rate limits, and retry outcomes. (Polite result-count live region, `aria-busy` during search, assertive `aria-live` for errors, polite detail-refresh progress and completion announcements; covered by four browser tests.)
-- [x] Automated contrast and responsive layout checks. (Latest CI checks both theme palettes; responsive runs pass at 320/375/768/1280px and the 640px CSS viewport used as a 200% zoom equivalent. The maintainer reported passing manual review of the listed redesigned UI checks on 2026-10-24; dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.)
+- [x] Automated contrast and responsive layout checks. (Latest CI checks both theme palettes; responsive runs pass at 320/375/768/1280px and the 640px CSS viewport used as a 200% zoom equivalent. The maintainer reported passing manual review of the listed redesigned UI checks on 2026-10-24; the maintainer has explicitly confirmed PASS for reduced motion, long-content stress, theme contrast, and screen reader/keyboard checks; formal numeric per-component contrast measurement remains unconfirmed.)
 - [x] Automated accessibility tests for Discover, Saved, and About, plus the issue-detail view.
 - [x] Manual keyboard acceptance checks documented and recorded in `docs/MANUAL_ACCEPTANCE.md` (maintainer-reported PASS on 2026-10-21; keyboard and visual checks only, no assistive technology recorded).
 - [x] Safely render untrusted GitHub content using text-safe DOM APIs; no executing imported/retrieved HTML or scripts.
@@ -131,7 +131,7 @@ Tasks:
 
 Acceptance criteria:
 - [x] Automated accessibility checks pass (local run on `main`: 3/3 axe scans, including the issue-detail scan inside the end-to-end flow).
-- [x] Manual acceptance disposition recorded: maintainer explicitly approved Phase 5 on 2026-10-21 and accepted the documented residual manual-review risk. Human visual checks for 768px/desktop, contrast, reduced motion, and long content remain **NOT RUN**; this approval is a waiver, not test evidence.
+- [x] Manual acceptance disposition recorded: maintainer explicitly approved Phase 5 on 2026-10-21 and accepted the documented residual manual-review risk. The maintainer subsequently reported PASS for 768px/desktop, theme contrast, reduced motion, and long content. Formal numeric per-component contrast measurement remains unconfirmed; the approval waiver records residual review risk rather than replacing evidence.
 - [x] Security-sensitive input paths have tests.
 - [x] No silent data loss or fabricated fallback information.
 
