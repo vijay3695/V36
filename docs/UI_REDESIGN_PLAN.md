@@ -29,7 +29,7 @@ The design should feel like a polished developer tool: familiar issue-list patte
 - Do not change GitHub API behavior, filtering semantics, saved-data formats, or context-pack evidence rules as part of a visual-only change.
 - Do not fabricate issue evidence or imply that unavailable metadata means a filter matched or failed.
 - Do not introduce a new frontend framework or a large UI dependency.
-- Do not implement anything before this plan and the visual layout are approved.
+- Implementation began only after the maintainer approved the plan on 2026-10-24; the redesign is now implemented and verified.
 
 ## 3. Current application audit summary
 
@@ -39,7 +39,7 @@ The current Discover view places a substantial group of filters before the resul
 
 The stylesheet contains repeated responsive and reduced-motion rules. The redesign should consolidate theme and component styling into a coherent set of CSS variables and avoid adding more override layers.
 
-Project status records in `PROGRESS.md`, `PHASES.md`, and related acceptance documentation do not describe all verification history identically. Before implementation, reconcile the actual baseline, open regressions, and outstanding manual checks. Do not treat an old test result as proof that the current default branch passes.
+Project status records in `PROGRESS.md`, `PHASES.md`, and related acceptance documentation were reconciled after implementation using current GitHub Actions evidence. Historical test counts remain labeled as historical; the current successful run and outstanding manual-review waiver are recorded in the progress and acceptance documents.
 
 The previously reported repeated “Generate context pack” button text issue has been reported as fixed by the maintainer. Treat it as resolved on the current baseline; do not reopen or modify the fix as part of this redesign. Preserve the working behavior. Retain a regression test only if it can verify the button text appears once and context-pack generation still works.
 
