@@ -2,6 +2,14 @@
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
+### 2026-10-24 — Maintainer completed UI redesign manual verification
+
+- The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
+- Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
+- These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
+- Remaining manual checks not reported as performed: dedicated reduced-motion preference check, dedicated long-content stress test, formal per-component contrast measurement in both themes, and assistive-technology testing. Do not mark these as PASS.
+- Previous automated redesign evidence remains recorded below.
+
 ### 2026-10-24 — Approved UI redesign implemented and verified
 
 - Maintainer approval recorded in `docs/UI_REDESIGN_PLAN.md`. Scope remained UI-only; no feature removals were authorized.
@@ -20,10 +28,10 @@
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
 - **Project status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`, with explicit Phase 5 manual-review waiver; no public release published.
-- **Phase 5:** APPROVED BY MAINTAINER on 2026-10-21. Remaining human visual checks are explicitly waived for phase sign-off but remain NOT RUN: 768px/desktop visual review, human contrast review, reduced-motion manual review, and human long-content review.
+- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer additionally reported PASS for the redesign's listed manual checks at 320/375/768/1280px, 200% zoom, both themes, keyboard-only navigation, readability/disabled controls, error states, and view navigation. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.
 - **Phase 6 candidate CI:** [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans. The long-content locator ambiguity was fixed by scoping the assertion to `#detail-content`; the assertion was not weakened.
 - **Responsive viewport CI:** [run #73 companion check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow.
-- **Known limitations:** Human visual sign-off at 768px/desktop, human contrast, reduced-motion manual, and long-content manual checks were not performed; explicit maintainer waiver is recorded. Automated checks do not substitute for those manual checks.
+- **Known limitations:** Maintainer-reported visual/responsive checks now cover 320/375/768/1280px and 200% zoom. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN. Automated checks do not substitute for these remaining checks.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
 - **Last verified application candidate:** `7e91404d05e85cb24447ae5708ec21896f4a5728`. Documentation updates in this completion batch record the verified evidence and will themselves be checked by CI.
