@@ -38,7 +38,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  });
  await page.goto("/");
  await page.getByLabel("Search issues").fill("crash");
- await page.locator("details.advanced-filters summary").click();
+ await page.locator("details.advanced-filters > summary").click();await page.locator("details.custom-date-filters > summary").click();
  await page.getByLabel("Created on or after").fill("2026-01-01");
  await page.getByLabel("Repository last push on or after").fill("2026-01-01");
  await page.getByLabel("Minimum stars").fill("100");
@@ -61,7 +61,7 @@ test("mocked GitHub flow searches, opens evidence, builds a sourced context pack
  await expect(page.getByRole("link",{name:"Search related pull requests"})).toHaveAttribute("href",/github\.com\/search/);
  const accessibility=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
  expect(accessibility.violations).toEqual([]);
- await page.getByRole("button",{name:"Generate context pack"}).focus();await page.keyboard.press("Enter");
+ const generatePack=page.getByRole("button",{name:"Generate context pack",exact:true});await expect(generatePack).toHaveCount(1);await generatePack.focus();await page.keyboard.press("Enter");await expect(generatePack).toHaveCount(1);await expect(generatePack).toHaveText("Generate context pack");
  const pack=page.getByRole("textbox",{name:"Generated AI context pack"});
  await expect(pack).toHaveValue(/Please add tests\./);
  await expect(pack).toHaveValue(/app\.js: https:\/\/github\.com\/acme\/demo\/blob\/main\/app\.js/);
@@ -103,7 +103,7 @@ test("invalid backup import preserves existing saved references",async({page})=>
 test("unknown commit metadata stays visible",async({page})=>{
  const issue={html_url:"https://github.com/acme/demo/issues/3",title:"Fix crash",body:"Crash",state:"open",number:3,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",labels:[],repository_url:"https://api.github.com/repos/acme/demo"};
  await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:1,incomplete_results:false,items:[issue]}});if(u.pathname==="/repos/acme/demo")return route.fulfill({status:403,headers:{"x-ratelimit-remaining":"0","x-ratelimit-reset":"1900000000"},json:{message:"API rate limit exceeded"}});return route.fulfill({status:404,json:{message:"not mocked"}});});
- await page.goto("/");await page.locator("details.advanced-filters summary").click();await page.getByLabel("Latest commit on or after").fill("2026-01-01");await page.getByLabel("Search issues").fill("crash");await page.getByRole("button",{name:"Search GitHub"}).click();
+ await page.goto("/");await page.locator("details.advanced-filters > summary").click();await page.locator("details.custom-date-filters > summary").click();await page.getByLabel("Latest commit on or after").fill("2026-01-01");await page.getByLabel("Search issues").fill("crash");await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.locator("#status")).toContainText("rate limit reached");await expect(page.getByRole("link",{name:"Fix crash"})).toBeVisible();await expect(page.getByText(/Could not evaluate selected filters: latest commit date/)).toBeVisible();await expect(page.locator("#results-meta")).toContainText("1 need metadata");
 });
 
@@ -246,7 +246,7 @@ test("shareable URL round-trips custom date bounds and exact star limits",async(
  await page.route("https://api.github.com/**",async route=>{const u=new URL(route.request().url());if(u.pathname==="/search/issues")return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});return route.fulfill({status:404,json:{message:"not mocked"}});});
  await page.goto("/");
  await page.getByLabel("Search issues").fill("parser");
- await page.locator("details.advanced-filters summary").click();
+ await page.locator("details.advanced-filters > summary").click();await page.locator("details.custom-date-filters > summary").click();
  const values={"Created on or after":"2026-01-01","Created on or before":"2026-02-01","Updated on or after":"2026-01-02","Updated on or before":"2026-02-02","Latest commit on or after":"2026-01-03","Latest commit on or before":"2026-02-03","Repository last push on or after":"2026-01-04","Repository last push on or before":"2026-02-04","Minimum stars":"120","Maximum stars":"500"};
  for(const [label,value] of Object.entries(values))await page.getByLabel(label).fill(value);
  await page.getByRole("button",{name:"Search GitHub"}).click();
@@ -461,7 +461,7 @@ test("saved searches wrap long summaries without pushing actions out of the card
 test("star inputs ignore spaces instead of blocking form submission",async({page})=>{
  await page.route("https://api.github.com/**",route=>route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}}));
  await page.goto("/");
- await page.locator("details.advanced-filters summary").click();
+ await page.locator("details.advanced-filters > summary").click();await page.locator("details.custom-date-filters > summary").click();
  const min=page.getByLabel("Minimum stars");
  await min.click();
  await min.pressSequentially(" 100");
