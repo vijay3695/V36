@@ -247,7 +247,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - Report actual pass/fail evidence and remaining manual checks. Do not mark unperformed checks complete.
 - Update project status and acceptance documents only to reflect verified facts.
 
-**Exit gate:** No unresolved automated regressions remain. The maintainer reported PASS for the listed manual UI checks after the redesign on 2026-10-24. Dedicated reduced-motion, long-content stress, formal per-component contrast measurement, and assistive-technology checks remain NOT RUN.
+**Exit gate:** No unresolved automated regressions remain. The maintainer reported PASS for the listed manual UI checks after the redesign on 2026-10-24. In a later follow-up, reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks were reported as performed, but outcomes were unspecified and are not marked PASS/FAIL. Formal per-component contrast measurement remains unconfirmed.
 
 ## 12. Acceptance checklist
 
@@ -261,7 +261,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - [x] Unknown values, unavailable evidence, and rate limits remain represented honestly in passing regression tests.
 - [x] Existing automated tests pass; the initial post-change failures were diagnosed and fixed before final verification.
 - [x] Responsive checks pass at 320, 375, 768, and 1280 px; a 640px CSS viewport used as a 200% zoom equivalent for a 1280px display passed with no horizontal overflow. Actual browser zoom was not re-tested after redesign.
-- [x] Automated accessibility checks pass in both themes; maintainer-reported manual checks are recorded in `docs/MANUAL_ACCEPTANCE.md`. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.
+- [x] Automated accessibility checks pass in both themes; maintainer-reported manual checks are recorded in `docs/MANUAL_ACCEPTANCE.md`. The latest reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are recorded as performed with outcomes unspecified; formal per-component contrast measurement remains unconfirmed.
 - [x] Project progress and acceptance records now reflect the actual CI evidence and explicitly disclose checks not performed.
 
 ## 13. Approval and change control
