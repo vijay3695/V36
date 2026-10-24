@@ -121,7 +121,7 @@ Acceptance criteria:
 Tasks:
 - [x] Semantic page structure, correct heading hierarchy, labels, keyboard navigation, and visible focus. (Axe scans, role/label browser tests, skip-link and tab-order proxy tests pass locally; visual focus confirmation remains part of manual acceptance.)
 - [x] Accessible announcements for loading, results count, errors, rate limits, and retry outcomes. (Polite result-count live region, `aria-busy` during search, assertive `aria-live` for errors, polite detail-refresh progress and completion announcements; covered by four browser tests.)
-- [x] Automated contrast and responsive layout checks. (Latest CI checks both theme palettes; responsive runs pass at 320/375/768/1280px and the 640px CSS viewport used as a 200% zoom equivalent. A fresh human visual review after redesign remains NOT RUN under the documented waiver.)
+- [x] Automated contrast and responsive layout checks. (Latest CI checks both theme palettes; responsive runs pass at 320/375/768/1280px and the 640px CSS viewport used as a 200% zoom equivalent. The maintainer reported passing manual review of the listed redesigned UI checks on 2026-10-24; dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.)
 - [x] Automated accessibility tests for Discover, Saved, and About, plus the issue-detail view.
 - [x] Manual keyboard acceptance checks documented and recorded in `docs/MANUAL_ACCEPTANCE.md` (maintainer-reported PASS on 2026-10-21; keyboard and visual checks only, no assistive technology recorded).
 - [x] Safely render untrusted GitHub content using text-safe DOM APIs; no executing imported/retrieved HTML or scripts.

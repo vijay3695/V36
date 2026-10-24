@@ -69,7 +69,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 ## Immediate next actions
 
-1. Complete the remaining manual checks in `docs/MANUAL_ACCEPTANCE.md` (keyboard-only, contrast, responsive widths, long content, reduced motion) and record environment, commit SHA, and outcome. 200% zoom is already recorded as PASS (maintainer-reported 2026-10-21). Automation cannot substitute.
+1. Remaining manual checks are listed in `docs/MANUAL_ACCEPTANCE.md`: dedicated reduced-motion preference, dedicated long-content stress, formal per-component contrast measurement, and assistive-technology testing. The maintainer reported the listed redesigned UI checks PASS on 2026-10-24. Automation cannot substitute for the remaining checks.
 2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
 3. Keep all work on `main`; do not create side branches for these tasks.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.

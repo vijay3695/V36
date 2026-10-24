@@ -261,7 +261,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - [x] Unknown values, unavailable evidence, and rate limits remain represented honestly in passing regression tests.
 - [x] Existing automated tests pass; the initial post-change failures were diagnosed and fixed before final verification.
 - [x] Responsive checks pass at 320, 375, 768, and 1280 px; a 640px CSS viewport used as a 200% zoom equivalent for a 1280px display passed with no horizontal overflow. Actual browser zoom was not re-tested after redesign.
-- [x] Automated accessibility checks pass in both themes; manual visual review remains separately recorded as not run/waived.
+- [x] Automated accessibility checks pass in both themes; maintainer-reported manual checks are recorded in `docs/MANUAL_ACCEPTANCE.md`. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.
 - [x] Project progress and acceptance records now reflect the actual CI evidence and explicitly disclose checks not performed.
 
 ## 13. Approval and change control
