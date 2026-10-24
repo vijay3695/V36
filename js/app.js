@@ -21,7 +21,7 @@ function applyTheme(theme,persist=false){
  if(toggle){
   const next=selected==="dark"?"light":"dark";
   toggle.textContent=next==="light"?"Light mode":"Dark mode";
-  toggle.setAttribute("aria-label","Switch to "+next+" theme");
+  toggle.setAttribute("aria-label",toggle.textContent+"; switch to "+next+" theme");
   toggle.title="Switch to "+next+" theme";
  }
  if(persist){try{localStorage.setItem(THEME_STORAGE_KEY,selected);}catch{}}
