@@ -235,7 +235,7 @@ test("shareable URL round-trips the standard filter set",async({page})=>{
  await page.reload();
  await expect(page.getByLabel("Search issues")).toHaveValue("memory leak");
  await expect(page.getByLabel("Language")).toHaveValue("Rust");
- await expect(page.getByLabel("Labels (comma-separated)")).toHaveValue("good first issue, help wanted");
+ await expect(page.locator("#labels")).toHaveValue("good first issue, help wanted");
  await expect(page.locator("#issue-type")).toHaveValue("issue");
  await expect(page.locator("#category")).toHaveValue("Documentation");
  await expect(page.locator("#created")).toHaveValue("30");
@@ -443,7 +443,9 @@ test("saved searches wrap long summaries without pushing actions out of the card
  await page.setViewportSize({width:320,height:800});
  await page.goto("/");
  await page.getByLabel("Search issues").fill("a".repeat(200));
- await page.getByLabel("Labels (comma-separated)").fill(Array.from({length:6},(_,i)=>"verylonglabelname"+i).join(","));
+ await page.locator("#labels-picker > summary").click();
+ for(let i=0;i<6;i++){await page.getByLabel("Custom label").fill("verylonglabelname"+i);await page.getByRole("button",{name:"Add",exact:true}).click();}
+ await expect(page.locator("#labels")).toHaveValue(Array.from({length:6},(_,i)=>"verylonglabelname"+i).join(", "));
  await page.getByRole("button",{name:"Save search"}).click();
  await page.getByRole("link",{name:"Saved",exact:true}).click();
  const row=page.locator("#saved-searches .saved-search").first();
