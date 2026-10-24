@@ -38,7 +38,7 @@
 - **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
 - **Phase 6 candidate CI:** [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans. The long-content locator ambiguity was fixed by scoping the assertion to `#detail-content`; the assertion was not weakened.
 - **Responsive viewport CI:** [run #73 companion check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow.
-- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are now reported as performed, but outcomes are unspecified and therefore not recorded as PASS/FAIL. Formal per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.
+- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
 - **Last verified application candidate:** `7e91404d05e85cb24447ae5708ec21896f4a5728`. Documentation updates in this completion batch record the verified evidence and will themselves be checked by CI.
@@ -71,12 +71,12 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual keyboard/contrast/zoom checks | PARTIAL — keyboard navigation, advanced-filter disclosure, focus/no-trap, search success and failure, saved items, import/export, issue detail, and 200% zoom PASS; four defects fixed and re-tested; contrast, responsive widths, long content, reduced motion NOT RUN | Continue from `docs/MANUAL_ACCEPTANCE.md` with the remaining four checks |
+| Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component contrast ratios not separately confirmed | No known functional or automated-test work pending; optional remaining evidence is numeric per-component contrast measurement |
 | CI / release readiness | BLOCKED | No workflow on `main`; CI-vs-no-Actions decision required; manual acceptance pending |
 
 ## Immediate next actions
 
-1. Remaining manual checks are listed in `docs/MANUAL_ACCEPTANCE.md`: dedicated reduced-motion preference, dedicated long-content stress, formal per-component contrast measurement, and assistive-technology testing. The maintainer reported the listed redesigned UI checks PASS on 2026-10-24. Automation cannot substitute for the remaining checks.
+1. The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader/keyboard checks on 2026-10-24. Formal numeric per-component contrast measurement remains unconfirmed. The Phase 5 waiver remains documented.
 2. The maintainer resolves the CI conflict: `DECISIONS.md` still requires a passing GitHub Actions run, but the workflow was removed in `ad8379b`.
 3. Keep all work on `main`; do not create side branches for these tasks.
 4. Do not mark Phase 5 VERIFIED or Phase 6 complete until the manual record and CI decision are settled.
