@@ -40,7 +40,7 @@ The stylesheet contains repeated responsive and reduced-motion rules. The redesi
 
 Project status records in `PROGRESS.md`, `PHASES.md`, and related acceptance documentation do not describe all verification history identically. Before implementation, reconcile the actual baseline, open regressions, and outstanding manual checks. Do not treat an old test result as proof that the current default branch passes.
 
-A previously reported issue—repeated “Generate context pack” button text—must be explicitly checked and regression-tested. Its current status is unconfirmed until reproduced or ruled out on the current baseline.
+The previously reported repeated “Generate context pack” button text issue has been reported as fixed by the maintainer. Treat it as resolved on the current baseline; do not reopen or modify the fix as part of this redesign. Preserve the working behavior. Retain a regression test only if it can verify the button text appears once and context-pack generation still works.
 
 ## 4. Information architecture
 
@@ -125,7 +125,7 @@ Retain existing detail content and behavior, but organize it into compact, scann
 - Related-work search links, where currently available.
 - Context-pack generation and copy/fallback behavior, including source links, retrieval times, missing evidence, and limitations.
 
-The context pack remains a portable prompt generated from information V36 actually retrieved. It must not invoke an AI API, invent evidence, or edit code. Check the reported repeated button text and add a regression assertion against duplicated accessible or visible button text.
+The context pack remains a portable prompt generated from information V36 actually retrieved. It must not invoke an AI API, invent evidence, or edit code. The maintainer has confirmed the previously reported repeated button text issue is fixed. Do not treat it as an open bug or change the existing fix; preserve its behavior and keep an appropriate regression assertion if supported by the current test setup.
 
 ## 7. Saved and About views
 
@@ -202,7 +202,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - Inspect the current default-branch files and existing tests before editing.
 - Reconcile status claims in `PROGRESS.md`, `PHASES.md`, and acceptance records using actual repository evidence.
 - Run the available baseline test commands and record the exact results.
-- Reproduce or rule out the repeated context-pack button text issue.
+- Confirm the existing context-pack button fix remains intact; do not reopen the resolved issue.
 - List known failures and checks that require manual review.
 
 **Exit gate:** Baseline is documented; current behavior and known issues are separated from proposed changes.
@@ -234,7 +234,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 
 - Apply the same visual system to all views.
 - Preserve every existing action and evidence requirement.
-- Verify context-pack generation/copy behavior and its text regression test.
+- Verify context-pack generation/copy behavior and, where supported, confirm the button text remains singular.
 
 **Exit gate:** All views and their important states remain usable and behaviorally equivalent.
 
@@ -256,7 +256,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - [ ] Quick and advanced filters retain all existing options and semantics.
 - [ ] Active filters, sorting, loaded counts, and partial-data warnings are clear.
 - [ ] Detail, Saved, About, pagination, import/export, and context packs retain their behavior.
-- [ ] The context-pack button-text regression is checked and covered by a test.
+- [ ] The previously fixed context-pack button text remains correct; an existing or appropriate regression test verifies singular button text and working generation where supported.
 - [ ] Unknown values, unavailable evidence, and rate limits are represented honestly.
 - [ ] Existing automated tests pass or failures are documented and addressed.
 - [ ] Responsive checks pass at 320, 375, 768, and 1280 px and at 200% zoom.
