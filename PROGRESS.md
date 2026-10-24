@@ -2,15 +2,19 @@
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
-### 2026-10-24 — Approved UI redesign implementation started
+### 2026-10-24 — Approved UI redesign implemented and verified
 
-- Maintainer approved `docs/UI_REDESIGN_PLAN.md`; approval is recorded in that plan. Work is scoped to visual/UI improvements only. No feature removals or behavior changes are authorized.
-- Updated `index.html` to prioritize search/results, keep Language, Labels, Issue type, and Updated as quick filters, and move existing advanced filters into a disclosure. Existing element IDs were compared with the pre-redesign baseline: **no existing IDs were removed**; the theme toggle is the only added ID.
-- Replaced `css/styles.css` with shared light/dark theme tokens and compact responsive styling, while retaining styles for issue details, evidence, saved items, notices, labels, and context packs.
-- Updated `js/app.js` to respect system theme on first visit, persist an explicit theme choice locally, and toggle themes without resetting filters/results.
-- Updated browser tests to cover theme toggling, filter preservation, theme persistence after reload, the existing searchable multi-select label UI, nested advanced filters, a singular “Generate context pack” button after generation, and automated accessibility scans in both themes.
-- **Tests:** NOT RUN locally. The execution container cannot resolve `github.com`, so a local clone/install/run was unavailable. GitHub Actions results for these direct-to-main commits have not been independently retrieved in this session; do not treat them as passing until verified.
-- **Next action:** Verify the consolidated CI run and fix any failures before declaring the UI redesign verified. Then inspect responsive behavior at 320/375/768/1280 px, 200% zoom, keyboard navigation, contrast, reduced motion, long content, and every existing view/state. Do not mark unperformed manual checks complete.
+- Maintainer approval recorded in `docs/UI_REDESIGN_PLAN.md`. Scope remained UI-only; no feature removals were authorized.
+- Updated `index.html` with a results-first Discover layout, quick filters, and nested advanced filters. Source comparison against the pre-redesign baseline found **no existing HTML IDs removed**, no duplicate IDs, and no JavaScript element references without matching IDs.
+- Replaced `css/styles.css` with compact responsive styling and shared light/dark theme tokens. Added a theme toggle that respects system preference initially, persists explicit choices locally, preserves filters/results, and has a visible-text-matching accessible name.
+- Updated `js/app.js` to restore the nested custom-filter disclosure when shareable URLs contain custom dates or exact star bounds.
+- Updated automated tests for theme persistence and filter preservation, searchable multi-select labels, nested custom filters, singular context-pack button text, both theme palettes, and a 200%-zoom-equivalent 640px viewport.
+- **Full CI passed on commit `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`:** [run](https://github.com/vijay3695/V36/actions/runs/40080705257) — **103/103 unit tests, 47/47 browser tests, 6/6 automated accessibility scans**, zero failures.
+- **Responsive overflow passed:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — no horizontal overflow at 320, 375, 768, or 1280px. The 640px CSS viewport used as a 200% zoom equivalent on a 1280px display also passed (document/body width both 640px).
+- **GitHub Pages build/deployment succeeded:** [run](https://github.com/vijay3695/V36/actions/runs/40080705112).
+- Earlier test failures were not hidden: the first post-change run found outdated contrast-test assumptions, a theme-toggle accessible-name mismatch, and a hidden-label serialization expectation mismatch. The tests/code were corrected; the final full run passed.
+- **Not performed after redesign:** a fresh human visual review at 200% browser zoom, 768px/desktop, and a manual assistive-technology review. Automated proxies passed. The existing maintainer-approved manual-review waiver remains recorded; these manual checks are not claimed as performed.
+- Local execution was unavailable because the container could not resolve `github.com`; authoritative verification was performed by GitHub Actions.
 
 ## Current snapshot
 
