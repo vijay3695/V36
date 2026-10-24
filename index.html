@@ -12,42 +12,52 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-<a class="brand" href="#discover" aria-label="V36 home">V36</a>
-<nav aria-label="Main navigation"><a href="#discover" data-nav="discover" aria-current="page">Discover</a><a href="#saved" data-nav="saved">Saved</a><a href="#about" data-nav="about">About</a></nav>
+<div class="brand-group"><a class="brand" href="#discover" aria-label="V36 home">V36</a><span class="brand-caption">Open-source issue discovery</span></div>
+<div class="header-actions"><nav aria-label="Main navigation"><a href="#discover" data-nav="discover" aria-current="page">Discover</a><a href="#saved" data-nav="saved">Saved</a><a href="#about" data-nav="about">About</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme">Light mode</button></div>
 </header>
 <main id="main" tabindex="-1">
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">Ready to search public GitHub issues.</div>
 <section id="view-discover" class="view" aria-labelledby="discover-title">
 <div class="hero"><p class="eyebrow">OPEN-SOURCE DISCOVERY</p><h1 id="discover-title" tabindex="-1">Find work worth contributing to.</h1><p class="lede">Search GitHub issues, inspect activity evidence, and build a portable context pack for your own AI coding assistant.</p></div>
 <form id="search-form" class="panel filter-panel">
+<div class="search-row">
 <div class="field search-field"><label for="query">Search issues</label><input id="query" name="query" type="search" maxlength="200" placeholder="e.g. improve error handling"></div>
-<div class="filter-grid">
+<button class="button button-primary search-submit" type="submit">Search GitHub</button>
+</div>
+<div class="quick-filter-heading"><span>Quick filters</span><span class="hint">Choose a language, labels, issue type, and update window</span></div>
+<div class="filter-grid quick-filter-grid">
 <div class="field"><label for="language-picker">Language</label><input id="language" name="language" type="hidden"><input id="language-picker" type="text" list="language-options" maxlength="50" placeholder="Any language" autocomplete="off" aria-describedby="language-hint"><datalist id="language-options"><option value="JavaScript"></option><option value="TypeScript"></option><option value="Python"></option><option value="Java"></option><option value="C"></option><option value="C++"></option><option value="C#"></option><option value="Go"></option><option value="Rust"></option><option value="Ruby"></option><option value="PHP"></option><option value="Swift"></option><option value="Kotlin"></option><option value="HTML"></option><option value="CSS"></option><option value="Shell"></option><option value="Jupyter Notebook"></option></datalist><p id="language-hint" class="hint">Choose one language or type your own. Aliases such as js, ts and py are recognized.</p></div>
 <div class="field label-filter-field"><label for="label-search">Labels</label><input id="labels" name="labels" type="hidden"><details id="labels-picker" class="labels-picker"><summary id="labels-summary">Any labels</summary><div class="label-picker-panel"><input id="label-search" type="search" placeholder="Search labels…" autocomplete="off" aria-label="Search available labels"><div id="label-options" class="label-options" aria-label="Available labels"></div><div class="custom-label-row"><input id="custom-label" type="text" maxlength="80" placeholder="Add custom label" aria-label="Custom label"><button id="add-custom-label" class="button button-secondary" type="button">Add</button></div><p class="hint">Select multiple labels. All selected labels must match an issue.</p></div></details></div>
 <div class="field"><label for="issue-type">Issue type</label><select id="issue-type" name="issueType"><option value="">Any type</option><option value="issue">Issues only</option><option value="pr">Pull requests only</option></select></div>
+<div class="field"><label for="updated">Issue last updated</label><select id="updated" name="updated"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
+</div>
+<details class="advanced-filters"><summary><span>More filters</span><span class="summary-hint">Contribution category, dates, repository activity, stars, sorting</span></summary>
+<div class="filter-grid advanced-filter-grid">
 <div class="field"><label for="category">Contribution category</label><select id="category" name="category"><option value="">Any category</option><option>Bug fix</option><option>Documentation</option><option>Tests</option><option>Feature or enhancement</option><option>Refactoring</option><option>Other/No category inferred</option></select></div>
 <div class="field"><label for="created">Issue created</label><select id="created" name="created"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
-<div class="field"><label for="updated">Issue last updated</label><select id="updated" name="updated"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="365">Last 365 days</option></select></div>
-<div class="field"><label for="commit-age">Latest commit age</label><select id="commit-age" name="commitAge"><option value="">No commit-age filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div><div class="field"><label for="push-age">Repository last push age</label><select id="push-age" name="pushAge"><option value="">No last-push filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div>
+<div class="field"><label for="commit-age">Latest commit age</label><select id="commit-age" name="commitAge"><option value="">No commit-age filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div>
+<div class="field"><label for="push-age">Repository last push age</label><select id="push-age" name="pushAge"><option value="">No last-push filter</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option><option value="180">Within 180 days</option><option value="365">Within 365 days</option></select></div>
 <div class="field"><label for="stars">Repository popularity</label><select id="stars" name="stars"><option value="">Any star count</option><option value="0-99">Under 100 stars</option><option value="100-999">100–999 stars</option><option value="1000-9999">1,000–9,999 stars</option><option value="10000-">10,000 or more stars</option></select></div>
 <div class="field"><label for="sort">Sort by</label><select id="sort" name="sort"><option value="updated">Recently updated</option><option value="created">Recently created</option><option value="comments">Most discussed</option><option value="relevance">GitHub relevance</option></select></div>
 </div>
-<details class="advanced-filters"><summary>Custom date ranges and exact star counts</summary>
+<details class="custom-date-filters"><summary>Custom date ranges and exact star counts</summary>
 <div class="filter-grid custom-filter-grid">
 <div class="field"><label for="created-after">Created on or after</label><input id="created-after" name="createdAfter" type="date"></div>
 <div class="field"><label for="created-before">Created on or before</label><input id="created-before" name="createdBefore" type="date"></div>
 <div class="field"><label for="updated-after">Updated on or after</label><input id="updated-after" name="updatedAfter" type="date"></div>
 <div class="field"><label for="updated-before">Updated on or before</label><input id="updated-before" name="updatedBefore" type="date"></div>
 <div class="field"><label for="commit-after">Latest commit on or after</label><input id="commit-after" name="commitAfter" type="date"></div>
-<div class="field"><label for="commit-before">Latest commit on or before</label><input id="commit-before" name="commitBefore" type="date"></div><div class="field"><label for="push-after">Repository last push on or after</label><input id="push-after" name="pushAfter" type="date"></div><div class="field"><label for="push-before">Repository last push on or before</label><input id="push-before" name="pushBefore" type="date"></div>
+<div class="field"><label for="commit-before">Latest commit on or before</label><input id="commit-before" name="commitBefore" type="date"></div>
+<div class="field"><label for="push-after">Repository last push on or after</label><input id="push-after" name="pushAfter" type="date"></div>
+<div class="field"><label for="push-before">Repository last push on or before</label><input id="push-before" name="pushBefore" type="date"></div>
 <div class="field"><label for="min-stars">Minimum stars</label><input id="min-stars" name="minStars" type="number" min="0" max="100000000" step="1" inputmode="numeric" placeholder="No minimum"></div>
 <div class="field"><label for="max-stars">Maximum stars</label><input id="max-stars" name="maxStars" type="number" min="0" max="100000000" step="1" inputmode="numeric" placeholder="No maximum"></div>
 </div><p class="hint">Custom dates override the corresponding age preset. Date and star filters that need metadata are evaluated on loaded results; load more to evaluate more issues.</p>
 </details>
-<div class="form-actions"><button class="button button-primary" type="submit">Search GitHub</button><button class="button button-secondary" id="save-search" type="button">Save search</button><button class="button button-quiet" id="reset-search" type="reset">Reset filters</button></div>
-<p class="hint">Filters combine using AND logic. Some filters are evaluated only on loaded issues; results may be incomplete until you load more. Stars indicate popularity, not project health.</p>
+</details>
+<div class="form-actions"><button class="button button-secondary" id="save-search" type="button">Save search</button><button class="button button-quiet" id="reset-search" type="reset">Reset filters</button><p class="hint filter-logic-hint">Filters combine using AND logic. Some filters are evaluated only on loaded issues; results may be incomplete until you load more. Stars indicate popularity, not project health.</p></div>
 </form>
-<div id="results-meta" class="results-meta" role="status" aria-live="polite" aria-atomic="true"></div><div id="results" class="results" role="region" aria-label="Search results" aria-busy="false"></div><div class="center-actions"><button id="load-more" class="button button-secondary" type="button" hidden>Load more</button></div>
+<div class="results-heading"><h2>Issues</h2><span class="results-heading-note">Evidence first · no project health scores</span></div><div id="results-meta" class="results-meta" role="status" aria-live="polite" aria-atomic="true"></div><div id="results" class="results" role="region" aria-label="Search results" aria-busy="false"></div><div class="center-actions"><button id="load-more" class="button button-secondary" type="button" hidden>Load more</button></div>
 </section>
 <section id="view-detail" class="view" aria-labelledby="detail-title" hidden><button id="back-to-results" class="button button-quiet" type="button">Back to results</button><div id="detail-content"></div></section>
 <section id="view-saved" class="view" aria-labelledby="saved-title" hidden>
