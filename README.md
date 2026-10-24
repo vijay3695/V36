@@ -4,7 +4,7 @@
 
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
-**Status:** Initial development. This repository is not a verified release. Do not treat planned functionality as complete until the documented tests, accessibility checks, manual acceptance checks, and CI requirements have actually passed.
+**Public preview:** The `v0.1.0` release is gated by the `Publish v0.1.0` GitHub Actions workflow, which runs the complete unit, browser, and accessibility test suite on the exact release candidate before publishing. See the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
 
 ## Principles
 
