@@ -1,6 +1,6 @@
 # V36 Project Plan
 
-**Status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728` with explicit Phase 5 manual-review waiver; no public release published.
+**Status:** Phase 6 VERIFIED; approved UI redesign automated verification passed on `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d` (103 unit, 47 browser, 6 accessibility tests; responsive and Pages workflows green). The existing Phase 5 manual-review waiver remains explicit; no public release published.
 **License:** MIT
 **Default branch:** `main`
 **Hosting target:** GitHub Pages (static-first; no paid backend or AI API).
