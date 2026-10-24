@@ -2,7 +2,7 @@
 
 **Status:** Approved by maintainer — implementation authorized  
 **Scope:** UI-only redesign. Preserve every existing feature and behavior; no feature removal is authorized.  
-**Implementation status:** COMPLETE — automated verification passed on commit `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`; maintainer-reported manual verification of the listed UI flows passed on 2026-10-24 (see `docs/MANUAL_ACCEPTANCE.md`). [Full CI](https://github.com/vijay3695/V36/actions/runs/40080705257): 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans passed. [Responsive checks](https://github.com/vijay3695/V36/actions/runs/40080705237) passed at 320/375/768/1280px; a 640px CSS viewport (200% zoom equivalent for a 1280px display) passed with no horizontal overflow. [GitHub Pages build/deployment](https://github.com/vijay3695/V36/actions/runs/40080705112) succeeded.  
+**Implementation status:** COMPLETE. The final release candidate `77b36385f3a2e9fb603d1602b451d152fda91cd7` published as [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0). Final release [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed 107/107 unit tests, 47/47 browser tests, and 6/6 accessibility scans; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) and [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded on that release commit. The latest documentation-only main commit `3627307845d5bb8f869e3baa9918ab2a5d5cf2b2` also passed [CI run #143](https://github.com/vijay3695/V36/actions/runs/40089452471) with the same suite counts and [Pages deployment #70](https://github.com/vijay3695/V36/actions/runs/40089452534). Responsive checks passed at 320/375/768/1280px. The maintainer reported manual PASS for 200% browser zoom, light/dark themes, reduced motion, long-content stress, and screen-reader/keyboard checks; see `docs/MANUAL_ACCEPTANCE.md`. Numeric contrast measurements are now documented in `docs/CONTRAST_AUDIT.md` and regression-tested by `tests/contrast-audit.test.js`.  
 **Target repository:** `vijay3695/V36`  
 **Implementation baseline:** Existing HTML, CSS, and vanilla JavaScript application hosted on GitHub Pages.
 
@@ -39,7 +39,7 @@ The current Discover view places a substantial group of filters before the resul
 
 The stylesheet contains repeated responsive and reduced-motion rules. The redesign should consolidate theme and component styling into a coherent set of CSS variables and avoid adding more override layers.
 
-Project status records in `PROGRESS.md`, `PHASES.md`, and related acceptance documentation were reconciled after implementation using current GitHub Actions evidence. Historical test counts remain labeled as historical; the current successful run and outstanding manual-review waiver are recorded in the progress and acceptance documents.
+Project status records in `PROGRESS.md`, `PHASES.md`, and related acceptance documentation were reconciled after implementation using GitHub Actions evidence. The original Phase 5 approval/waiver is historical; subsequent maintainer-reported UI checks and their limitations are recorded separately in `docs/MANUAL_ACCEPTANCE.md`. The completed numeric contrast audit is recorded in `docs/CONTRAST_AUDIT.md`.
 
 The previously reported repeated “Generate context pack” button text issue has been reported as fixed by the maintainer. Treat it as resolved on the current baseline; do not reopen or modify the fix as part of this redesign. Preserve the working behavior. Retain a regression test only if it can verify the button text appears once and context-pack generation still works.
 
@@ -247,7 +247,7 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - Report actual pass/fail evidence and remaining manual checks. Do not mark unperformed checks complete.
 - Update project status and acceptance documents only to reflect verified facts.
 
-**Exit gate:** No unresolved automated regressions remain. The maintainer reported PASS for the listed manual UI checks after the redesign on 2026-10-24 and subsequently confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. Formal per-component contrast measurement remains unconfirmed.
+**Exit gate: COMPLETE.** No unresolved automated regressions remain. The maintainer reported PASS for the redesigned UI flows, responsive widths, 200% zoom, reduced motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks on 2026-10-24. Numeric component contrast ratios are recorded in `docs/CONTRAST_AUDIT.md` and guarded by `tests/contrast-audit.test.js`. Manual environment/version details not supplied by the maintainer are not inferred.
 
 ## 12. Acceptance checklist
 
@@ -260,12 +260,12 @@ Avoid a second independent layout for dark mode: only theme tokens and necessary
 - [x] The previously fixed context-pack button text remains correct; the passing browser regression test verifies one button and working generation.
 - [x] Unknown values, unavailable evidence, and rate limits remain represented honestly in passing regression tests.
 - [x] Existing automated tests pass; the initial post-change failures were diagnosed and fixed before final verification.
-- [x] Responsive checks pass at 320, 375, 768, and 1280 px; a 640px CSS viewport used as a 200% zoom equivalent for a 1280px display passed with no horizontal overflow. Actual browser zoom was not re-tested after redesign.
-- [x] Automated accessibility checks pass in both themes; maintainer-reported manual checks are recorded in `docs/MANUAL_ACCEPTANCE.md`. The latest reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks are recorded as maintainer-confirmed PASS; formal per-component contrast measurement remains unconfirmed.
+- [x] Responsive checks pass at 320, 375, 768, and 1280 px; a 640px CSS viewport used as a 200% zoom equivalent for a 1280px display passed with no horizontal overflow. The maintainer also reported a PASS for actual 200% browser zoom on the redesigned UI; browser/version details were not supplied.
+- [x] Automated accessibility checks pass in both themes; maintainer-reported manual checks are recorded in `docs/MANUAL_ACCEPTANCE.md`. Reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks are maintainer-confirmed PASS. Numeric per-component ratios for both themes are recorded in `docs/CONTRAST_AUDIT.md` and regression-tested.
 - [x] Project progress and acceptance records now reflect the actual CI evidence and explicitly disclose checks not performed.
 
 ## 13. Approval and change control
 
-The maintainer approved this plan and authorized implementation on 2026-10-24. Implementation and automated verification are complete. Preserve every existing feature and behavior; this was a UI upgrade, not a feature-removal exercise. No existing HTML IDs were removed. The manual visual-review waiver remains explicit; no unperformed manual check is represented as passed.
+The maintainer approved this plan and authorized implementation on 2026-10-24. Implementation and automated verification are complete. Preserve every existing feature and behavior; this was a UI upgrade, not a feature-removal exercise. No existing HTML IDs were removed. The earlier Phase 5 waiver remains historical sign-off context; later maintainer-reported manual checks are recorded as reported rather than independently reproduced. The final release is published as `v0.1.0`; latest CI and Pages checks also passed on main. There is no open task in this UI redesign plan.
 
 Any suggested behavior change discovered during implementation must be called out separately for approval rather than silently bundled into the visual redesign.
