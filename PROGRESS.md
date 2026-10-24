@@ -1,5 +1,12 @@
 # V36 Progress Log
 
+### 2026-10-24 — Follow-up manual checks reported performed; outcomes unspecified
+
+- The maintainer reported performing four checks: reduced-motion preference; long-content stress; light/dark theme contrast; and screen reader plus keyboard.
+- The supplied result for each was “Tested; result not specified.” Record each as **performed, outcome unspecified**—not PASS and not FAIL.
+- Formal per-component contrast measurement was not explicitly confirmed. Do not infer that it occurred from the broader “light/dark theme contrast” label.
+- Updated detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md). Ask the maintainer for the outcomes before changing these to PASS/FAIL.
+
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
 ### 2026-10-24 — Maintainer completed UI redesign manual verification
@@ -7,7 +14,7 @@
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
 - Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
-- Remaining manual checks not reported as performed: dedicated reduced-motion preference check, dedicated long-content stress test, formal per-component contrast measurement in both themes, and assistive-technology testing. Do not mark these as PASS.
+- Follow-up report: reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks were reported as performed, but outcomes were not specified. Do not mark them PASS or FAIL without outcomes; formal per-component contrast measurement remains unconfirmed.
 - Previous automated redesign evidence remains recorded below.
 
 ### 2026-10-24 — Approved UI redesign implemented and verified
@@ -28,10 +35,10 @@
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
 - **Project status:** Phase 6 VERIFIED on tested candidate `7e91404d05e85cb24447ae5708ec21896f4a5728`, with explicit Phase 5 manual-review waiver; no public release published.
-- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer additionally reported PASS for the redesign's listed manual checks at 320/375/768/1280px, 200% zoom, both themes, keyboard-only navigation, readability/disabled controls, error states, and view navigation. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN.
+- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks. In a later follow-up, the maintainer reported performing reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks, but outcomes were unspecified. These checks are not marked PASS/FAIL; formal per-component contrast measurement remains unconfirmed.
 - **Phase 6 candidate CI:** [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) — **PASS** on `7e91404d05e85cb24447ae5708ec21896f4a5728`: 101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans. The long-content locator ambiguity was fixed by scoping the assertion to `#detail-content`; the assertion was not weakened.
 - **Responsive viewport CI:** [run #73 companion check](https://github.com/vijay3695/V36/actions/runs/39642076859) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow.
-- **Known limitations:** Maintainer-reported visual/responsive checks now cover 320/375/768/1280px and 200% zoom. Dedicated reduced-motion, long-content stress, formal contrast measurement, and assistive-technology checks remain NOT RUN. Automated checks do not substitute for these remaining checks.
+- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are now reported as performed, but outcomes are unspecified and therefore not recorded as PASS/FAIL. Formal per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
 - **Last verified application candidate:** `7e91404d05e85cb24447ae5708ec21896f4a5728`. Documentation updates in this completion batch record the verified evidence and will themselves be checked by CI.
