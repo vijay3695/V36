@@ -13,23 +13,9 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
 <div class="brand-group"><a class="brand" href="#discover" aria-label="V36 home">V36</a><span class="brand-caption">Open-source issue discovery</span></div>
-<div class="header-actions"><nav aria-label="Main navigation"><a href="#discover" data-nav="discover" aria-current="page">Discover</a><a href="#saved" data-nav="saved">Saved</a><a href="#about" data-nav="about">About</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme">Light mode</button></div>
+<div class="header-actions"><nav aria-label="Main navigation"><a href="#discover" data-nav="discover" aria-current="page">Discover</a><a href="#saved" data-nav="saved">Saved</a><a href="#github" data-nav="github">GitHub API</a><a href="#about" data-nav="about">About</a></nav><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme">Light mode</button></div>
 </header>
-<section class="token-access" aria-label="Optional GitHub API connection">
-<details id="github-auth-panel">
-<summary>Optional GitHub API connection</summary>
-<div class="token-panel panel">
-<p class="hint">Anonymous mode remains the default. Authentication can raise the general REST limit (usually 60 to 5,000 requests/hour) and Search has a separate limit (usually 10 to 30 requests/minute). Search may return only repositories your token can access, so disconnect for broad anonymous discovery. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Create a fine-grained token</a> · <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api" target="_blank" rel="noopener noreferrer">Rate-limit details</a></p>
-<form id="github-token-form">
-<div class="field"><label for="github-token">Fine-grained GitHub personal access token</label><input id="github-token" name="githubToken" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="300" placeholder="Paste token here" aria-describedby="github-token-warning" required></div>
-<label class="remember-token"><input id="remember-github-token" type="checkbox"> Remember on this device (stores the token in browser local storage)</label>
-<p id="github-token-warning" class="hint">Only use a token you created yourself. Use the minimum permissions needed (read-only Issues where required; no write permissions). Browser storage is readable by same-origin JavaScript, including injected scripts if an XSS flaw exists. For lower persistence risk, leave this unchecked. V36 sends the token only to api.github.com and never exports it.</p>
-<div class="token-actions"><button id="connect-github" class="button button-primary" type="submit">Validate and connect</button><button id="disconnect-github" class="button button-secondary" type="button" hidden>Disconnect</button></div>
-</form>
-<p id="github-token-status" class="token-status" role="status" aria-live="polite">Not connected. Public anonymous access is active.</p>
-</div>
-</details>
-</section>
+
 <main id="main" tabindex="-1">
 <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">Ready to search public GitHub issues.</div>
 <section id="view-discover" class="view" aria-labelledby="discover-title">
@@ -79,6 +65,22 @@
 <div class="page-heading"><p class="eyebrow">YOUR BROWSER</p><h1 id="saved-title" tabindex="-1">Saved</h1><p class="lede">Saved locally in this browser only. There is no account or cloud sync.</p></div>
 <div class="panel saved-tools"><button id="export-saved" class="button button-secondary" type="button">Export backup</button><button id="import-saved" class="button button-secondary" type="button">Import backup</button><input id="import-file" type="file" accept="application/json,.json" hidden><p class="hint">Imports are validated and deduplicated. Never import files you do not trust. Clearing browser data or private browsing may remove saved items.</p></div>
 <h2>Saved issues</h2><div id="saved-issues" class="results"></div><h2>Saved searches</h2><div id="saved-searches" class="saved-searches"></div>
+</section>
+<section id="view-github" class="view" aria-labelledby="github-title" hidden>
+<div class="page-heading"><p class="eyebrow">OPTIONAL CONNECTION</p><h1 id="github-title" tabindex="-1">GitHub API</h1><p class="lede">Connect your own token to increase API limits. Connecting only validates the token; it does not run a search.</p></div>
+<details id="github-auth-panel" open>
+<summary>Optional GitHub API connection</summary>
+<div class="token-panel panel">
+<p class="hint">Anonymous mode remains the default. Authentication can raise the general REST limit (usually 60 to 5,000 requests/hour) and Search has a separate limit (usually 10 to 30 requests/minute). Search may return only repositories your token can access, so disconnect for broad anonymous discovery. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Create a fine-grained token</a> · <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api" target="_blank" rel="noopener noreferrer">Rate-limit details</a></p>
+<form id="github-token-form">
+<div class="field"><label for="github-token">Fine-grained GitHub personal access token</label><input id="github-token" name="githubToken" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="300" placeholder="Paste token here" aria-describedby="github-token-warning" required></div>
+<label class="remember-token"><input id="remember-github-token" type="checkbox"> Remember on this device (stores the token in browser local storage)</label>
+<p id="github-token-warning" class="hint">Only use a token you created yourself. Use the minimum permissions needed (read-only Issues where required; no write permissions). Browser storage is readable by same-origin JavaScript, including injected scripts if an XSS flaw exists. For lower persistence risk, leave this unchecked. V36 sends the token only to api.github.com and never exports it.</p>
+<div class="token-actions"><button id="connect-github" class="button button-primary" type="submit">Validate and connect</button><button id="disconnect-github" class="button button-secondary" type="button" hidden>Disconnect</button></div>
+</form>
+<p id="github-token-status" class="token-status" role="status" aria-live="polite">Not connected. Public anonymous access is active.</p>
+</div>
+</details>
 </section>
 <section id="view-about" class="view" aria-labelledby="about-title" hidden>
 <div class="page-heading"><p class="eyebrow">PROJECT RULES</p><h1 id="about-title" tabindex="-1">About V36</h1></div>
