@@ -81,13 +81,13 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component contrast ratios not separately confirmed | No known functional or automated-test work pending; optional remaining evidence is numeric per-component contrast measurement |
-| CI / verification readiness | PASS | Latest CI run #132 and Pages deployment passed; manual acceptance outcomes recorded. Numeric per-component contrast ratios are now recorded in `docs/CONTRAST_AUDIT.md`. No public GitHub Release has been published. |
+| Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component ratios are documented in `docs/CONTRAST_AUDIT.md` | No known functional or automated-test work pending |
+| CI / verification readiness | PASS | Historical CI run #132 and its Pages deployment passed; the v0.1.0 release was subsequently published and numeric contrast ratios are recorded in `docs/CONTRAST_AUDIT.md`. |
 
 ## Current next actions
 
 1. No known implementation or automated-test defect remains in the verified scope; the latest CI and Pages deployment passed.
-2. Manual acceptance PASS outcomes are recorded in `docs/MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are not separately documented.
+2. Manual acceptance PASS outcomes are recorded in `docs/MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are documented in `docs/CONTRAST_AUDIT.md`.
 3. The public GitHub Release v0.1.0 was subsequently published; see the current status at the top of this file.
 4. Continue working directly on `main`, consistent with the project workflow. The release and numeric contrast audit are complete.
 
@@ -391,4 +391,4 @@ These are **not yet verified as complete** merely because related code exists.
 - Candidate commit `7e91404d05e85cb24447ae5708ec21896f4a5728`: [consolidated CI run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) passed `npm run test:all`: **101/101 unit tests, 42/42 browser tests, 3/3 standalone accessibility scans**. No failures or skipped suites.
 - Responsive overflow check [run #73 companion](https://github.com/vijay3695/V36/actions/runs/39642076859) passed at 320/375/768/1280px with no document-level overflow.
 - Updated the acceptance checklist, project plan, phase tracker, agent handoff, and final verification report. The report discloses the remaining manual-review waiver.
-- **Phase 6: VERIFIED.** No public release was published; the user ordered phase completion, not publication.
+- **Historical Phase 6 note (superseded):** At that point, no public release had been published because release publication was a separate action. The v0.1.0 public preview was subsequently published; see the current status at the top of this file.
