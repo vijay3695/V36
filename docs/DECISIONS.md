@@ -139,7 +139,7 @@ The maintainer chose a strict release gate:
 
 When the maintainer answers a planning question:
 1. Add or update the relevant row in this file.
-2. If the decision changes implementation scope, update `PHASES.md` and `docs/PROJECT_PLAN.md` as needed.
+2. If the decision changes implementation scope, update `PHASES.md` and `PROJECT_PLAN.md` as needed.
 3. Update `PROGRESS.md` only for actual implementation/test status, not to claim a product decision is implemented.
 4. Keep “confirmed decision”, “planned”, “implemented”, and “verified” as distinct states.
 5. Do not ask the maintainer to repeat decisions already recorded here.

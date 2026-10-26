@@ -1,6 +1,6 @@
 # V36 Project Specification
 
-Status: **v0.1.0 Public Preview published** (2026-10-24). The implementation and release verification are recorded in `docs/PHASE_6_AUDIT.md`, `docs/RELEASE_VERIFICATION.md`, and `docs/ACCEPTANCE_CHECKLIST.md`. Historical planning decisions below describe intended product behavior; use current verification records for implementation status.
+Status: **v0.1.0 Public Preview published** (2026-10-24). The implementation and release verification are recorded in `PHASE_6_AUDIT.md`, `RELEASE_VERIFICATION.md`, and `ACCEPTANCE_CHECKLIST.md`. Historical planning decisions below describe intended product behavior; use current verification records for implementation status.
 
 ## Product goal
 
@@ -37,12 +37,12 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - index.html
 - css/styles.css
 - js/ application modules
-- tests/ unit and browser acceptance tests
+- ../tests/ unit and browser acceptance tests
 - .github/workflows/ci.yml
 - .github issue and pull request templates
 - README.md, LICENSE, CONTRIBUTING.md, SECURITY.md
-- PROJECT_SPEC.md and docs/ACCEPTANCE_CHECKLIST.md
+- PROJECT_SPEC.md and ACCEPTANCE_CHECKLIST.md
 
 ## Verification source of truth
 
-The v0.1.0 public preview has passed its recorded release gate. The release candidate `77b36385f3a2e9fb603d1602b451d152fda91cd7` passed 107 unit tests, 47 browser tests, and 6 accessibility scans in [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927); [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) and [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded. Numeric light/dark component contrast ratios are documented in `docs/CONTRAST_AUDIT.md` and regression-tested. See `docs/PHASE_6_AUDIT.md` for scope, limitations, and the distinction between automated results and maintainer-reported manual checks. Do not treat the earlier implementation-gap list as current open work.
+The v0.1.0 public preview has passed its recorded release gate. The release candidate `77b36385f3a2e9fb603d1602b451d152fda91cd7` passed 107 unit tests, 47 browser tests, and 6 accessibility scans in [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927); [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) and [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded. Numeric light/dark component contrast ratios are documented in `CONTRAST_AUDIT.md` and regression-tested. See `PHASE_6_AUDIT.md` for scope, limitations, and the distinction between automated results and maintainer-reported manual checks. Do not treat the earlier implementation-gap list as current open work.

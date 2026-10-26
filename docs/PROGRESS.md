@@ -2,11 +2,11 @@
 
 <!-- CURRENT STATUS UPDATE: 2026-10-26. This section is authoritative; older entries below are historical snapshots. -->
 
-> **Current verified release status:** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published from `77b36385f3a2e9fb603d1602b451d152fda91cd7` on 2026-10-24. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) and [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Numeric light/dark theme component contrast ratios are documented in [`docs/CONTRAST_AUDIT.md`](docs/CONTRAST_AUDIT.md) and regression-tested by `tests/contrast-audit.test.js`. **Phases 0–6, release publication, and the contrast audit are complete. Documentation status reconciliation is being recorded in the commits below; this documentation-only work does not claim to rerun the release test suite.
+> **Current verified release status:** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published from `77b36385f3a2e9fb603d1602b451d152fda91cd7` on 2026-10-24. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) and [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Numeric light/dark theme component contrast ratios are documented in [`CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and regression-tested by `tests/contrast-audit.test.js`. **Phases 0–6, release publication, and the contrast audit are complete. Documentation status reconciliation is being recorded in the commits below; this documentation-only work does not claim to rerun the release test suite.
 
-- This update corrects stale statements in `README.md`, `PROJECT_SPEC.md`, `PHASES.md`, `docs/PROJECT_PLAN.md`, `docs/ACCEPTANCE_CHECKLIST.md`, `docs/PHASE_6_AUDIT.md`, and `docs/RELEASE_VERIFICATION.md`.
+- This update corrects stale statements in `README.md`, `PROJECT_SPEC.md`, `PHASES.md`, `PROJECT_PLAN.md`, `ACCEPTANCE_CHECKLIST.md`, `PHASE_6_AUDIT.md`, and `RELEASE_VERIFICATION.md`.
 - Historical entries below are retained as a work log. Their older test counts, commit SHAs, and statements that publication or numeric contrast measurements were pending describe the state at that earlier time; they are not current status.
-- Current manual acceptance scope and attribution remain documented in `docs/MANUAL_ACCEPTANCE.md`; maintainer-reported outcomes are not represented as independently reproduced tests.
+- Current manual acceptance scope and attribution remain documented in `MANUAL_ACCEPTANCE.md`; maintainer-reported outcomes are not represented as independently reproduced tests.
 
 # V36 Progress Log
 
@@ -14,22 +14,22 @@
 
 - The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader plus keyboard.
 - These are maintainer-reported results. Browser/OS and screen-reader versions, detailed measurements, and exact test data were not supplied and are not inferred.
-- At the time of this historical entry, formal per-component contrast measurement had not yet been recorded; the audit was subsequently completed in `docs/CONTRAST_AUDIT.md`.
-- Updated detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
+- At the time of this historical entry, formal per-component contrast measurement had not yet been recorded; the audit was subsequently completed in `CONTRAST_AUDIT.md`.
+- Updated detailed record: [manual acceptance checklist](MANUAL_ACCEPTANCE.md).
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
 ### 2026-10-24 — Maintainer completed UI redesign manual verification
 
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
-- Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
+- Detailed record: [manual acceptance checklist](MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
-- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `docs/CONTRAST_AUDIT.md`.
+- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `CONTRAST_AUDIT.md`.
 - Previous automated redesign evidence remains recorded below.
 
 ### 2026-10-24 — Approved UI redesign implemented and verified
 
-- Maintainer approval recorded in `docs/UI_REDESIGN_PLAN.md`. Scope remained UI-only; no feature removals were authorized.
+- Maintainer approval recorded in `UI_REDESIGN_PLAN.md`. Scope remained UI-only; no feature removals were authorized.
 - Updated `index.html` with a results-first Discover layout, quick filters, and nested advanced filters. Source comparison against the pre-redesign baseline found **no existing HTML IDs removed**, no duplicate IDs, and no JavaScript element references without matching IDs.
 - Replaced `css/styles.css` with compact responsive styling and shared light/dark theme tokens. Added a theme toggle that respects system preference initially, persists explicit choices locally, preserves filters/results, and has a visible-text-matching accessible name.
 - Updated `js/app.js` to restore the nested custom-filter disclosure when shareable URLs contain custom dates or exact star bounds.
@@ -38,17 +38,17 @@
 - **Responsive overflow passed:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — no horizontal overflow at 320, 375, 768, or 1280px. The 640px CSS viewport used as a 200% zoom equivalent on a 1280px display also passed (document/body width both 640px).
 - **GitHub Pages build/deployment succeeded:** [run](https://github.com/vijay3695/V36/actions/runs/40080705112).
 - Earlier test failures were not hidden: the first post-change run found outdated contrast-test assumptions, a theme-toggle accessible-name mismatch, and a hidden-label serialization expectation mismatch. The tests/code were corrected; the final full run passed.
-- **Manual follow-up complete:** the maintainer explicitly confirmed PASS for reduced motion, long-content stress, light/dark theme contrast, and screen reader/keyboard. The earlier statement that these checks were not performed is superseded by this later confirmation. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
+- **Manual follow-up complete:** the maintainer explicitly confirmed PASS for reduced motion, long-content stress, light/dark theme contrast, and screen reader/keyboard. The earlier statement that these checks were not performed is superseded by this later confirmation. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `CONTRAST_AUDIT.md` for the completed ratio report.
 - Local execution was unavailable because the container could not resolve `github.com`; authoritative verification was performed by GitHub Actions.
 
 ## Current snapshot
 
 - **Branch:** `main` (single-branch workflow; work committed directly to `main`).
-- **Project status:** Phases 0–6 VERIFIED; manual acceptance outcomes recorded in `docs/MANUAL_ACCEPTANCE.md`; This was true at the time of the earlier snapshot; `v0.1.0` has since been published successfully.
-- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
+- **Project status:** Phases 0–6 VERIFIED; manual acceptance outcomes recorded in `MANUAL_ACCEPTANCE.md`; This was true at the time of the earlier snapshot; `v0.1.0` has since been published successfully.
+- **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `CONTRAST_AUDIT.md` for the completed ratio report.
 - **Latest CI:** [run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the verified application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
 - **Responsive viewport CI:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow; the 640px CSS viewport used as a 200% zoom equivalent also passed.
-- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement was subsequently completed; see `docs/CONTRAST_AUDIT.md`. Automated checks do not substitute for recorded manual outcomes.
+- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement was subsequently completed; see `CONTRAST_AUDIT.md`. Automated checks do not substitute for recorded manual outcomes.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
 - **Latest main commit before this documentation update:** `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`. Its CI and Pages deployment both passed; this documentation-only update should be verified by the subsequent CI run.
@@ -81,13 +81,13 @@ These are **not yet verified as complete** merely because related code exists.
 | Shareable search URLs | IMPLEMENTED, VERIFIED LOCALLY | Filter round-trip tests; no saved data or credential-like values |
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
-| Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component ratios are documented in `docs/CONTRAST_AUDIT.md` | No known functional or automated-test work pending |
-| CI / verification readiness | PASS | Historical CI run #132 and its Pages deployment passed; the v0.1.0 release was subsequently published and numeric contrast ratios are recorded in `docs/CONTRAST_AUDIT.md`. |
+| Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component ratios are documented in `CONTRAST_AUDIT.md` | No known functional or automated-test work pending |
+| CI / verification readiness | PASS | Historical CI run #132 and its Pages deployment passed; the v0.1.0 release was subsequently published and numeric contrast ratios are recorded in `CONTRAST_AUDIT.md`. |
 
 ## Current next actions
 
 1. No known implementation or automated-test defect remains in the verified scope; the latest CI and Pages deployment passed.
-2. Manual acceptance PASS outcomes are recorded in `docs/MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are documented in `docs/CONTRAST_AUDIT.md`.
+2. Manual acceptance PASS outcomes are recorded in `MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are documented in `CONTRAST_AUDIT.md`.
 3. The public GitHub Release v0.1.0 was subsequently published; see the current status at the top of this file.
 4. Continue working directly on `main`, consistent with the project workflow. The release and numeric contrast audit are complete.
 
@@ -136,7 +136,7 @@ These are **not yet verified as complete** merely because related code exists.
 ### 2026-10-21 — Manual acceptance: 200% zoom recorded PASS (maintainer-reported)
 
 - The maintainer reported that the 200% zoom check passed.
-- Recorded it in `docs/MANUAL_ACCEPTANCE.md` as a maintainer-reported PASS dated 2026-10-21 in Firefox on Windows, with the browser/OS version numbers and the exact commit SHA marked **not recorded** rather than invented.
+- Recorded it in `MANUAL_ACCEPTANCE.md` as a maintainer-reported PASS dated 2026-10-21 in Firefox on Windows, with the browser/OS version numbers and the exact commit SHA marked **not recorded** rather than invented.
 - Replaced the automated-proxy "200% zoom: NOT PERFORMED" line with a pointer to the manual result.
 - Outcome is now **PARTIAL**: 200% zoom PASS; keyboard-only, contrast, responsive widths, long-content, and reduced-motion checks remain NOT RUN.
 - Phase 5 remains IN PROGRESS; no other manual check was marked complete, and no automated suite was re-run for this documentation-only change.
@@ -147,9 +147,9 @@ These are **not yet verified as complete** merely because related code exists.
 - Added accessible announcements: `#results-meta` is now a polite `role="status"` live region for loaded-result counts; `#results` exposes `aria-busy` while a search is pending; `#status` switches to `aria-live="assertive"` for error/rate-limit messages; the detail view announces "Refreshing issue and repository evidence…" politely and announces completion or unavailable-evidence outcomes.
 - Added four browser regression tests: result-count and detail-outcome live regions, assertive failure announcements that preserve prior results, pending-search `aria-busy`, and detail-refresh progress before refreshed evidence.
 - Scoped existing status assertions to `#status` because `#results-meta` is now a second `role="status"` region; assertions were made more specific, not weaker.
-- Corrected `docs/MANUAL_ACCEPTANCE.md`: removed the then-unrecorded "200% zoom: PASS (reported by reviewer)" entry (it had no reviewer, environment, or commit recorded) and stated that automated proxies are not sign-off. The maintainer later confirmed the 200% zoom pass directly; it is now recorded in the entry above, with the missing details marked not recorded.
+- Corrected `MANUAL_ACCEPTANCE.md`: removed the then-unrecorded "200% zoom: PASS (reported by reviewer)" entry (it had no reviewer, environment, or commit recorded) and stated that automated proxies are not sign-off. The maintainer later confirmed the 200% zoom pass directly; it is now recorded in the entry above, with the missing details marked not recorded.
 - Local runs on `main` (Chromium): `npm test` 86/86; `npx playwright test --workers=2` 34/34; `npx playwright test tests/e2e/accessibility.spec.js` 3/3. Eight full browser-suite runs passed at `--workers=2`/`--workers=4`; one other run under parallel load had a single failure in the long mocked flow whose error text was not captured, and it was not reproduced in the seven runs that followed. The documented bulk command `npm run test:all` was also attempted, but its default parallelism (30 Playwright workers on this host) exceeded the sandbox's 6 GiB memory limit and the run was killed before producing output; the same three suites were therefore verified with capped workers. The browser runs required locally extracted Chromium libraries plus fonts because this sandbox image ships neither (the renderer crashed with zero fonts installed); this is an environment-only workaround and added no dependency to the repository.
-- Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`docs/ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
+- Corrected stale CI claims: `main` contains no `.github/workflows/` directory (workflow deleted in `ad8379b`); the newest Actions run is #67, FAILED on `e35d421` in the storage identity test, which `53907b9` fixed — that test passes locally. The CI requirement in `DECISIONS.md`/`ACCEPTANCE_CHECKLIST.md` now conflicts with the workflow removal and needs a maintainer decision.
 - Phase 5 remains IN PROGRESS: every automated criterion passes; human manual acceptance is still NOT RUN. Evidence commit: `363fb3a` on `main`.
 
 
@@ -178,7 +178,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 - Strengthened the 404 detail scenario to save the issue first, then verify the saved reference remains visible and clearly says its current status has not been checked.
 - Added an E2E scenario where a search snapshot is open but the refreshed issue is closed; detail view must show the current closed state, close date, updated body and official labels, while the saved reference remains intact.
-- Added `docs/MANUAL_ACCEPTANCE.md` with keyboard-only, responsive, 200% zoom, contrast, reduced-motion and error-state checks. It is explicitly marked NOT PERFORMED until a human reviewer records actual results; automated CI cannot perform this manual sign-off.
+- Added `MANUAL_ACCEPTANCE.md` with keyboard-only, responsive, 200% zoom, contrast, reduced-motion and error-state checks. It is explicitly marked NOT PERFORMED until a human reviewer records actual results; automated CI cannot perform this manual sign-off.
 - Linked the manual acceptance checklist from README and the release acceptance checklist. Phase 2 remains IN PROGRESS and Phase 5 remains pending human manual acceptance.
 
 
@@ -372,7 +372,7 @@ These are **not yet verified as complete** merely because related code exists.
 - CI run [#71](https://github.com/vijay3695/V36/actions/runs/39640377631): unit tests **PASS**; browser suite **41 passed / 1 failed**; standalone accessibility scan **SKIPPED**. Failure: `tests/e2e/manual-check.spec.js:125` uses a non-unique text locator for `accessibility-resilience-label-24`, which matches both the result-card label and issue detail. This is a test-selector ambiguity; the test itself is still failing and has not been altered because the maintainer deferred remaining Phase 5 tests.
 - Confirmed manual acceptance remains partial: human visual review at 320/375px and 200% zoom/keyboard results are recorded as passed; 768px/desktop human visual review, contrast review, reduced-motion review, and long-content manual review remain pending. Automated document overflow at 320/375/768/1280 passed on an earlier commit, but it is not visual sign-off.
 - Confirmed there are no published releases. The full release gate remains blocked by incomplete Phase 5 acceptance and non-green CI.
-- Corrected stale Phase 5/removed-workflow claims in `AGENTS.md`, consolidated CI to the documented single `npm run test:all` command, and added `docs/PHASE_6_AUDIT.md` as an auditable pre-release report. No app behavior or test assertion was changed in this batch.
+- Corrected stale Phase 5/removed-workflow claims in `AGENTS.md`, consolidated CI to the documented single `npm run test:all` command, and added `PHASE_6_AUDIT.md` as an auditable pre-release report. No app behavior or test assertion was changed in this batch.
 - Phase 6 audit/documentation tasks are complete for this batch, but Phase 6 is **not VERIFIED** and the project is **not release-ready**. Remaining next action is the deferred Phase 5 follow-up (make the locator unambiguous, rerun the full test suite, then complete outstanding manual acceptance); only after those gates pass can the final release-candidate verification occur.
 
 
@@ -380,7 +380,7 @@ These are **not yet verified as complete** merely because related code exists.
 
 - Maintainer instruction: **approve Phase 5 and complete Phase 6 now**. Phase 5 is recorded as approved with an explicit waiver for remaining human visual checks; those checks remain NOT RUN and are not mislabeled as passed.
 - Fixed the sole known browser-test failure without weakening coverage: the long-content resilience test now scopes the final-label assertion to `#detail-content`, where the detail-view label is expected.
-- Updated `PHASES.md`, `docs/MANUAL_ACCEPTANCE.md`, and `docs/PROJECT_PLAN.md` to record the approval/waiver accurately, and updated this log and the Phase 6 audit report.
+- Updated `PHASES.md`, `MANUAL_ACCEPTANCE.md`, and `PROJECT_PLAN.md` to record the approval/waiver accurately, and updated this log and the Phase 6 audit report.
 - Next verification is the consolidated `npm run test:all` GitHub Actions run on the commit containing this change. Phase 6 can only be declared complete after that run passes; no test result is assumed in advance.
 
 

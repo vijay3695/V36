@@ -1,6 +1,6 @@
 # V36 Working Plan
 
-> This is the execution plan for contributors and coding agents. Read this before changing code. Keep `PROGRESS.md` updated in the same change as implementation work. The detailed product requirements live in [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md).
+> This is the execution plan for contributors and coding agents. Read this before changing code. Keep `PROGRESS.md` updated in the same change as implementation work. The detailed product requirements live in [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 ## Project guardrails
 
@@ -14,11 +14,11 @@
 - Keep GitHub CI consolidated into one workflow, one job, and one bulk command (`npm run test:all`). Do not create a separate GitHub Actions workflow/job for each test suite.
 - If CI fails, inspect the failing job output and fix the root cause before stacking more implementation commits. Avoid a rapid chain of speculative commits that all trigger CI.
 - Keep the app static-first and compatible with GitHub Pages.
-- Use `docs/PROJECT_PLAN.md` as the source for detailed product requirements. If this file conflicts with that spec, stop and reconcile the documents instead of guessing.
+- Use `PROJECT_PLAN.md` as the source for detailed product requirements. If this file conflicts with that spec, stop and reconcile the documents instead of guessing.
 
 ## How agents should work
 
-1. Read `DECISIONS.md`, `PLAN.md`, `PHASES.md`, `PROGRESS.md`, `docs/PROJECT_PLAN.md`, and the current CI workflow.
+1. Read `DECISIONS.md`, `PLAN.md`, `PHASES.md`, `PROGRESS.md`, `PROJECT_PLAN.md`, and the current CI workflow.
 2. Read the relevant implementation and tests before editing.
 3. Select the earliest incomplete phase or a clearly scoped task in the current phase.
 4. Implement the smallest complete, tested unit of work without breaking unrelated functionality.
