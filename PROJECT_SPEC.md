@@ -1,6 +1,6 @@
 # V36 Project Specification
 
-Status: planning and implementation in progress. This document records confirmed decisions; it is not proof that every feature is implemented or verified.
+Status: **v0.1.0 Public Preview published** (2026-10-24). The implementation and release verification are recorded in `docs/PHASE_6_AUDIT.md`, `docs/RELEASE_VERIFICATION.md`, and `docs/ACCEPTANCE_CHECKLIST.md`. Historical planning decisions below describe intended product behavior; use current verification records for implementation status.
 
 ## Product goal
 
@@ -29,7 +29,7 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - Security: all GitHub content and imported files are untrusted. Render safely, never execute remote content, validate import size/schema, and never store credentials or tokens.
 - Accessibility: every agreed criterion is a release blocker. Automated checks plus documented manual keyboard checks are required.
 - Tests: unit tests, browser end-to-end tests, accessibility checks, and GitHub Actions CI. Use mocks for routine tests; separate optional live GitHub checks.
-- Release scope: do not publish the first release until every planned feature is implemented and verified.
+- Release scope: the first public preview `v0.1.0` has been published after the release workflow passed on the exact release commit. Apply the same evidence gate to future releases.
 - Release verification: require a release checklist and report tied to the exact release commit; never claim a check passed unless it actually ran and passed.
 
 ## Planned repository structure
@@ -43,6 +43,6 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - README.md, LICENSE, CONTRIBUTING.md, SECURITY.md
 - PROJECT_SPEC.md and docs/ACCEPTANCE_CHECKLIST.md
 
-## Important implementation gaps to verify
+## Verification source of truth
 
-This repository currently contains an initial implementation, not a verified release. Confirm that metadata-dependent filters are actually enriched from GitHub, date/custom range requirements are satisfied, import feedback reports duplicates and rejected entries clearly, source-file links are grounded in retrieved data, partial-result semantics are correct, and all planned behavior is covered by tests and manual acceptance. Do not mark any gap complete without evidence.
+The v0.1.0 public preview has passed its recorded release gate. The release candidate `77b36385f3a2e9fb603d1602b451d152fda91cd7` passed 107 unit tests, 47 browser tests, and 6 accessibility scans in [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927); [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) and [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded. Numeric light/dark component contrast ratios are documented in `docs/CONTRAST_AUDIT.md` and regression-tested. See `docs/PHASE_6_AUDIT.md` for scope, limitations, and the distinction between automated results and maintainer-reported manual checks. Do not treat the earlier implementation-gap list as current open work.
