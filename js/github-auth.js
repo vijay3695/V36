@@ -32,8 +32,8 @@ export function restoreRememberedToken() {
 export async function connectGitHubToken(value, remember = false) {
   const candidate = String(value || "").trim();
   if (!candidate) throw new Error("Enter a GitHub fine-grained personal access token.");
-  if (!/^(github_pat_[A-Za-z0-9_]+|ghp_[A-Za-z0-9]+)$/.test(candidate)) {
-    throw new Error("That token format is not recognized. Paste a GitHub personal access token.");
+  if (!/^github_pat_[A-Za-z0-9_]+$/.test(candidate)) {
+    throw new Error("That token format is not recognized. Paste a GitHub fine-grained personal access token.");
   }
 
   let response;
