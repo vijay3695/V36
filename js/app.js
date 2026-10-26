@@ -2,9 +2,45 @@ import {buildSearchQuery,matchesFilters,inferCategories,normalizeFilters,unknown
 import {searchIssues,getIssue,getRepo,getRepoLanguages,getReadme,getLatestCommit,getRepoContents,getRepoFile,GitHubError} from "./github.js";
 import {loadSaved,addSavedIssue,addSavedSearch,removeSavedIssue,removeSavedSearch,exportBackup,parseImportFile,mergeBackup} from "./storage.js";
 import {buildContextPack} from "./context-pack.js";
+import {restoreRememberedToken,connectGitHubToken,disconnectGitHubToken,hasGitHubToken,isTokenRemembered} from "./github-auth.js";
 const $=id=>document.getElementById(id),form=$("search-form"),status=$("status");
 let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;
 const repoCache=new Map();
+const tokenForm=$("github-token-form"),tokenInput=$("github-token"),rememberToken=$("remember-github-token"),tokenStatus=$("github-token-status"),connectButton=$("connect-github"),disconnectButton=$("disconnect-github");
+function renderTokenState(message=""){
+ if(!tokenStatus)return;
+ const connected=hasGitHubToken();
+ tokenStatus.textContent=message||(connected?(isTokenRemembered()?"Connected. This browser remembers the token.":"Connected for this page session only."):"Not connected. Public anonymous access is active.");
+ disconnectButton.hidden=!connected;
+ connectButton.disabled=false;
+}
+restoreRememberedToken();
+renderTokenState();
+tokenForm?.addEventListener("submit",async event=>{
+ event.preventDefault();
+ const candidate=tokenInput.value;
+ connectButton.disabled=true;
+ tokenStatus.textContent="Validating with GitHub…";
+ try{
+  const result=await connectGitHubToken(candidate,rememberToken.checked);
+  tokenInput.value="";
+  const mode=result.storageWarning?"Connected for this page session only. Browser storage was unavailable, so the token was not saved.":result.remembered?"Connected. Token is stored on this device as requested.":"Connected for this page session only. Reloading the page will disconnect.";
+  const quota=[];
+  for(const [name,bucket] of [["Core API",result.rateLimits?.core],["Search API",result.rateLimits?.search]])if(bucket)quota.push(name+": "+bucket.remaining+"/"+bucket.limit+" requests remaining");
+  renderTokenState(mode+(quota.length?" Current GitHub quota: "+quota.join("; ")+".":" Quota details were not returned."));
+  setStatus("GitHub token validated. Authenticated API capacity may improve; Search API limits remain separate.","success");
+ }catch(error){
+  renderTokenState("Connection failed: "+error.message);
+ }finally{connectButton.disabled=false;}
+});
+disconnectButton?.addEventListener("click",()=>{
+ disconnectGitHubToken();
+ tokenInput.value="";
+ rememberToken.checked=false;
+ renderTokenState("Disconnected. Future requests use anonymous GitHub access.");
+ setStatus("GitHub token disconnected. Anonymous mode is active.","success");
+});
+
 
 const THEME_STORAGE_KEY="v36-theme";
 function getInitialTheme(){

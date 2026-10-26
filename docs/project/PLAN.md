@@ -8,7 +8,7 @@
 - Do not remove agreed features to make tests pass.
 - Do not claim a feature or test is complete without checking the implementation and evidence.
 - Do not publish a release until every required release gate passes.
-- No paid services, backend, AI API, required GitHub token, or stored credentials.
+- No paid services, backend, AI API, or required GitHub token. On `main`, no token storage. The separately approved `feature/github-token-auth` experiment permits optional PAT state, session-only by default and localStorage only with explicit opt-in and disclosure; do not merge until its documented gate passes.
 - GitHub issue/repository content and imported files are untrusted input.
 - Use Husky for local checks: `npm test` on pre-commit and `npm run test:all` on pre-push.
 - Keep GitHub CI consolidated into one workflow, one job, and one bulk command (`npm run test:all`). Do not create a separate GitHub Actions workflow/job for each test suite.

@@ -16,6 +16,7 @@ Use this index to find the right project record without digging through the repo
 - [Working plan](project/PLAN.md) — coding-agent guardrails and test expectations.
 - [Project specification](project/PROJECT_SPEC.md) — core requirements and constraints.
 - [Detailed project plan](project/PROJECT_PLAN.md) — full behavior, edge cases, and release gate.
+- [GitHub token-auth experiment](project/GITHUB_TOKEN_AUTH_EXPERIMENT.md) — optional token security design, implementation status, and merge gate (feature branch only).
 
 ## Design
 

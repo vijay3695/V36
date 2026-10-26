@@ -19,7 +19,7 @@ When this log conflicts with implementation assumptions, follow the confirmed de
 | Hosting / architecture | Static-first website intended for GitHub Pages; keep it usable without a paid server or backend | CONFIRMED |
 | Budget | No paid hosting, database, or AI API dependency | CONFIRMED |
 | Accounts / backend | No user account system or server database for the planned first release | FIRST RELEASE |
-| GitHub credentials | Do not require users to supply a token; never store credentials or API tokens | FIRST RELEASE |
+| GitHub credentials | Anonymous mode must remain available. Optional user-supplied fine-grained PAT is an experiment; never required. In-memory session mode is default; browser localStorage only after explicit opt-in and risk warning. Tokens must never enter exports, URLs, context packs, or diagnostics. | EXPERIMENTAL — MERGE GATE REQUIRED |
 | AI provider | Generate a portable context prompt for the user's own AI assistant; do not call an AI API or make automatic code changes | FIRST RELEASE |
 | Evidence philosophy | Show evidence, dates, source links, and uncertainty. Do not produce a simplistic “dead/alive” verdict or overall repository health score | FIRST RELEASE |
 | Release policy | Do not publish the first release until every agreed feature and release check is implemented and verified | CONFIRMED |
@@ -73,6 +73,7 @@ The maintainer selected the **complete-scope release gate**. The following are n
 
 - When rate limited, stop additional requests, preserve already-loaded results and saved items, explain the limit and retry time when known, and offer manual retry.
 - Never bypass rate limits and never require a GitHub token.
+- Experimental token-based authentication may raise general REST capacity, but Search API limits are separate (GitHub documents 10 requests/minute unauthenticated and up to 30 authenticated) and authenticated search can return only resources the token has access to. Verify real behavior before merge.
 - If activity metadata cannot be retrieved, keep the issue visible and mark missing fields Unknown; allow retry.
 - Preserve current results and saved data on failures.
 - Clearly distinguish unavailable data from zero matches.
@@ -117,7 +118,7 @@ This order is an implementation sequence, not permission to omit a later phase f
 | Automatic code edits, repository execution, or running target-repository tests | Excluded from current scope. |
 | Full repository download for context packs | Excluded from current scope. |
 | Accounts, server-side saved data, paid database/backend | Excluded from first-release scope. |
-| Required personal access token | Excluded; do not ask users to provide one. |
+| Required personal access token | Excluded; token connection must remain optional. Any optional token feature requires explicit maintainer approval and verified security/rate-limit evidence. |
 | Overall repository health score or “dead/alive” label | Explicitly rejected; show evidence instead. |
 
 These items are not a promise to implement them after release. Reconsider them only if the maintainer explicitly changes the scope.

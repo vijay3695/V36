@@ -20,7 +20,7 @@ test("theme toggle changes appearance without clearing current filters",async({p
 });
 
 test("saved page explains browser-local storage",async({page})=>{await page.goto("/#saved");await expect(page.getByRole("heading",{name:"Saved",exact:true})).toBeVisible();await expect(page.getByText(/Saved locally in this browser only/)).toBeVisible();});
-test("about page documents evidence and API limits",async({page})=>{await page.goto("/#about");await expect(page.getByText(/does not label projects dead or calculate an overall health score/)).toBeVisible();await expect(page.getByText(/Unauthenticated API limits apply/)).toBeVisible();});
+test("about page documents evidence and API limits",async({page})=>{await page.goto("/#about");await expect(page.getByText(/does not label projects dead or calculate an overall health score/)).toBeVisible();await expect(page.getByText(/Anonymous mode works without setup/)).toBeVisible();});
 
 test("mocked GitHub flow searches, opens evidence, builds a sourced context pack and saves an issue",async({page})=>{
  const issue={html_url:"https://github.com/acme/demo/issues/1",title:"Fix crash on startup",body:"The app crashes on startup.",state:"open",number:1,created_at:"2026-01-20T00:00:00Z",updated_at:"2026-01-30T00:00:00Z",closed_at:null,comments:2,labels:[{name:"bug"}],repository_url:"https://api.github.com/repos/acme/demo"};
@@ -511,3 +511,45 @@ test("related work links keep the issue repository when repository metadata is u
  expect(pack).not.toContain("Retry after");
 });
 
+
+
+test("optional GitHub token stays session-only by default and disconnect restores anonymous requests",async({page})=>{
+ const token="github_pat_"+"A".repeat(40),authorization=[];
+ await page.route("https://api.github.com/**",async route=>{
+  const url=new URL(route.request().url()),headers=route.request().headers();
+  authorization.push({path:url.pathname,authorization:headers.authorization});
+  if(url.pathname==="/rate_limit")return route.fulfill({json:{resources:{core:{limit:5000,remaining:4999},search:{limit:30,remaining:29}}}});
+  if(url.pathname==="/search/issues")return route.fulfill({json:{total_count:0,incomplete_results:false,items:[]}});
+  return route.fulfill({status:404,json:{message:"not mocked"}});
+ });
+ await page.goto("/");
+ await page.locator("#github-auth-panel > summary").click();
+ await page.getByLabel("Fine-grained GitHub personal access token").fill(token);
+ await page.getByRole("button",{name:"Validate and connect"}).click();
+ await expect(page.locator("#github-token-status")).toContainText("Connected for this page session only");
+ await expect(page.locator("#github-token")).toHaveValue("");
+ expect(await page.evaluate(()=>Object.values(localStorage).some(value=>value.includes("github_pat_")))).toBe(false);
+ await page.getByLabel("Search issues").fill("rate limit");
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.locator("#status")).toContainText("Loaded 0 issues");
+ expect(authorization.find(x=>x.path==="/search/issues")?.authorization).toBe("Bearer "+token);
+ await page.getByRole("button",{name:"Disconnect"}).click();
+ await page.getByRole("button",{name:"Search GitHub"}).click();
+ await expect(page.locator("#status")).toContainText("Loaded 0 issues");
+ expect(authorization.filter(x=>x.path==="/search/issues").at(-1)?.authorization).toBeUndefined();
+ await expect(page.locator("#github-token-status")).toContainText("Disconnected");
+});
+
+test("remembering a GitHub token is explicit and disconnect clears local storage",async({page})=>{
+ const token="github_pat_"+"B".repeat(40);
+ await page.route("https://api.github.com/rate_limit",route=>route.fulfill({json:{resources:{core:{limit:5000,remaining:4999}}}}));
+ await page.goto("/");
+ await page.locator("#github-auth-panel > summary").click();
+ await page.getByLabel("Fine-grained GitHub personal access token").fill(token);
+ await page.getByLabel(/Remember on this device/).check();
+ await page.getByRole("button",{name:"Validate and connect"}).click();
+ await expect(page.locator("#github-token-status")).toContainText("stored on this device");
+ expect(await page.evaluate(()=>localStorage.getItem("v36.github-token.v1"))).toBe(token);
+ await page.getByRole("button",{name:"Disconnect"}).click();
+ expect(await page.evaluate(()=>localStorage.getItem("v36.github-token.v1"))).toBeNull();
+});
