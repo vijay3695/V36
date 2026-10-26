@@ -1,13 +1,13 @@
 # Phase 6 — Final verification report
 
-<!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
+<!-- RELEASE EVIDENCE SNAPSHOT: 2026-10-24. Current documentation reconciliation is recorded in PROGRESS.md. Historical snapshots below are retained for auditability. -->
 
 > **Current verified status (2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](../tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
 
 
 **Verification record updated:** 2026-10-24  
 **Branch:** `main`  
-**Latest documentation/CI commit:** `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`  
+**Historical documentation/CI commit at the time of the earlier audit:** `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`  
 **Verified application candidate:** `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`  
 **Phase 5:** APPROVED; manual outcomes subsequently confirmed by maintainer  
 **Phase 6:** VERIFIED  
