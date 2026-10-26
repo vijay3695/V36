@@ -23,16 +23,18 @@ V36 is a free, static-first website for discovering GitHub issues that may suit 
 
 ## 2. Required reading order
 
+Use [docs/README.md](docs/README.md) as the documentation map.
+
 Read these files in order before making code changes:
 
-1. **`DECISIONS.md`** — maintainer-confirmed decisions, first-release requirements, and features explicitly excluded or deferred. Do not re-ask questions already answered here.
-2. **`PROGRESS.md`** — current phase, what is known, what is verified, blockers, and the next action. Treat unverified claims as unverified.
-3. **`PHASES.md`** — implementation phases and acceptance checklists. Work in the current phase; do not skip ahead around a blocker.
-4. **`PLAN.md`** — coding rules, test expectations, and repository guardrails.
+1. **`docs/DECISIONS.md`** — maintainer-confirmed decisions, first-release requirements, and features explicitly excluded or deferred. Do not re-ask questions already answered here.
+2. **`docs/PROGRESS.md`** — current phase, what is known, what is verified, blockers, and the next action. Treat unverified claims as unverified.
+3. **`docs/PHASES.md`** — implementation phases and acceptance checklists. Work in the current phase; do not skip ahead around a blocker.
+4. **`docs/PLAN.md`** — coding rules, test expectations, and repository guardrails.
 5. **`docs/PROJECT_PLAN.md`** — full product requirements, behavior, edge cases, and release gate.
 6. **`README.md`, `.github/workflows/ci.yml`, `package.json`, `playwright.config.js`, and relevant source/tests** — understand how the current implementation and test pipeline actually work.
 
-If these files disagree, do not guess or silently choose a convenient interpretation. Resolve the discrepancy against the explicit decisions in `DECISIONS.md`; update the affected documentation together and record the correction in `PROGRESS.md`.
+If these files disagree, do not guess or silently choose a convenient interpretation. Resolve the discrepancy against the explicit decisions in `docs/DECISIONS.md`; update the affected documentation together and record the correction in `docs/PROGRESS.md`.
 
 ## 3. Start coding work — do not stop after reading
 
@@ -40,10 +42,10 @@ After reading the files:
 
 1. Check the current `main` state and working tree/recent commits using the available repository tools.
 2. Inspect the exact source, tests, and CI logs relevant to the current task. Do not infer a failure's cause from a red status icon alone.
-3. Follow the **next action** recorded in `PROGRESS.md`. If it is stale, verify the actual repository/CI state and correct the progress log before proceeding.
+3. Follow the **next action** recorded in `docs/PROGRESS.md`. If it is stale, verify the actual repository/CI state and correct the progress log before proceeding.
 4. Implement the smallest complete root-cause fix that preserves all confirmed first-release requirements. Add or update regression tests.
 5. Run the relevant tests and then the broader required checks. Clearly distinguish checks that passed, failed, or were not run.
-6. Update `PROGRESS.md` in the same change as the implementation, recording files changed, test commands/results, evidence links, remaining risks, and the next action.
+6. Update `docs/PROGRESS.md` in the same change as the implementation, recording files changed, test commands/results, evidence links, remaining risks, and the next action.
 7. Commit the coherent fix and its evidence to `main` unless the maintainer has directed otherwise. Avoid a stream of speculative commits that each trigger CI; diagnose first, then group related fixes.
 8. Re-check the resulting GitHub Actions run. Never claim a fix is complete merely because a commit was pushed.
 
@@ -59,30 +61,30 @@ After reading the files:
 - Respect GitHub API limits. Stop extra requests when rate limited; do not bypass limits or require a token.
 - Keep source links, fetch times, missing context, and limitations visible in generated context packs. Fetch source-file links/contribution guidance only when requested, and disclose if the root listing or guide is unavailable. Never fabricate evidence.
 - Keep routine tests deterministic with mocked GitHub API responses where appropriate. Cover custom date/star filters, shareable URLs, saved-search backups, activity evidence, and context-pack source links with regression tests.
-- Husky runs `npm test` before commits and `npm run test:all` before pushes. Install hooks with `npm install` (the package `prepare` script configures Husky). When a GitHub Actions workflow exists, it must run `npm run test:all` as one job. **Note:** the consolidated workflow was deleted in `ad8379b` ("admin approved disable … no-Actions rule"), while `DECISIONS.md` and the release checklist still require CI; this conflict is unresolved and must be settled by the maintainer.
+- Husky runs `npm test` before commits and `npm run test:all` before pushes. Install hooks with `npm install` (the package `prepare` script configures Husky). When a GitHub Actions workflow exists, it must run `npm run test:all` as one job. **Note:** the consolidated workflow was deleted in `ad8379b` ("admin approved disable … no-Actions rule"), while `docs/DECISIONS.md` and the release checklist still require CI; this conflict is unresolved and must be settled by the maintainer.
 - Do not create separate GitHub Actions workflows/jobs for individual test suites. Keep the GitHub-hosted check consolidated into one workflow, one job, and one bulk test command.
 - No paid services, paid AI API, server-side account system, automatic code changes, or full-repository download unless the maintainer explicitly changes the documented scope.
-- Keep the documentation synchronized: confirmed decisions in `DECISIONS.md`, phase criteria in `PHASES.md`, and actual implementation/test status in `PROGRESS.md`.
+- Keep the documentation synchronized: confirmed decisions in `docs/DECISIONS.md`, phase criteria in `docs/PHASES.md`, and actual implementation/test status in `docs/PROGRESS.md`.
 
 ## 5. Explicit do / do-not instructions
 
 ### DO
 
 - Read this guide and every required project document before editing code; inspect relevant source and tests rather than relying on summaries alone.
-- Treat `DECISIONS.md` as the record of maintainer decisions and `PROGRESS.md` as a snapshot that must be checked against the real repository and latest CI state.
+- Treat `docs/DECISIONS.md` as the record of maintainer decisions and `docs/PROGRESS.md` as a snapshot that must be checked against the real repository and latest CI state.
 - Complete work for the current phase, including its acceptance criteria, before moving on. Work on the actual blocker first.
 - Trace bugs to their source, reproduce failures where practical, and add regression tests for fixes.
 - Preserve existing working behavior and all confirmed first-release requirements while making changes.
 - Prefer small, coherent changes that solve a verified problem; review the diff for unintended changes.
 - Run the relevant checks and record exact commands, outcomes, links, and limitations. If a check cannot be run, say why and mark it NOT RUN.
-- Update the appropriate docs when facts or decisions change. Update `PROGRESS.md` alongside implementation work.
+- Update the appropriate docs when facts or decisions change. Update `docs/PROGRESS.md` alongside implementation work.
 - Work on `main` unless the maintainer explicitly instructs otherwise.
 - Give a final report that separates **implemented**, **tested**, **verified**, **not tested**, and **still blocked**.
 
 ### DO NOT
 
 - Do not start coding before reading the required documents and checking the current state.
-- Do not invent product requirements, silently change a confirmed decision, re-ask a question already settled in `DECISIONS.md`, or treat a proposed/unconfirmed item as approved.
+- Do not invent product requirements, silently change a confirmed decision, re-ask a question already settled in `docs/DECISIONS.md`, or treat a proposed/unconfirmed item as approved.
 - Do not create branches, change the target branch, open pull requests, or change the workflow strategy unless the maintainer asks.
 - Do not skip the current phase, start unrelated features to avoid a blocker, or claim the project is finished while required work remains.
 - Do not delete, skip, loosen, or rewrite meaningful tests just to turn CI green. Do not hide errors, suppress failures, or replace real assertions with weak smoke tests.
@@ -116,7 +118,7 @@ The first release is intended to include:
 - Copyable AI context packs based only on retrieved source material, with links, fetch times, gaps, and limitations.
 - Rate-limit/error resilience, safe untrusted-content handling, accessibility, unit tests, browser E2E tests, CI, and documented release verification.
 
-See `DECISIONS.md` and `docs/PROJECT_PLAN.md` for authoritative details and exclusions.
+See `docs/DECISIONS.md` and `docs/PROJECT_PLAN.md` for authoritative details and exclusions.
 
 ## 7. Definition of done
 
@@ -124,7 +126,7 @@ A task is done only when:
 - The implementation matches the confirmed decision and acceptance criteria.
 - Relevant regression tests exist and were run, with results recorded.
 - Related broader checks were run or explicitly marked NOT RUN with a reason.
-- `PROGRESS.md` states the real status and evidence.
+- `docs/PROGRESS.md` states the real status and evidence.
 - The final report summarizes changes, test results, remaining blockers, and the next action.
 
 A green CI run alone does not make a future release ready. The v0.1.0 public preview has been published after the required release checks passed; apply the same evidence gate to every future release.

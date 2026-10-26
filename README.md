@@ -4,7 +4,7 @@
 
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
-**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
+**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [documentation index](docs/README.md) for a map of project records, testing evidence, audits, and release documents; the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
 
 ## Principles
 
@@ -31,19 +31,19 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 
 The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. GitHub's unauthenticated API limits still apply.
 
-## Contributor handoff and project tracking
+## Documentation and contributor handoff
 
-**AI coding agents: start with [AGENTS.md](AGENTS.md).** It explains the whole project, specifies the required reading order, and tells agents how to begin the current coding task.
+**AI coding agents:** start with [AGENTS.md](AGENTS.md). Use the [documentation index](docs/README.md) to find project records, detailed requirements, design plans, test evidence, audits, and release notes.
 
-Supporting records:
+Key project records live in `docs/`:
 
-1. [DECISIONS.md](DECISIONS.md) — what the maintainer explicitly decided, first-release scope, and what is deferred/excluded.
-2. [PROGRESS.md](PROGRESS.md) — current status, verified evidence, blockers, and next actions.
-3. [PHASES.md](PHASES.md) — phased work breakdown and acceptance checklists.
-4. [PLAN.md](PLAN.md) — coding-agent instructions and guardrails.
-5. [Detailed project specification](docs/PROJECT_PLAN.md) — full product requirements and release rules.
+- [Decision log](docs/DECISIONS.md) — maintainer-confirmed scope and exclusions.
+- [Current progress](docs/PROGRESS.md) — verified status, evidence, and next actions.
+- [Phases](docs/PHASES.md) — phased work and acceptance criteria.
+- [Working plan](docs/PLAN.md) — coding-agent guardrails.
+- [Project specification](docs/PROJECT_SPEC.md) and [detailed requirements](docs/PROJECT_PLAN.md).
 
-Update `PROGRESS.md` alongside implementation work. Never mark a feature or phase complete without test evidence. Keep confirmed decisions separate from implementation status.
+Keep these records synchronized. Never mark a feature or phase complete without evidence.
 
 ## Development
 
