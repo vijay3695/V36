@@ -58,6 +58,18 @@ export async function connectGitHubToken(value, remember = false) {
     }
     throw new Error("GitHub could not validate the token right now. Try again later.");
   }
+  let rateLimits;
+  try {
+    const data = await response.json();
+    const resources = data?.resources || {};
+    const safeBucket = bucket => {
+      const limit = Number(bucket?.limit), remaining = Number(bucket?.remaining);
+      return Number.isFinite(limit) && Number.isFinite(remaining) ? { limit, remaining } : null;
+    };
+    rateLimits = { core: safeBucket(resources.core), search: safeBucket(resources.search) };
+  } catch {
+    throw new Error("GitHub accepted the connection but returned unreadable rate-limit information. No token was saved.");
+  }
 
   // Never persist a token until GitHub has accepted it.
   let storageWarning = false;
@@ -74,7 +86,7 @@ export async function connectGitHubToken(value, remember = false) {
     storageWarning = Boolean(remember);
   }
   activeToken = candidate;
-  return { remembered, storageWarning };
+  return { remembered, storageWarning, rateLimits };
 }
 
 export function disconnectGitHubToken() {
