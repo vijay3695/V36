@@ -45,7 +45,7 @@ test("secondary rate limits are detected from response text and retry-after",asy
 });
 test("ordinary permission-denied 403 is not mislabeled as a rate limit",async t=>{
  t.mock.method(globalThis,"fetch",async()=>new Response(JSON.stringify({message:"Resource not accessible by integration"}),{status:403,headers:{"content-type":"application/json","x-ratelimit-remaining":"12"}}));
- await assert.rejects(apiGet("/repos/acme/private"),e=>e instanceof GitHubError&&e.status===403&&!e.rateLimited&&e.message==="GitHub returned HTTP 403.");
+ await assert.rejects(apiGet("/repos/acme/private"),e=>e instanceof GitHubError&&e.status===403&&!e.rateLimited&&e.message.startsWith("GitHub returned HTTP 403.")&&e.message.includes("Resource not accessible by integration"));
 });
 test("HTTP 429 honors retry-after",async t=>{
  t.mock.method(globalThis,"fetch",async()=>new Response(JSON.stringify({message:"Too many requests"}),{status:429,headers:{"content-type":"application/json","retry-after":"10"}}));
@@ -61,7 +61,7 @@ test("abort errors are preserved for callers",async t=>{
 });
 test("server errors retain their HTTP status and actionable message",async t=>{
  t.mock.method(globalThis,"fetch",async()=>new Response(JSON.stringify({message:"Internal error"}),{status:500,headers:{"content-type":"application/json"}}));
- await assert.rejects(apiGet("/search/issues?q=test"),e=>e instanceof GitHubError&&e.status===500&&e.message==="GitHub returned HTTP 500.");
+ await assert.rejects(apiGet("/search/issues?q=test"),e=>e instanceof GitHubError&&e.status===500&&e.message.startsWith("GitHub returned HTTP 500.")&&e.message.includes("Internal error"));
 });
 test("search requests encode page and supported sort order",async t=>{
  let requested="";
