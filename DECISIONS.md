@@ -106,7 +106,7 @@ The maintainer selected the **complete-scope release gate**. The following are n
 6. **Phase 5 — Accessibility, resilience, and security.**
 7. **Phase 6 — End-to-end verification and release readiness.**
 
-This order is an implementation sequence, not permission to omit a later phase from the first release. The first release remains blocked until all phases and acceptance criteria pass.
+This order is an implementation sequence, not permission to omit a later phase from a release. The v0.1.0 public preview has been published after its required phases and acceptance criteria passed; future releases must meet their applicable acceptance criteria before publication.
 
 ## 9. Explicitly deferred or excluded from current scope
 
