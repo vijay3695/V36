@@ -3,6 +3,23 @@ import {searchIssues,getIssue,getRepo,getRepoLanguages,getReadme,getLatestCommit
 import {loadSaved,addSavedIssue,addSavedSearch,removeSavedIssue,removeSavedSearch,exportBackup,parseImportFile,mergeBackup} from "./storage.js";
 import {buildContextPack} from "./context-pack.js";
 import {restoreRememberedToken,connectGitHubToken,disconnectGitHubToken,hasGitHubToken,isTokenRemembered} from "./github-auth.js";
+const SHAREABLE_FILTER_KEYS=new Set(["q","lang","labels","type","category","created","updated","commit","stars","sort","ca","cb","ua","ub","ma","mb","push","pa","pb","minStars","maxStars"]);
+function sanitizeAddressBar(){
+ try{
+  const url=new URL(window.location.href);
+  let changed=false;
+  for(const key of [...url.searchParams.keys()]){
+   if(!SHAREABLE_FILTER_KEYS.has(key)||/token|secret|authorization|access[_-]?key/i.test(key)||/github_pat_[A-Za-z0-9_]+/.test(url.searchParams.get(key)||"")){
+    url.searchParams.delete(key);changed=true;
+   }
+  }
+  if(/github_pat_[A-Za-z0-9_]+|(?:access[_-]?token|token)=/i.test(url.hash)){url.hash="#discover";changed=true;}
+  if(changed)history.replaceState(null,"",url.pathname+(url.search?url.search:"")+url.hash);
+ }catch{
+  // If URL parsing fails, do not attempt navigation or expose form data in a new URL.
+ }
+}
+sanitizeAddressBar();
 const $=id=>document.getElementById(id),form=$("search-form"),status=$("status");
 let saved=loadSaved(),loadedIssues=[],totalCount=0,page=1,hasMore=false,busy=false,currentFilters=normalizeFilters({}),currentIssue=null;
 const repoCache=new Map();
