@@ -24,7 +24,10 @@ tokenForm?.addEventListener("submit",async event=>{
  try{
   const result=await connectGitHubToken(candidate,rememberToken.checked);
   tokenInput.value="";
-  renderTokenState(result.storageWarning?"Connected for this page session only. Browser storage was unavailable, so the token was not saved.":result.remembered?"Connected. Token is stored on this device as requested.":"Connected for this page session only. Reloading the page will disconnect.");
+  const mode=result.storageWarning?"Connected for this page session only. Browser storage was unavailable, so the token was not saved.":result.remembered?"Connected. Token is stored on this device as requested.":"Connected for this page session only. Reloading the page will disconnect.";
+  const quota=[];
+  for(const [name,bucket] of [["Core API",result.rateLimits?.core],["Search API",result.rateLimits?.search]])if(bucket)quota.push(name+": "+bucket.remaining+"/"+bucket.limit+" requests remaining");
+  renderTokenState(mode+(quota.length?" Current GitHub quota: "+quota.join("; ")+".":" Quota details were not returned."));
   setStatus("GitHub token validated. Authenticated API capacity may improve; Search API limits remain separate.","success");
  }catch(error){
   renderTokenState("Connection failed: "+error.message);
