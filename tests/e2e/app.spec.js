@@ -535,7 +535,9 @@ test("optional GitHub token stays session-only by default and disconnect restore
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.locator("#status")).toContainText("Loaded 0 issues");
  expect(authorization.find(x=>x.path==="/search/issues")?.authorization).toBe("Bearer "+token);
+ await page.getByRole("link",{name:"GitHub API"}).click();
  await page.getByRole("button",{name:"Disconnect"}).click();
+ await page.getByRole("link",{name:"Discover"}).click();
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.locator("#status")).toContainText("Loaded 0 issues");
  expect(authorization.filter(x=>x.path==="/search/issues").at(-1)?.authorization).toBeUndefined();
