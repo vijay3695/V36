@@ -1,9 +1,9 @@
 # GitHub Token Authentication Experiment
 
-**Status:** Approved experiment plan; implementation not started  
+**Status:** Prototype implemented on the experiment branch; automated CI and live rate-limit verification pending  
 **Branch:** `feature/github-token-auth`  
 **Base:** `main`  
-**Scope:** Isolated investigation and prototype only. This document does not change the current product contract or authorize merging.
+**Scope:** Isolated implementation and verification on this branch. `main` remains unchanged; do not merge until the decision gate below is satisfied.
 
 ## 1. Purpose
 
@@ -25,7 +25,7 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 ## 3. Proposed user experience
 
 - Existing anonymous mode remains the default.
-- An optional “Connect GitHub” / “Use a personal access token” control explains why a token may help and links directly to GitHub's fine-grained token creation page.
+- An optional “GitHub API connection” control explains why a token may help and links to GitHub's fine-grained token creation page and rate-limit documentation. It warns that authenticated search may return only repositories the token can access, potentially narrowing global discovery.
 - Token input is masked by default, with clear show/hide control if implemented.
 - Validate the token with a minimal, read-only request to the official GitHub API. Never echo the token in UI or logs.
 - Offer an explicit “Remember on this device” choice. If declined, keep the token only in memory for the current page session and clear it when the page is closed/reloaded.
@@ -56,7 +56,13 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 - Test that all token-bearing requests target only `https://api.github.com` and that external links/content requests never receive Authorization.
 - Use fake test tokens only; never use a real PAT in automated tests, fixtures, commits, CI variables, screenshots, or reports.
 
-## 6. Acceptance criteria
+## 6. Implementation status
+
+Implemented on `feature/github-token-auth`: optional masked token entry, validation against the official `/rate_limit` endpoint, explicit session-only default, opt-in localStorage, disconnect, centralized Authorization injection, destination path/origin guard, anonymous fallback, unit tests, and user-facing privacy/limit explanations. This is implementation status only, not a claim that the checks below have passed.
+
+Not yet verified: full CI on the exact branch head, manual browser interaction, real-token validation, actual authenticated-versus-anonymous rate-limit comparison, and whether the chosen fine-grained token preserves sufficiently broad public search coverage. No real PAT has been used or recorded.
+
+## 7. Acceptance criteria
 
 ### Compatibility and functionality
 - [ ] Existing anonymous discovery works with no token and matches baseline behavior.
@@ -87,7 +93,7 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 - [ ] Verify no regression in light/dark themes, contrast, reduced motion, and existing responsive behavior.
 - [ ] Review dependency and complexity impact; do not add a dependency without a demonstrated need.
 
-## 7. Test method
+## 8. Test method
 
 1. Record the current branch baseline and run the existing test suite before implementation.
 2. Build a test matrix covering anonymous, connected, remembered, session-only, invalid, expired/revoked, disconnect, network error, general REST rate limit, and Search API rate limit.
@@ -96,10 +102,10 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 5. Review source and test diffs for accidental token sinks and unauthorized request destinations.
 6. Report pass/fail per acceptance item. Mark untested items “not verified,” never “pass.”
 
-## 8. Decision gate
+## 9. Decision gate
 
 Do not merge merely because the prototype works.
 
 Recommend merge only if every mandatory compatibility/security check passes, the actual rate-limit benefit is demonstrated and accurately described, browser-storage risks are acceptable, and the maintainer reviews the evidence. If the token does not materially help the app, or safe handling cannot be demonstrated, abandon the feature without affecting `main`.
 
-If the experiment passes, separately update the canonical product specification and decision log to replace the current “no token requirement / no credential storage” rule with the explicitly optional, consent-based design. That scope change must be reviewed before merge. Until then, the existing `main` product contract remains unchanged.
+The experiment branch updates the canonical product specification and decision log to describe this as an optional, consent-based capability proposal. `main` retains its existing product contract until the maintainer approves a merge. Do not merge until CI is green, token-leak and anonymous-regression tests pass, and live evidence confirms both the rate-limit benefit and the effect on broad public search results. If broad search is materially narrowed or the benefit cannot be demonstrated, revise or abandon the feature.
