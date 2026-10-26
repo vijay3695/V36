@@ -4,7 +4,7 @@
 
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
-**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [documentation index](docs/README.md) for a map of project records, testing evidence, audits, and release documents; the [numeric contrast audit](../docs/testing/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
+**Latest published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 from release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. `main` has subsequent changes that are not part of that release. Package metadata tracks the next development version; no v0.1.1 release is published. See the [documentation index](docs/README.md) for a map of project records, testing evidence, audits, and release documents; the [numeric contrast audit](docs/testing/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
 
 ## Principles
 
@@ -13,7 +13,7 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 - Clearly distinguish GitHub-provided labels from conservatively inferred contribution categories.
 - Preserve loaded results and saved references when requests fail.
 - Treat GitHub content and imported files as untrusted input.
-- Never require a GitHub token. Optional token connection is an isolated experiment; device storage is opt-in and disclosed, and tokens never enter exports or share URLs.
+- Anonymous access remains available. Optional browser-side GitHub token support is present on `main`; it is not required. Session-only use is the default, and remembering a token requires explicit opt-in. Tokens must never enter exports, share URLs, context packs, or diagnostics.
 - Generate portable AI context packs from retrieved information only.
 - Respect GitHub API limits and disclose when loaded results are incomplete.
 
@@ -37,11 +37,11 @@ The application is designed for GitHub Pages and modern browsers using static HT
 
 Key project records live in `docs/`:
 
-- [Decision log](../docs/project/DECISIONS.md) — maintainer-confirmed scope and exclusions.
-- [Current progress](../docs/project/PROGRESS.md) — verified status, evidence, and next actions.
-- [Phases](../docs/project/PHASES.md) — phased work and acceptance criteria.
-- [Working plan](../docs/project/PLAN.md) — coding-agent guardrails.
-- [Project specification](../docs/project/PROJECT_SPEC.md) and [detailed requirements](../docs/project/PROJECT_PLAN.md).
+- [Decision log](docs/project/DECISIONS.md) — maintainer-confirmed scope and exclusions.
+- [Current progress](docs/project/PROGRESS.md) — verified status, evidence, and next actions.
+- [Phases](docs/project/PHASES.md) — phased work and acceptance criteria.
+- [Working plan](docs/project/PLAN.md) — coding-agent guardrails.
+- [Project specification](docs/project/PROJECT_SPEC.md) and [detailed requirements](../docs/project/PROJECT_PLAN.md).
 
 Keep these records synchronized. Never mark a feature or phase complete without evidence.
 
@@ -54,11 +54,11 @@ npm install
 npm test
 ```
 
-Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md`, `SECURITY.md`, and the [manual acceptance checklist](../docs/testing/MANUAL_ACCEPTANCE.md). Automated accessibility scans do not replace manual keyboard acceptance. A passing unit-test command alone does not establish release readiness.
+Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md`, `SECURITY.md`, and the [manual acceptance checklist](docs/testing/MANUAL_ACCEPTANCE.md). Automated accessibility scans do not replace manual keyboard acceptance. A passing unit-test command alone does not establish release readiness.
 
 ## Release policy
 
-The first public preview (`v0.1.0`) has been published after the release workflow passed on its exact release commit. Future releases must not be published until their planned scope is implemented and verified, automated tests and CI pass, accessibility criteria pass through both automated and documented manual checks, and the release acceptance checklist is complete. Do not claim checks passed unless they were actually run.
+The first public preview (`v0.1.0`) is published. Changes on `main` after that exact release commit are unreleased; do not treat the package development version as a published release. Future releases must not be published until their planned scope is implemented and verified, automated tests and CI pass, accessibility criteria pass through both automated and documented manual checks, and the release acceptance checklist is complete. Do not claim checks passed unless they were actually run.
 
 ## License
 
