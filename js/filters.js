@@ -46,7 +46,7 @@ export function unknownFilterReasons(issue,f){
 export function buildSearchQuery(f,now=Date.now()){
  const p=["is:open"];if(f.query)p.push(f.query.trim());
  for(const label of f.labels||[])p.push('label:"'+label.replaceAll('"',"")+'"');
- if(f.issueType==="issue")p.push("is:issue");if(f.issueType==="pr")p.push("is:pr");
+ if(f.issueType==="pr")p.push("is:pr");else p.push("is:issue");
  if(f.createdAfter||f.createdBefore){if(f.createdAfter)p.push("created:>="+f.createdAfter);if(f.createdBefore)p.push("created:<="+f.createdBefore);}else if(f.createdDays)p.push("created:>="+new Date(now-Number(f.createdDays)*DAY).toISOString().slice(0,10));
  if(f.updatedAfter||f.updatedBefore){if(f.updatedAfter)p.push("updated:>="+f.updatedAfter);if(f.updatedBefore)p.push("updated:<="+f.updatedBefore);}else if(f.updatedDays)p.push("updated:>="+new Date(now-Number(f.updatedDays)*DAY).toISOString().slice(0,10));
  if(f.minStars!==""&&f.minStars!==undefined)p.push("stars:>="+f.minStars);
