@@ -60,22 +60,21 @@ export async function connectGitHubToken(value, remember = false) {
   }
 
   // Never persist a token until GitHub has accepted it.
-  activeToken = candidate;
-  remembered = false;
+  let storageWarning = false;
   try {
     globalThis.localStorage?.removeItem(STORAGE_KEY);
     if (remember) {
       globalThis.localStorage?.setItem(STORAGE_KEY, candidate);
       remembered = true;
+    } else {
+      remembered = false;
     }
   } catch {
-    if (remember) {
-      activeToken = candidate;
-      remembered = false;
-      throw new Error("GitHub accepted the token, but browser storage is unavailable. Reconnect without device storage or enable browser storage.");
-    }
+    remembered = false;
+    storageWarning = Boolean(remember);
   }
-  return { remembered };
+  activeToken = candidate;
+  return { remembered, storageWarning };
 }
 
 export function disconnectGitHubToken() {
