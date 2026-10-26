@@ -4,7 +4,7 @@
 
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
-**Public preview:** The `v0.1.0` release is gated by the `Publish v0.1.0` GitHub Actions workflow, which runs the complete unit, browser, and accessibility test suite on the exact release candidate before publishing. See the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
+**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
 
 ## Principles
 
@@ -17,7 +17,7 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 - Generate portable AI context packs from retrieved information only.
 - Respect GitHub API limits and disclose when loaded results are incomplete.
 
-## Planned experience
+## Included in the public preview
 
 - Discover issues with language, labels, issue type, date, commit-age, popularity, category, and sorting filters.
 - Compact search results and a dedicated issue-detail view with activity evidence.
@@ -58,7 +58,7 @@ Browser end-to-end tests and accessibility checks are part of the release gate; 
 
 ## Release policy
 
-V36's first public release must not be published until all planned features are implemented and verified, automated tests and CI pass, accessibility criteria pass through both automated and documented manual checks, and the release acceptance checklist is complete. Do not claim checks passed unless they were actually run.
+The first public preview (`v0.1.0`) has been published after the release workflow passed on its exact release commit. Future releases must not be published until their planned scope is implemented and verified, automated tests and CI pass, accessibility criteria pass through both automated and documented manual checks, and the release acceptance checklist is complete. Do not claim checks passed unless they were actually run.
 
 ## License
 
