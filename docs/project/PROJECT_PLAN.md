@@ -59,7 +59,7 @@ Apply GitHub-supported query filters first. Apply additional metadata-based filt
 
 Display dates and available evidence rather than an overall repository health score. Fetch extra activity data only for displayed results to conserve API quota.
 
-If activity data is unavailable, keep the issue visible and mark the missing fields Unknown; offer retry. On rate limits, stop extra requests, preserve loaded results and saved items, explain the limit and retry time if known, and provide manual retry. Never bypass rate limits or require users to supply a token.
+If activity data is unavailable, keep the issue visible and mark the missing fields Unknown; offer retry. On rate limits, stop extra requests, preserve loaded results and saved items, explain the limit and retry time if known, and provide manual retry. Never bypass rate limits or require users to supply a token. The isolated `feature/github-token-auth` experiment adds an optional fine-grained token with session-only default and explicit opt-in persistence; this is not part of `main` until reviewed and merged.
 
 For failures, preserve existing results and saved items, identify which data failed, distinguish unavailable data from zero matches, and never fabricate cached data or silently discard results.
 
@@ -85,7 +85,7 @@ Do not download or execute the entire repository, run project tests, call a paid
 
 ## 9. Security and privacy
 
-Treat GitHub issue/repository content and imported files as untrusted input. Render text safely; do not execute imported or retrieved scripts/HTML. Validate and limit imported data. Do not store credentials, access tokens, or secret-bearing API keys. Security-sensitive behavior must be tested before release.
+Treat GitHub issue/repository content and imported files as untrusted input. Render text safely; do not execute imported or retrieved scripts/HTML. Validate and limit imported data. Do not include credentials or access tokens in saved data, exports, URLs, context packs, diagnostics, or source. The isolated `feature/github-token-auth` branch is an explicit exception for optional browser-side token state; persistence is opt-in and must pass the experiment security gate before merge. Security-sensitive behavior must be tested before release.
 
 ## 10. Planned repository structure
 
