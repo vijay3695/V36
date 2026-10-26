@@ -1,9 +1,9 @@
 # GitHub Token Authentication Experiment
 
-**Status:** Prototype implemented on the experiment branch; automated CI and live rate-limit verification pending  
-**Branch:** `feature/github-token-auth`  
-**Base:** `main`  
-**Scope:** Isolated implementation and verification on this branch. `main` remains unchanged; do not merge until the decision gate below is satisfied.
+**Status (2026-10-26):** Token-related implementation and test fixes are present on `main`. The latest consolidated CI run and Pages deployment were reported successful, but that does not verify live-token behavior or demonstrate a real-world rate-limit benefit. This document began as the experiment plan; its original branch-only statements below are historical unless explicitly identified as current.  
+**Original experiment branch:** `feature/github-token-auth`  
+**Current branch:** `main`  
+**Release status:** Not included in published `v0.1.0`; no `v0.1.1` release has been published.
 
 ## 1. Purpose
 
@@ -20,7 +20,7 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 5. **No writes.** V36 uses the token only for read-only discovery requests. The application must not create, edit, close, react to, or otherwise mutate GitHub resources.
 6. **Explicit consent.** Explain that a PAT is a credential, ask the user to paste it intentionally, and make storage choice clear. Provide a disconnect action.
 7. **No false OAuth claim.** Label this as optional token-based connection, not GitHub OAuth login.
-8. **No change to `main`.** All prototype code and documentation changes stay on this branch until reviewed and explicitly approved for merge.
+8. **Historical experiment constraint.** The original prototype was kept off `main` pending review. The implementation has since reached `main`; this historical requirement is not a current branch instruction.
 
 ## 3. Proposed user experience
 
@@ -58,7 +58,7 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 
 ## 6. Implementation status
 
-Implemented on `feature/github-token-auth`: optional masked token entry, validation against the official `/rate_limit` endpoint, explicit session-only default, opt-in localStorage, disconnect, centralized Authorization injection, destination path/origin guard, anonymous fallback, unit tests, and user-facing privacy/limit explanations. This is implementation status only, not a claim that the checks below have passed.
+Implementation originally developed on `feature/github-token-auth` and now present on `main`: optional masked token entry, validation against the official `/rate_limit` endpoint, explicit session-only default, opt-in localStorage, disconnect, centralized Authorization injection, destination path/origin guard, anonymous fallback, unit tests, and user-facing privacy/limit explanations. This is implementation status only, not a claim that the checks below have passed.
 
 Not yet verified: full CI on the exact branch head, manual browser interaction, real-token validation, actual authenticated-versus-anonymous rate-limit comparison, and whether the chosen fine-grained token preserves sufficiently broad public search coverage. No real PAT has been used or recorded.
 
@@ -108,4 +108,4 @@ Do not merge merely because the prototype works.
 
 Recommend merge only if every mandatory compatibility/security check passes, the actual rate-limit benefit is demonstrated and accurately described, browser-storage risks are acceptable, and the maintainer reviews the evidence. If the token does not materially help the app, or safe handling cannot be demonstrated, abandon the feature without affecting `main`.
 
-The experiment branch updates the canonical product specification and decision log to describe this as an optional, consent-based capability proposal. `main` retains its existing product contract until the maintainer approves a merge. Do not merge until CI is green, token-leak and anonymous-regression tests pass, and live evidence confirms both the rate-limit benefit and the effect on broad public search results. If broad search is materially narrowed or the benefit cannot be demonstrated, revise or abandon the feature.
+Current disposition: optional token support is on `main` but is not included in published `v0.1.0`. Automated CI success is not a substitute for the outstanding live checks. Record results here before claiming a rate-limit benefit or deciding whether to include this feature in a future release. If broad search is materially narrowed or the benefit cannot be demonstrated, revise or remove the feature.
