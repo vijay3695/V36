@@ -11,7 +11,7 @@
 **Verified application candidate:** `7a3faefbcab7e88ce7cbf1f8a9a4a0506b20b09d`  
 **Phase 5:** APPROVED; manual outcomes subsequently confirmed by maintainer  
 **Phase 6:** VERIFIED  
-**Public release:** Not published
+**Public release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0), published 2026-10-24
 
 ## Historical CI evidence
 
@@ -29,7 +29,7 @@ The passing suite includes search and filter semantics, custom date/star bounds,
 
 ## Phase 5 approval and completed manual checks
 
-The maintainer approved Phase 5 on 2026-10-21. On 2026-10-24, the maintainer subsequently confirmed PASS for the redesigned UI's manual checks, including 320/375/768/1280px layouts, 200% zoom, light/dark theme contrast, reduced motion, long-content stress, and screen reader/keyboard checks. The maintainer also reported PASS for search/filter/sort/load-more/details, Saved/sharing/import-export, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md) for the recorded outcomes and scope. These are maintainer-reported results; the browser/OS and assistive-technology versions were not supplied. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report. Automated axe/contrast and browser checks are recorded separately from manual acceptance.
+The maintainer approved Phase 5 on 2026-10-21. On 2026-10-24, the maintainer subsequently confirmed PASS for the redesigned UI's manual checks, including 320/375/768/1280px layouts, 200% zoom, light/dark theme contrast, reduced motion, long-content stress, and screen reader/keyboard checks. The maintainer also reported PASS for search/filter/sort/load-more/details, Saved/sharing/import-export, readability/disabled controls, no-results/rate-limit states, and About/detail navigation. See [MANUAL_ACCEPTANCE.md](MANUAL_ACCEPTANCE.md) for the recorded outcomes and scope. These are maintainer-reported results; the browser/OS and assistive-technology versions were not supplied. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `docs/CONTRAST_AUDIT.md`. Automated axe/contrast and browser checks are recorded separately from manual acceptance.
 
 ## Release checklist disposition
 
