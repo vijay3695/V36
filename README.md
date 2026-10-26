@@ -13,7 +13,7 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 - Clearly distinguish GitHub-provided labels from conservatively inferred contribution categories.
 - Preserve loaded results and saved references when requests fail.
 - Treat GitHub content and imported files as untrusted input.
-- Never require or store a GitHub token, credentials, or a paid API key.
+- Never require a GitHub token. Optional token connection is an isolated experiment; device storage is opt-in and disclosed, and tokens never enter exports or share URLs.
 - Generate portable AI context packs from retrieved information only.
 - Respect GitHub API limits and disclose when loaded results are incomplete.
 
@@ -29,7 +29,7 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 
 ## Technology and hosting
 
-The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. GitHub's unauthenticated API limits still apply.
+The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. Anonymous GitHub access remains available; an optional token-based experiment is being reviewed on `feature/github-token-auth`. Authenticated search may be limited to repositories the token can access. See [the experiment plan](docs/project/GITHUB_TOKEN_AUTH_EXPERIMENT.md).
 
 ## Documentation and contributor handoff
 
