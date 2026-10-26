@@ -24,7 +24,7 @@ tokenForm?.addEventListener("submit",async event=>{
  try{
   const result=await connectGitHubToken(candidate,rememberToken.checked);
   tokenInput.value="";
-  renderTokenState(result.remembered?"Connected. Token is stored on this device as requested.":"Connected for this page session only. Reloading the page will disconnect.");
+  renderTokenState(result.storageWarning?"Connected for this page session only. Browser storage was unavailable, so the token was not saved.":result.remembered?"Connected. Token is stored on this device as requested.":"Connected for this page session only. Reloading the page will disconnect.");
   setStatus("GitHub token validated. Authenticated API capacity may improve; Search API limits remain separate.","success");
  }catch(error){
   renderTokenState("Connection failed: "+error.message);
