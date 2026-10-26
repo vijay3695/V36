@@ -8,13 +8,13 @@
 - Historical entries below are retained as a work log. Their older test counts, commit SHAs, and statements that publication or numeric contrast measurements were pending describe the state at that earlier time; they are not current status.
 - Current manual acceptance scope and attribution remain documented in `MANUAL_ACCEPTANCE.md`; maintainer-reported outcomes are not represented as independently reproduced tests.
 
-### 2026-10-26 — Optional GitHub token experiment (branch-only; verification pending)
+### 2026-10-26 — Optional GitHub token support on main; live verification pending
 
-- Maintainer approved an isolated experiment on `feature/github-token-auth`; `main` has not been changed.
+- The original prototype was developed on `feature/github-token-auth`; token-related implementation and test-navigation fixes are now present on `main`.
 - Implemented optional fine-grained PAT entry, validation, session-only default, opt-in browser persistence, disconnect, centralized API authorization, unit tests, and browser tests. Updated product/security docs on this branch to document the proposed scope change.
-- **NOT VERIFIED YET:** CI on this branch head, manual browser run, live-token validation, authenticated-versus-anonymous rate-limit comparison, and breadth of public search results with a fine-grained token. No real token was used. Do not merge until the acceptance gate is met.
+- Latest consolidated CI and Pages deployment for main were reported successful (CI run [40372776149](https://github.com/vijay3695/V36/actions/runs/40372776149); Pages run [40372775953](https://github.com/vijay3695/V36/actions/runs/40372775953)). These results do not establish live-token behavior. **NOT VERIFIED:** real-token validation, authenticated-versus-anonymous rate-limit comparison, and breadth of public search results with a fine-grained token. No real token was used in automated tests. Do not claim rate-limit benefit until measured.
 - Search authentication has a material limitation: GitHub documents separate Search API limits and says authenticated search returns only resources the authenticated user can access. Compare actual behavior before approving the feature.
-- Plan and acceptance matrix: [GitHub token-auth experiment](GITHUB_TOKEN_AUTH_EXPERIMENT.md).
+- Current implementation/security checklist: [GitHub token-auth experiment](GITHUB_TOKEN_AUTH_EXPERIMENT.md).
 
 # V36 Progress Log
 
@@ -57,9 +57,9 @@
 - **Latest CI:** [run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the verified application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
 - **Responsive viewport CI:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow; the 640px CSS viewport used as a 200% zoom equivalent also passed.
 - **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement was subsequently completed; see `CONTRAST_AUDIT.md`. Automated checks do not substitute for recorded manual outcomes.
-- **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
+- **Release:** v0.1.0 is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. Subsequent `main` commits are unreleased. Package metadata is `0.1.1` for next development work; no v0.1.1 release/tag is published.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
-- **Latest main commit before this documentation update:** `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`. Its CI and Pages deployment both passed; this documentation-only update should be verified by the subsequent CI run.
+- **Latest application verification before this documentation update:** CI run [40372776149](https://github.com/vijay3695/V36/actions/runs/40372776149) and Pages run [40372775953](https://github.com/vijay3695/V36/actions/runs/40372775953) passed on commit `74bd67c8eb9e53cacedb26e87f7910172da019d7`. This documentation/version update must be checked by its own subsequent CI run.
 
 
 ## Verified observations
