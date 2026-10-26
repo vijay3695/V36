@@ -161,7 +161,7 @@ h3{color:var(--text-strong)}
   .label-picker-panel{position:relative;top:auto;left:auto;right:auto;border-top:1px solid var(--line-strong);border-radius:0 0 8px 8px}
   .custom-label-row{align-items:stretch}
 }
-@media(max-width:360px){.brand-group{width:100%}.header-actions{align-items:flex-start}.site-header nav a{padding-inline:.42rem;font-size:.83rem}.theme-toggle{padding:.4rem .5rem;font-size:.78rem}.card-actions .button{padding:.38rem .5rem}}
+@media(max-width:360px){.brand-group{width:100%}.header-actions{align-items:flex-start;flex-wrap:wrap}.site-header nav{flex-wrap:wrap;min-width:0}.site-header nav a{padding-inline:.42rem;font-size:.83rem}.theme-toggle{padding:.4rem .5rem;font-size:.78rem}.card-actions .button{padding:.38rem .5rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 #github-auth-panel>summary{display:inline-flex;cursor:pointer;color:var(--accent);font-size:.84rem;font-weight:700;padding:.35rem 0}
