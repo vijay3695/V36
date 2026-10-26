@@ -18,11 +18,12 @@ export function isTokenRemembered() {
 export function restoreRememberedToken() {
   try {
     const stored = globalThis.localStorage?.getItem(STORAGE_KEY);
-    if (typeof stored === "string" && stored.length > 0) {
+    if (typeof stored === "string" && /^github_pat_[A-Za-z0-9_]+$/.test(stored)) {
       activeToken = stored;
       remembered = true;
       return true;
     }
+    if (stored) globalThis.localStorage?.removeItem(STORAGE_KEY);
   } catch {
     // Storage may be disabled; anonymous and session-only modes still work.
   }
