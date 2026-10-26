@@ -11,7 +11,7 @@ The maintainer confirmed PASS for all four checks in a subsequent message. These
 
 - [x] Reduced-motion preference — **PASS**.
 - [x] Long-content stress test (long title/body, many labels, empty description, unavailable-data list) — **PASS**.
-- [x] Light/dark theme contrast — **PASS** for the reported theme contrast check. A formal per-component contrast measurement (numeric ratios for each relevant component) is **not separately confirmed**.
+- [x] Light/dark theme contrast — **PASS** for the reported theme contrast check. Numeric per-component contrast ratios are documented in `CONTRAST_AUDIT.md`; the automated audit is distinct from this maintainer-reported manual theme review.
 - [x] Screen reader and keyboard — **PASS**, as reported by the maintainer. The specific screen reader, browser/OS combination, and detailed announcement results were not supplied.
 
 The pass statuses above reflect the maintainer's explicit report; they do not imply unreported measurements, test configurations, or additional coverage.
@@ -30,7 +30,7 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 - [x] No-results and unavailable/rate-limit states.
 - [x] About page and issue-detail navigation.
 
-**Latest follow-up:** the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report. Automated tests and maintainer-reported checks are distinct evidence types.
+**Latest follow-up:** the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `docs/CONTRAST_AUDIT.md`. Automated tests and maintainer-reported checks are distinct evidence types.
 
 
 **Status: PARTIALLY PERFORMED — latest maintainer-reported review 2026-10-24.** The maintainer directed that Phase 5 be approved. The documented approval includes an explicit waiver for residual manual-review risks; it does not imply coverage beyond the recorded checks. Checks were run by the maintainer on 2026-10-21 in Firefox on Windows. Keyboard navigation, advanced-filter disclosure, search, failure handling, import/export, 200% zoom, and issue-detail content passed. Four defects were fixed and re-tested (`534bca7`, `7bd7d45`, `28d0768`, `ac5306e`). Manual visual approval is recorded at 320px and 375px. Automated Chromium overflow testing passed at 320px, 375px, 768px, and 1280px in [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181) on commit `16fd41922033a356e7305e70f00f9edcac71702d`. The automated check measures document-level horizontal overflow only; it does not certify visual usability or absence of clipped controls. The maintainer's 2026-10-24 manual review passed the listed redesigned UI checks, including the four requested viewport widths and 200% zoom. In a later follow-up, the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen-reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
@@ -71,7 +71,7 @@ The maintainer manually checked the live V36 UI and reported PASS for every item
 - [x] Human visual acceptance at 320px, 375px, 768px, and desktop width: **PASS — maintainer-reported 2026-10-24** for the redesigned live UI. Browser/OS versions and exact deployed commit were not supplied. This new result supersedes the earlier 768px/desktop NOT RUN entry.
 - [x] Automated responsive overflow test at 320px, 375px, 768px, and 1280px. **PASS** — [GitHub Actions run #1](https://github.com/vijay3695/V36/actions/runs/39636965181), commit `16fd41922033a356e7305e70f00f9edcac71702d`. Playwright logged `OVERFLOW@320: false`, `OVERFLOW@375: false`, `OVERFLOW@768: false`, and `OVERFLOW@1280: false`; 1 test passed. This measures document-level horizontal overflow, not clipped controls or visual usability.
 - [x] At 200% zoom, confirm navigation, filters, cards, detail panels, saved controls, and context-pack text remain usable. **PASS — maintainer-reported 2026-10-24** for the redesigned live UI; environment/version details were not supplied.
-- [x] Light/dark theme contrast check — **PASS**, explicitly confirmed by the maintainer on 2026-10-24. A formal numeric per-component contrast measurement (text, borders, focus indicators, status messages, inferred labels, and disabled controls) is not separately confirmed.
+- [x] Light/dark theme contrast check — **PASS**, explicitly confirmed by the maintainer on 2026-10-24. Numeric ratios for the documented text, border, focus, status, inferred-label, and disabled-control combinations are recorded in `CONTRAST_AUDIT.md` and regression-tested.
 - [x] Reduced-motion preference check — **PASS**, explicitly confirmed by the maintainer on 2026-10-24.
 - [x] Dedicated long-content stress test: long issue title/body, many labels, empty description, and unavailable-data list — **PASS**, explicitly confirmed by the maintainer on 2026-10-24.
 
