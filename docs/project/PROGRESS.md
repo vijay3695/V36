@@ -2,7 +2,7 @@
 
 <!-- CURRENT STATUS UPDATE: 2026-10-26. This section is authoritative; older entries below are historical snapshots. -->
 
-> **Current verified release status:** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published from `77b36385f3a2e9fb603d1602b451d152fda91cd7` on 2026-10-24. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) and [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Numeric light/dark theme component contrast ratios are documented in [`CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and regression-tested by `tests/contrast-audit.test.js`. **Phases 0–6, release publication, and the contrast audit are complete. Documentation status reconciliation is being recorded in the commits below; this documentation-only work does not claim to rerun the release test suite.
+> **Current verified release status:** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published from `77b36385f3a2e9fb603d1602b451d152fda91cd7` on 2026-10-24. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) and [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Numeric light/dark theme component contrast ratios are documented in [`CONTRAST_AUDIT.md`](../testing/CONTRAST_AUDIT.md) and regression-tested by `tests/contrast-audit.test.js`. **Phases 0–6, release publication, and the contrast audit are complete. Documentation status reconciliation is being recorded in the commits below; this documentation-only work does not claim to rerun the release test suite.
 
 - This update corrects stale statements in `README.md`, `PROJECT_SPEC.md`, `PHASES.md`, `PROJECT_PLAN.md`, `ACCEPTANCE_CHECKLIST.md`, `PHASE_6_AUDIT.md`, and `RELEASE_VERIFICATION.md`.
 - Historical entries below are retained as a work log. Their older test counts, commit SHAs, and statements that publication or numeric contrast measurements were pending describe the state at that earlier time; they are not current status.
@@ -15,14 +15,14 @@
 - The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader plus keyboard.
 - These are maintainer-reported results. Browser/OS and screen-reader versions, detailed measurements, and exact test data were not supplied and are not inferred.
 - At the time of this historical entry, formal per-component contrast measurement had not yet been recorded; the audit was subsequently completed in `CONTRAST_AUDIT.md`.
-- Updated detailed record: [manual acceptance checklist](MANUAL_ACCEPTANCE.md).
+- Updated detailed record: [manual acceptance checklist](../testing/MANUAL_ACCEPTANCE.md).
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
 
 ### 2026-10-24 — Maintainer completed UI redesign manual verification
 
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
-- Detailed record: [manual acceptance checklist](MANUAL_ACCEPTANCE.md).
+- Detailed record: [manual acceptance checklist](../testing/MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
 - Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `CONTRAST_AUDIT.md`.
 - Previous automated redesign evidence remains recorded below.

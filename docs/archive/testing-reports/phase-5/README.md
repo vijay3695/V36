@@ -11,7 +11,7 @@ Branch: `main` (evidence commit `363fb3a`)
 - 200% zoom: NOT PERFORMED
 - Manual keyboard/contrast/responsive/reduced-motion checks: NOT PERFORMED
 
-See `docs/MANUAL_ACCEPTANCE.md`. Phase 5 remains IN PROGRESS pending a human reviewer's record. No GitHub Actions were triggered (no workflow exists on `main`).
+See `docs/testing/MANUAL_ACCEPTANCE.md`. Phase 5 remains IN PROGRESS pending a human reviewer's record. No GitHub Actions were triggered (no workflow exists on `main`).
 
 ## Historical run — commit 6888c67
 
@@ -26,5 +26,5 @@ Automated results:
 - Accessibility (axe) tests: 3 passed, 0 failed (see accessibility-tests.log)
 
 Manual keyboard/responsive/zoom/contrast/reduced-motion checks are NOT performed.
-See docs/MANUAL_ACCEPTANCE.md. Phase 5 remains IN PROGRESS pending manual acceptance.
+See docs/testing/MANUAL_ACCEPTANCE.md. Phase 5 remains IN PROGRESS pending manual acceptance.
 No GitHub Actions were triggered.

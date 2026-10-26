@@ -1,6 +1,6 @@
 # V36 Working Plan
 
-> This is the execution plan for contributors and coding agents. Read this before changing code. Keep `PROGRESS.md` updated in the same change as implementation work. The detailed product requirements live in [PROJECT_PLAN.md](PROJECT_PLAN.md).
+> This is the execution plan for contributors and coding agents. Read this before changing code. Keep `PROGRESS.md` updated in the same change as implementation work. The detailed product requirements live in [PROJECT_PLAN.md](./PROJECT_PLAN.md).
 
 ## Project guardrails
 
@@ -37,4 +37,4 @@
 6. **Phase 5 — Accessibility, resilience, and security**
 7. **Phase 6 — End-to-end verification and release readiness**
 
-The phase checklist and acceptance criteria are in [PHASES.md](PHASES.md). Current factual status is in [PROGRESS.md](PROGRESS.md); it is not a substitute for test evidence.
+The phase checklist and acceptance criteria are in [PHASES.md](./PHASES.md). Current factual status is in [PROGRESS.md](./PROGRESS.md); it is not a substitute for test evidence.

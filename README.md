@@ -4,7 +4,7 @@
 
 V36 is a free, static-first open-source discovery tool for finding GitHub issues and preparing evidence-backed context packs for AI coding assistants.
 
-**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [documentation index](docs/README.md) for a map of project records, testing evidence, audits, and release documents; the [numeric contrast audit](docs/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
+**Published release:** [V36 v0.1.0 — Public Preview](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published on 2026-10-24 after the `Publish v0.1.0` workflow passed on release commit `77b36385f3a2e9fb603d1602b451d152fda91cd7`. The latest documentation and status corrections are tracked on `main`; historical test runs below the current status are not claims about the latest commit. See the [documentation index](docs/README.md) for a map of project records, testing evidence, audits, and release documents; the [numeric contrast audit](../docs/testing/CONTRAST_AUDIT.md) for light/dark component ratios and regression coverage.
 
 ## Principles
 
@@ -37,11 +37,11 @@ The application is designed for GitHub Pages and modern browsers using static HT
 
 Key project records live in `docs/`:
 
-- [Decision log](docs/DECISIONS.md) — maintainer-confirmed scope and exclusions.
-- [Current progress](docs/PROGRESS.md) — verified status, evidence, and next actions.
-- [Phases](docs/PHASES.md) — phased work and acceptance criteria.
-- [Working plan](docs/PLAN.md) — coding-agent guardrails.
-- [Project specification](docs/PROJECT_SPEC.md) and [detailed requirements](docs/PROJECT_PLAN.md).
+- [Decision log](../docs/project/DECISIONS.md) — maintainer-confirmed scope and exclusions.
+- [Current progress](../docs/project/PROGRESS.md) — verified status, evidence, and next actions.
+- [Phases](../docs/project/PHASES.md) — phased work and acceptance criteria.
+- [Working plan](../docs/project/PLAN.md) — coding-agent guardrails.
+- [Project specification](../docs/project/PROJECT_SPEC.md) and [detailed requirements](../docs/project/PROJECT_PLAN.md).
 
 Keep these records synchronized. Never mark a feature or phase complete without evidence.
 
@@ -54,7 +54,7 @@ npm install
 npm test
 ```
 
-Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md`, `SECURITY.md`, and the [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md). Automated accessibility scans do not replace manual keyboard acceptance. A passing unit-test command alone does not establish release readiness.
+Browser end-to-end tests and accessibility checks are part of the release gate; see `CONTRIBUTING.md`, `SECURITY.md`, and the [manual acceptance checklist](../docs/testing/MANUAL_ACCEPTANCE.md). Automated accessibility scans do not replace manual keyboard acceptance. A passing unit-test command alone does not establish release readiness.
 
 ## Release policy
 
