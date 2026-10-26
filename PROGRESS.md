@@ -1,15 +1,12 @@
-### 2026-10-24 — Final documentation verification closed
+### 2026-10-26 — Documentation status reconciled with published release
 
-<!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
+<!-- CURRENT STATUS UPDATE: 2026-10-26. This section is authoritative; older entries below are historical snapshots. -->
 
-> **Current verified status (2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/CONTRAST_AUDIT.md`](CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](../tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
+> **Current verified release status:** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) was published from `77b36385f3a2e9fb603d1602b451d152fda91cd7` on 2026-10-24. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) and [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Numeric light/dark theme component contrast ratios are documented in [`docs/CONTRAST_AUDIT.md`](docs/CONTRAST_AUDIT.md) and regression-tested by `tests/contrast-audit.test.js`. **Phases 0–6 and the recorded release tasks are complete.** This documentation-only reconciliation does not claim to rerun the release test suite.
 
-
-- Latest documentation commit before this entry: `e8446c8b093a0a70992ad7ef03975f30dfdf7c1a`.
-- Consolidated GitHub Actions CI run [#136](https://github.com/vijay3695/V36/actions/runs/40085468160): **PASS**.
-- GitHub Pages deployment [#63](https://github.com/vijay3695/V36/actions/runs/40085467930): **SUCCESS**.
-- No open pull requests or issues were found in the repository during the final status check.
-- All phases 0–6 remain verified. No active CI/deployment task remains pending. Formal per-component numeric contrast ratios are still not separately recorded; this is an evidence limitation, not a failed test. No public release was created; release publication remains a separate, unrequested action.
+- This update corrects stale statements in `README.md`, `PROJECT_SPEC.md`, `PHASES.md`, `docs/PROJECT_PLAN.md`, `docs/ACCEPTANCE_CHECKLIST.md`, `docs/PHASE_6_AUDIT.md`, and `docs/RELEASE_VERIFICATION.md`.
+- Historical entries below are retained as a work log. Their older test counts, commit SHAs, and statements that publication or numeric contrast measurements were pending describe the state at that earlier time; they are not current status.
+- Current manual acceptance scope and attribution remain documented in `docs/MANUAL_ACCEPTANCE.md`; maintainer-reported outcomes are not represented as independently reproduced tests.
 
 # V36 Progress Log
 
@@ -17,7 +14,7 @@
 
 - The maintainer explicitly confirmed PASS for reduced-motion preference, long-content stress, light/dark theme contrast, and screen reader plus keyboard.
 - These are maintainer-reported results. Browser/OS and screen-reader versions, detailed measurements, and exact test data were not supplied and are not inferred.
-- Formal per-component contrast measurement remains unconfirmed; the reported theme-contrast PASS is not treated as numeric component-by-component contrast evidence.
+- At the time of this historical entry, formal per-component contrast measurement had not yet been recorded; the audit was subsequently completed in `docs/CONTRAST_AUDIT.md`.
 - Updated detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 
 > Update this file with every implementation change. Record facts and evidence, not optimism. If a test was not run, write **NOT RUN**. If it failed, write **FAILED** and link the run. Do not mark a phase VERIFIED until all its acceptance criteria are met.
@@ -27,7 +24,7 @@
 - The maintainer reported PASS for Discover/search/filtering, Saved and sharing, 320/375/768/1280px layouts, 200% browser zoom/no horizontal overflow, light/dark themes, keyboard-only navigation/focus, readability/disabled controls, no-results/rate-limit states, and About/detail navigation.
 - Detailed record: [manual acceptance checklist](docs/MANUAL_ACCEPTANCE.md).
 - These are maintainer-reported manual results; browser/OS versions and exact deployed commit were not supplied and are not invented.
-- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
+- Follow-up outcome: the maintainer explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this historical snapshot the numeric audit had not yet been recorded; the completed ratio report is now in `docs/CONTRAST_AUDIT.md`.
 - Previous automated redesign evidence remains recorded below.
 
 ### 2026-10-24 — Approved UI redesign implemented and verified
@@ -51,7 +48,7 @@
 - **Phase 5:** APPROVED BY MAINTAINER. On 2026-10-24, the maintainer reported PASS for the listed redesign UI checks and subsequently explicitly confirmed PASS for reduced-motion, long-content stress, light/dark theme contrast, and screen reader/keyboard checks. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
 - **Latest CI:** [run #132](https://github.com/vijay3695/V36/actions/runs/40084825503) — **PASS** on `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`; the verified application candidate passed 103/103 unit tests, 47/47 browser tests, and 6/6 accessibility scans.
 - **Responsive viewport CI:** [run](https://github.com/vijay3695/V36/actions/runs/40080705237) — **PASS** at 320, 375, 768, and 1280 CSS pixels, with no document-level horizontal overflow; the 640px CSS viewport used as a 200% zoom equivalent also passed.
-- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement remains unconfirmed. Automated checks do not substitute for recorded manual outcomes.
+- **Known limitations:** Maintainer-reported visual/responsive checks cover 320/375/768/1280px and 200% zoom. Reduced-motion, long-content stress, light/dark contrast, and screen reader/keyboard checks are explicitly confirmed PASS. Formal numeric per-component contrast measurement was subsequently completed; see `docs/CONTRAST_AUDIT.md`. Automated checks do not substitute for recorded manual outcomes.
 - **Release:** No GitHub Release was published. Phase 6 completion records verification and readiness; publication remains separate.
 - **CI configuration:** `.github/workflows/ci.yml` uses one job and the bulk command `npm run test:all`; Husky runs `npm test` pre-commit and `npm run test:all` pre-push.
 - **Latest main commit before this documentation update:** `6370799c7ed4b1e5e82309b61c8feb12c78c9a08`. Its CI and Pages deployment both passed; this documentation-only update should be verified by the subsequent CI run.
@@ -85,14 +82,14 @@ These are **not yet verified as complete** merely because related code exists.
 | Automated accessibility | PASS LOCALLY | 3/3 axe scans (Discover, Saved, About) plus detail-view scan in E2E |
 | Accessible announcements | IMPLEMENTED, PASS LOCALLY | Result-count live region, `aria-busy`, assertive errors, detail-refresh announcements |
 | Manual acceptance checks | PASS for maintainer-reported responsive widths, 200% zoom, keyboard/screen reader, theme contrast, reduced motion, long content, filters, saved data, and failure states; numeric per-component contrast ratios not separately confirmed | No known functional or automated-test work pending; optional remaining evidence is numeric per-component contrast measurement |
-| CI / verification readiness | PASS | Latest CI run #132 and Pages deployment passed; manual acceptance outcomes recorded. Numeric per-component contrast ratios remain optional unrecorded evidence. No public GitHub Release has been published. |
+| CI / verification readiness | PASS | Latest CI run #132 and Pages deployment passed; manual acceptance outcomes recorded. Numeric per-component contrast ratios are now recorded in `docs/CONTRAST_AUDIT.md`. No public GitHub Release has been published. |
 
 ## Current next actions
 
 1. No known implementation or automated-test defect remains in the verified scope; the latest CI and Pages deployment passed.
 2. Manual acceptance PASS outcomes are recorded in `docs/MANUAL_ACCEPTANCE.md`; the formal numeric per-component contrast ratios are not separately documented.
-3. No public GitHub Release has been published. Release publication is a separate decision, not a failed test.
-4. Continue working directly on `main`, consistent with the project workflow.
+3. The public GitHub Release v0.1.0 was subsequently published; see the current status at the top of this file.
+4. Continue working directly on `main`, consistent with the project workflow. The release and numeric contrast audit are complete.
 
 ## Work log
 
