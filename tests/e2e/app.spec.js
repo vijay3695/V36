@@ -523,6 +523,7 @@ test("optional GitHub token stays session-only by default and disconnect restore
   return route.fulfill({status:404,json:{message:"not mocked"}});
  });
  await page.goto("/");
+ await page.locator("#github-auth-panel > summary").click();
  await page.getByLabel("Fine-grained GitHub personal access token").fill(token);
  await page.getByRole("button",{name:"Validate and connect"}).click();
  await expect(page.locator("#github-token-status")).toContainText("Connected for this page session only");
@@ -543,6 +544,7 @@ test("remembering a GitHub token is explicit and disconnect clears local storage
  const token="github_pat_"+"B".repeat(40);
  await page.route("https://api.github.com/rate_limit",route=>route.fulfill({json:{resources:{core:{limit:5000,remaining:4999}}}}));
  await page.goto("/");
+ await page.locator("#github-auth-panel > summary").click();
  await page.getByLabel("Fine-grained GitHub personal access token").fill(token);
  await page.getByLabel(/Remember on this device/).check();
  await page.getByRole("button",{name:"Validate and connect"}).click();
