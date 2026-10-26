@@ -529,6 +529,8 @@ test("optional GitHub token stays session-only by default and disconnect restore
  await expect(page.locator("#github-token-status")).toContainText("Connected for this page session only");
  await expect(page.locator("#github-token")).toHaveValue("");
  expect(await page.evaluate(()=>Object.values(localStorage).some(value=>value.includes("github_pat_")))).toBe(false);
+ await page.getByRole("link",{name:"Discover"}).click();
+ await expect(page.getByLabel("Search issues")).toBeVisible();
  await page.getByLabel("Search issues").fill("rate limit");
  await page.getByRole("button",{name:"Search GitHub"}).click();
  await expect(page.locator("#status")).toContainText("Loaded 0 issues");
