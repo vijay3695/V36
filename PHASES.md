@@ -152,7 +152,7 @@ Tasks:
 - [x] Audit the release checklist, project plan, manual acceptance record, release list, workflow, and latest CI failure; disposition recorded in this report.
 - [x] Publish a public, auditable verification report tied to the exact tested candidate commit, listing checks, results, limitations, and waived/not-run checks.
 - [x] Confirm CI is green on the exact candidate commit — [run #73](https://github.com/vijay3695/V36/actions/runs/39642076673) on `7e91404d05e85cb24447ae5708ec21896f4a5728`.
-- [x] Enforce release policy — no public release was published as part of this task; publication remains a separate action.
+- [x] Enforce release policy — the v0.1.0 public preview was subsequently published after the release gate passed; see `docs/RELEASE_VERIFICATION.md`.
 
 Acceptance criteria:
 - [x] Every required item has a verified result or an explicit maintainer-approved exception recorded.
@@ -162,4 +162,4 @@ Acceptance criteria:
 
 ### Phase 6 sequencing note — 2026-10-21
 
-The maintainer explicitly directed on 2026-10-21 to approve Phase 5 and complete Phase 6. The long-content browser locator was corrected without weakening the assertion. Since then, the maintainer explicitly confirmed PASS for the listed manual acceptance checks on 2026-10-24. Latest consolidated CI run #132 passed on main with 103 unit tests, 47 browser tests, and 6 accessibility scans; responsive overflow checks also passed at 320/375/768/1280px. Phase 6 remains VERIFIED; This was true at the time of the earlier snapshot; `v0.1.0` has since been published successfully. At the time of this earlier snapshot the numeric audit had not yet been recorded; see `docs/CONTRAST_AUDIT.md` for the completed ratio report.
+The maintainer explicitly directed on 2026-10-21 to approve Phase 5 and complete Phase 6. The long-content browser locator was corrected without weakening the assertion. Since then, the maintainer explicitly confirmed PASS for the listed manual acceptance checks on 2026-10-24. Latest consolidated CI run #132 passed on main with 103 unit tests, 47 browser tests, and 6 accessibility scans; responsive overflow checks also passed at 320/375/768/1280px. Phase 6 remains VERIFIED. The v0.1.0 public preview was subsequently published and the numeric audit completed; see `docs/RELEASE_VERIFICATION.md` and `docs/CONTRAST_AUDIT.md`.
