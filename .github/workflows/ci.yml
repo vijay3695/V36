@@ -39,3 +39,13 @@ jobs:
         run: npx playwright install chromium
       - name: Run complete test suite
         run: npm run test:all
+      - name: Upload Playwright diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-diagnostics
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
