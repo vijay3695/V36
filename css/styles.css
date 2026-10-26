@@ -164,8 +164,8 @@ h3{color:var(--text-strong)}
 @media(max-width:360px){.brand-group{width:100%}.header-actions{align-items:flex-start}.site-header nav a{padding-inline:.42rem;font-size:.83rem}.theme-toggle{padding:.4rem .5rem;font-size:.78rem}.card-actions .button{padding:.38rem .5rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-.token-access{max-width:1320px;margin:0 auto;padding:0 clamp(1rem,3vw,2rem)}
 #github-auth-panel>summary{display:inline-flex;cursor:pointer;color:var(--accent);font-size:.84rem;font-weight:700;padding:.35rem 0}
+#view-github .token-panel{max-width:760px;margin:.5rem 0 1rem;box-shadow:var(--shadow)}
 .token-panel{max-width:760px;margin:.5rem 0 1rem;box-shadow:var(--shadow)}
 .token-panel .field input{width:100%;min-height:42px}
 .remember-token{display:flex;align-items:flex-start;gap:.55rem;margin:.75rem 0;font-size:.84rem;color:var(--muted-strong)}
@@ -173,4 +173,4 @@ h3{color:var(--text-strong)}
 .token-actions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.75rem}
 .token-status{margin:.8rem 0 0;padding:.55rem .65rem;border-left:3px solid var(--line-strong);background:var(--status-bg);font-size:.85rem;overflow-wrap:anywhere}
 .token-status:empty{display:none}
-@media(max-width:640px){.token-access{padding-inline:1rem}.token-actions .button{flex:1}}
+@media(max-width:640px){.token-actions .button{flex:1}}
