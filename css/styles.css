@@ -139,8 +139,8 @@ h3{color:var(--text-strong)}
 @media(max-width:1000px){.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.brand-caption{display:none}}
 @media(max-width:640px){
   .site-header{align-items:flex-start;flex-wrap:wrap}
-  .header-actions{width:100%;justify-content:space-between;gap:.5rem}
-  .site-header nav{gap:0}
+  .header-actions{width:100%;min-width:0;flex-wrap:wrap;justify-content:space-between;gap:.5rem}
+  .site-header nav{gap:0;min-width:0;max-width:100%;flex-wrap:wrap}
   .site-header nav a{padding:.48rem .6rem}
   .theme-toggle{min-height:36px}
   main{padding-top:.75rem}
