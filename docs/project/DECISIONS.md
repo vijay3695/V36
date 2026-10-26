@@ -19,7 +19,7 @@ When this log conflicts with implementation assumptions, follow the confirmed de
 | Hosting / architecture | Static-first website intended for GitHub Pages; keep it usable without a paid server or backend | CONFIRMED |
 | Budget | No paid hosting, database, or AI API dependency | CONFIRMED |
 | Accounts / backend | No user account system or server database for the planned first release | FIRST RELEASE |
-| GitHub credentials | Anonymous mode must remain available. Optional user-supplied fine-grained PAT is an experiment; never required. In-memory session mode is default; browser localStorage only after explicit opt-in and risk warning. Tokens must never enter exports, URLs, context packs, or diagnostics. | EXPERIMENTAL — MERGE GATE REQUIRED |
+| GitHub credentials | Anonymous mode must remain available. Optional user-supplied fine-grained PAT support is present on `main`; never required. In-memory session mode is default; browser localStorage only after explicit opt-in and risk warning. Tokens must never enter exports, URLs, context packs, or diagnostics. Live rate-limit benefit and broad-search effects remain unverified. | IMPLEMENTED; LIVE VERIFICATION PENDING |
 | AI provider | Generate a portable context prompt for the user's own AI assistant; do not call an AI API or make automatic code changes | FIRST RELEASE |
 | Evidence philosophy | Show evidence, dates, source links, and uncertainty. Do not produce a simplistic “dead/alive” verdict or overall repository health score | FIRST RELEASE |
 | Release policy | Do not publish the first release until every agreed feature and release check is implemented and verified | CONFIRMED |
