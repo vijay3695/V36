@@ -8,6 +8,14 @@
 - Historical entries below are retained as a work log. Their older test counts, commit SHAs, and statements that publication or numeric contrast measurements were pending describe the state at that earlier time; they are not current status.
 - Current manual acceptance scope and attribution remain documented in `MANUAL_ACCEPTANCE.md`; maintainer-reported outcomes are not represented as independently reproduced tests.
 
+### 2026-10-26 — Optional GitHub token experiment (branch-only; verification pending)
+
+- Maintainer approved an isolated experiment on `feature/github-token-auth`; `main` has not been changed.
+- Implemented optional fine-grained PAT entry, validation, session-only default, opt-in browser persistence, disconnect, centralized API authorization, unit tests, and browser tests. Updated product/security docs on this branch to document the proposed scope change.
+- **NOT VERIFIED YET:** CI on this branch head, manual browser run, live-token validation, authenticated-versus-anonymous rate-limit comparison, and breadth of public search results with a fine-grained token. No real token was used. Do not merge until the acceptance gate is met.
+- Search authentication has a material limitation: GitHub documents separate Search API limits and says authenticated search returns only resources the authenticated user can access. Compare actual behavior before approving the feature.
+- Plan and acceptance matrix: [GitHub token-auth experiment](GITHUB_TOKEN_AUTH_EXPERIMENT.md).
+
 # V36 Progress Log
 
 ### 2026-10-24 — Follow-up manual checks confirmed PASS
