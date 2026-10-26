@@ -79,7 +79,9 @@ test("disconnect restores anonymous API requests",async t=>{
   await connectGitHubToken(VALID,false);
   await apiGet("/rate_limit");
   disconnectGitHubToken();
+  assert.equal(getGitHubToken(),"");
   await apiGet("/rate_limit");
-  assert.equal(seen[0].authorization,"Bearer "+VALID);
-  assert.equal(seen[1].authorization,undefined);
+  assert.equal(seen[0].authorization,"Bearer "+VALID); // token validation request
+  assert.equal(seen[1].authorization,"Bearer "+VALID); // authenticated API request
+  assert.equal(seen[2].authorization,undefined); // anonymous after disconnect
 });
