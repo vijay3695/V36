@@ -1,6 +1,6 @@
 # V36 Project Specification
 
-Status: **v0.1.0 Public Preview published** (2026-10-24). The implementation and release verification are recorded in `PHASE_6_AUDIT.md`, `RELEASE_VERIFICATION.md`, and `ACCEPTANCE_CHECKLIST.md`. Historical planning decisions below describe intended product behavior; use current verification records for implementation status.
+Status: **v0.1.0 Public Preview published** (2026-10-24); package metadata is now `0.1.1` for unreleased development work. No v0.1.1 release is published. The implementation and release verification are recorded in `PHASE_6_AUDIT.md`, `RELEASE_VERIFICATION.md`, and `ACCEPTANCE_CHECKLIST.md`. Historical planning decisions below describe intended product behavior; use current verification records for implementation status.
 
 ## Product goal
 
@@ -23,10 +23,10 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - AI context packs: provider-portable, copyable, based only on retrieved information, with source links, fetch times, missing context, and limitations. No AI API calls, repository execution, test execution, or automatic PR creation.
 - Saved data: local browser storage, no account or sync. Dedicated Saved page separates issues and saved searches. Export/import uses validated, size-limited JSON, deduplicates canonical references and equivalent filter presets, and preserves unrelated data.
 - Share URLs contain filters only, not saved items, credentials, or tokens.
-- API limits: anonymous mode remains fully available. An optional, user-supplied fine-grained PAT experiment is implemented on `feature/github-token-auth` but is not enabled on `main` until reviewed and merged. Authenticated requests may raise primary REST limits, while Search API has separate limits and can return only repositories the token can access. Stop additional requests when rate-limited, preserve results and saves, disclose retry timing when known, and allow manual retry.
+- API limits: anonymous mode remains fully available. Optional user-supplied fine-grained PAT support is present on `main` and is not required; anonymous mode remains available. Live rate-limit benefit and broad public-search behavior remain NOT VERIFIED. Authenticated requests may raise primary REST limits, while Search API has separate limits and can return only repositories the token can access. Stop additional requests when rate-limited, preserve results and saves, disclose retry timing when known, and allow manual retry.
 - Failures: preserve visible results and saved references, identify failed fields, and distinguish unavailable data from zero matches and incomplete results.
 - Freshness: GitHub is the source of truth. Refresh issue/repository data when opening details and generating context packs where practical. Show fetch times and never present saved snapshots as current.
-- Security: all GitHub content and imported files are untrusted. Render safely, never execute remote content, validate import size/schema, and never include tokens in saved data, exports, URLs, context packs, or diagnostics. On the experiment branch only, token persistence is opt-in and uses browser localStorage with an explicit same-origin JavaScript/XSS warning; session-only mode is the default.
+- Security: all GitHub content and imported files are untrusted. Render safely, never execute remote content, validate import size/schema, and never include tokens in saved data, exports, URLs, context packs, or diagnostics. Token persistence is opt-in and uses browser localStorage with an explicit same-origin JavaScript/XSS warning; session-only mode is the default.
 - Accessibility: every agreed criterion is a release blocker. Automated checks plus documented manual keyboard checks are required.
 - Tests: unit tests, browser end-to-end tests, accessibility checks, and GitHub Actions CI. Use mocks for routine tests; separate optional live GitHub checks.
 - Release scope: the first public preview `v0.1.0` has been published after the release workflow passed on the exact release commit. Apply the same evidence gate to future releases.
@@ -37,7 +37,7 @@ A free, static-first site that helps contributors discover public GitHub issues,
 - index.html
 - css/styles.css
 - js/ application modules
-- ../tests/ unit and browser acceptance tests
+- ../../tests/ unit and browser acceptance tests
 - .github/workflows/ci.yml
 - .github issue and pull request templates
 - README.md, LICENSE, CONTRIBUTING.md, SECURITY.md
