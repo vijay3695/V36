@@ -16,4 +16,6 @@ The published preview uses the unauthenticated GitHub API, so rate limits and in
 
 Manual acceptance outcomes are recorded in `../testing/MANUAL_ACCEPTANCE.md` as maintainer-reported results; browser/OS and assistive-technology versions were not supplied and are not inferred. Automated checks and reported manual checks are distinct evidence types.
 
+The release commit predates subsequent changes on `main`; those changes are not covered by this release evidence. Package metadata is now `0.1.1` for unreleased development work; no v0.1.1 release or tag has been published.
+
 This file is the current release-verification record. Earlier planning statements that publication was pending are superseded by the published release linked above. Do not infer that this documentation update reran the release suite; the cited results apply to the exact release commit.
