@@ -60,7 +60,7 @@ This is an experiment, not a claim that authentication removes all limits. GitHu
 
 Implementation originally developed on `feature/github-token-auth` and now present on `main`: optional masked token entry, validation against the official `/rate_limit` endpoint, explicit session-only default, opt-in localStorage, disconnect, centralized Authorization injection, destination path/origin guard, anonymous fallback, unit tests, and user-facing privacy/limit explanations. This is implementation status only, not a claim that the checks below have passed.
 
-Not yet verified: full CI on the exact branch head, manual browser interaction, real-token validation, actual authenticated-versus-anonymous rate-limit comparison, and whether the chosen fine-grained token preserves sufficiently broad public search coverage. No real PAT has been used or recorded.
+Still not verified: manual browser interaction specifically covering token connect/disconnect and storage behavior, real-token validation, actual authenticated-versus-anonymous rate-limit comparison, and whether the chosen fine-grained token preserves sufficiently broad public search coverage. Automated CI passing does not establish these live behaviors. No real PAT has been recorded in repository files or automated tests.
 
 ## 7. Acceptance criteria
 

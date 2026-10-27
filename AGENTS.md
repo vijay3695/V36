@@ -2,7 +2,7 @@
 
 <!-- CURRENT STATUS UPDATE: 2026-10-24. This supersedes earlier snapshots below when they conflict. -->
 
-> **Current verified release status (2026-10-26; release published 2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/testing/CONTRAST_AUDIT.md`](../docs/testing/CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
+> **Current verified release status (2026-10-26; release published 2026-10-24):** The public preview [V36 v0.1.0](https://github.com/vijay3695/V36/releases/tag/v0.1.0) is published from `77b36385f3a2e9fb603d1602b451d152fda91cd7`. [CI run #142](https://github.com/vijay3695/V36/actions/runs/40088851927) passed **107 unit tests, 47 browser tests, and 6 accessibility scans**; [Pages deployment #69](https://github.com/vijay3695/V36/actions/runs/40088851539) succeeded; [release workflow #1](https://github.com/vijay3695/V36/actions/runs/40088852176) succeeded. Per-component numeric contrast ratios for both themes are recorded in [`docs/testing/CONTRAST_AUDIT.md`](docs/testing/CONTRAST_AUDIT.md) and recalculated by [`tests/contrast-audit.test.js`](tests/contrast-audit.test.js) where this relative link is valid only for docs files. **No Phase 0–6 or active release/CI/deployment task remains pending.** Older status notes below describe earlier snapshots and are not the current state.
 
 **Current starting task:** No current V36 phase is open. `v0.1.0` is public, all three release/CI/Pages checks passed, and numeric contrast ratios are recorded and regression-tested. For future tasks, inspect current `main`, latest CI, release state, and this document before making changes.
 
@@ -17,7 +17,7 @@ V36 is a free, static-first website for discovering GitHub issues that may suit 
 - **License:** MIT.
 - **Hosting goal:** GitHub Pages; no paid backend or database.
 - **AI:** No paid AI API or built-in autonomous coding. V36 prepares portable context packs for users to paste into their own assistant.
-- **Credentials on main:** Never require or store GitHub tokens, secrets, or credentials. The separately approved `feature/github-token-auth` experiment is an isolated exception: optional fine-grained PAT, session-only by default, localStorage only by explicit opt-in, never exported, and not eligible to merge without its documented security/rate-limit gate.
+- **GitHub token support:** Optional fine-grained PAT support is implemented on `main`; anonymous access remains available and the token is never required. The token is session-only by default, with localStorage only by explicit opt-in. Live rate-limit benefit and broad-search coverage remain unverified; see `docs/project/GITHUB_TOKEN_AUTH_EXPERIMENT.md`.
 - **Release state:** Public preview `v0.1.0` is published after the full test suite passed on the exact release commit. See `docs/releases/RELEASE_VERIFICATION.md`.
 - **Product principle:** Show source-backed evidence and uncertainty. Do not assign an overall repository health score or declare projects “dead” based on incomplete signals.
 
@@ -58,13 +58,13 @@ After reading the files:
 - Do not claim tests, accessibility checks, manual checks, deployment, or release verification happened unless they actually happened.
 - Treat GitHub issue/repository text and imported files as untrusted input. Render safely; validate and size-limit imports; never execute imported content.
 - Preserve loaded results and saved data when requests fail. Distinguish “no results” from “data unavailable”; show Unknown for missing metadata.
-- Respect GitHub API limits. Stop extra requests when rate limited; do not bypass limits or require a token. The optional PAT experiment is branch-only and must not narrow global discovery silently.
+- Respect GitHub API limits. Stop extra requests when rate limited; do not bypass limits or require a token. Optional PAT support is on `main`; disclose that authenticated search may narrow results and keep anonymous discovery available.
 - Keep source links, fetch times, missing context, and limitations visible in generated context packs. Fetch source-file links/contribution guidance only when requested, and disclose if the root listing or guide is unavailable. Never fabricate evidence.
 - Keep routine tests deterministic with mocked GitHub API responses where appropriate. Cover custom date/star filters, shareable URLs, saved-search backups, activity evidence, and context-pack source links with regression tests.
-- Husky runs `npm test` before commits and `npm run test:all` before pushes. Install hooks with `npm install` (the package `prepare` script configures Husky). When a GitHub Actions workflow exists, it must run `npm run test:all` as one job. **Note:** the consolidated workflow was deleted in `ad8379b` ("admin approved disable … no-Actions rule"), while `docs/project/DECISIONS.md` and the release checklist still require CI; this conflict is unresolved and must be settled by the maintainer.
+- **Testing policy:** GitHub Actions is the sole automated test gate. The consolidated CI workflow must run `npm run test:all` in one job. Do not install local Git hooks or add Husky. Run tests locally when useful, but merge readiness is determined by GitHub Actions and the documented manual acceptance requirements.
 - Do not create separate GitHub Actions workflows/jobs for individual test suites. Keep the GitHub-hosted check consolidated into one workflow, one job, and one bulk test command.
 - No paid services, paid AI API, server-side account system, automatic code changes, or full-repository download unless the maintainer explicitly changes the documented scope.
-- Keep the documentation synchronized: confirmed decisions in `docs/project/DECISIONS.md`, phase criteria in `docs/project/PHASES.md`, and actual implementation/test status in `docs/project/PROGRESS.md`.
+- Keep the documentation synchronized: confirmed decisions in `docs/project/DECISIONS.md`, phase criteria in `docs/project/PHASES.md`, and actual implementation/test status in `docs/project/PROGRESS.md`. GitHub Actions is the only automated test gate; do not add Husky or local Git hooks.
 
 ## 5. Explicit do / do-not instructions
 

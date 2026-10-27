@@ -29,7 +29,7 @@ V36 is a free, static-first open-source discovery tool for finding GitHub issues
 
 ## Technology and hosting
 
-The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. Anonymous GitHub access remains available; an optional token-based experiment is being reviewed on `feature/github-token-auth`. Authenticated search may be limited to repositories the token can access. See [the experiment plan](docs/project/GITHUB_TOKEN_AUTH_EXPERIMENT.md).
+The application is designed for GitHub Pages and modern browsers using static HTML, CSS, and JavaScript modules. No server, database, account system, or paid AI API is required. Anonymous GitHub access remains available; optional browser-side fine-grained token support is implemented on `main` but its live rate-limit benefit and search coverage remain unverified. Authenticated search may be limited to repositories the token can access. See [the token-auth status and verification plan](docs/project/GITHUB_TOKEN_AUTH_EXPERIMENT.md).
 
 ## Documentation and contributor handoff
 
@@ -41,7 +41,7 @@ Key project records live in `docs/`:
 - [Current progress](docs/project/PROGRESS.md) — verified status, evidence, and next actions.
 - [Phases](docs/project/PHASES.md) — phased work and acceptance criteria.
 - [Working plan](docs/project/PLAN.md) — coding-agent guardrails.
-- [Project specification](docs/project/PROJECT_SPEC.md) and [detailed requirements](../docs/project/PROJECT_PLAN.md).
+- [Project specification](docs/project/PROJECT_SPEC.md) and [detailed requirements](docs/project/PROJECT_PLAN.md).
 
 Keep these records synchronized. Never mark a feature or phase complete without evidence.
 

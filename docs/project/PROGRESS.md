@@ -1,3 +1,14 @@
+### 2026-10-27 — Repository consistency and Actions-only testing policy
+
+<!-- CURRENT STATUS UPDATE: this section reflects the repository state checked before this maintenance commit; CI for this commit must be checked after push. -->
+
+- Confirmed `main` contains the optional browser-side PAT implementation; anonymous discovery remains available. Real-token validation, authenticated-versus-anonymous rate-limit measurements, and broad-search coverage remain **NOT VERIFIED**. See `GITHUB_TOKEN_AUTH_EXPERIMENT.md`; do not describe the token feature as fully live-verified.
+- Latest pre-maintenance CI passed the complete unit, browser, and accessibility suite: [run #40374201688](https://github.com/vijay3695/V36/actions/runs/40374201688). Latest Pages deployment succeeded: [run #40374201433](https://github.com/vijay3695/V36/actions/runs/40374201433).
+- The one-time `v0.1.0` publishing workflow failed only because that release already exists; its test suite passed. Remove the obsolete one-time publishing workflow rather than letting edits to release notes repeatedly attempt to recreate the published release. Future releases must use a deliberate version-specific process.
+- Remove Husky, its package `prepare` script, and tracked local hooks. GitHub Actions is the only automated test gate; optional local test commands remain available. Update contributor/agent/plan guidance accordingly.
+- Fix stale token-branch wording and incorrect documentation links in README and agent guidance.
+- This entry records the maintenance intent and pre-change evidence. The new commit's CI and Pages results are **PENDING** until their actual GitHub Actions runs complete. Live-token scenarios remain **NOT VERIFIED**.
+
 ### 2026-10-26 — Documentation status reconciled with published release
 
 <!-- CURRENT STATUS UPDATE: 2026-10-26. This section is authoritative; older entries below are historical snapshots. -->

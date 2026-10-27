@@ -11,15 +11,9 @@ Thanks for helping improve V36. The first public release has a strict completion
 5. Keep issue and repository content untrusted. Use safe DOM APIs such as textContent; do not inject remote content as HTML.
 6. Add or update tests for behavior changes.
 
-## Local checks
+## Testing
 
-Requires Node.js 20+.
-
-    npm install
-    npm test
-    npm run test:all
-
-Husky installs local Git hooks during `npm install`: the pre-commit hook runs unit tests, and the pre-push hook runs the complete bulk suite. The single GitHub Actions workflow also runs `npm run test:all` in one job; do not add separate workflows/jobs for individual test suites. The bulk suite includes the Playwright browser tests, including the automated accessibility spec. Automated accessibility scans do not replace manual keyboard checks.
+Requires Node.js 20+. Install dependencies with `npm install`. You may run `npm test` or `npm run test:all` locally when useful, but local Git hooks are intentionally not installed. **GitHub Actions is the sole automated test gate** and runs `npm run test:all` in one consolidated job. Do not add Husky, Git hooks, or separate workflows/jobs for individual test suites. The bulk suite includes Playwright browser tests and automated accessibility scans; automated scans do not replace documented manual keyboard checks.
 
 ## Pull request expectations
 

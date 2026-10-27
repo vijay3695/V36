@@ -10,7 +10,7 @@
 - Do not publish a release until every required release gate passes.
 - No paid services, backend, AI API, or required GitHub token. Anonymous access remains supported. Optional token-based API access is present on `main`, session-only by default with localStorage only after explicit opt-in and disclosure. Automated checks do not establish live rate-limit benefit or broad-search behavior; see `GITHUB_TOKEN_AUTH_EXPERIMENT.md`.
 - GitHub issue/repository content and imported files are untrusted input.
-- Use Husky for local checks: `npm test` on pre-commit and `npm run test:all` on pre-push.
+- Do not install Husky or local Git hooks. GitHub Actions is the sole automated test gate; local test commands are optional developer tools.
 - Keep GitHub CI consolidated into one workflow, one job, and one bulk command (`npm run test:all`). Do not create a separate GitHub Actions workflow/job for each test suite.
 - If CI fails, inspect the failing job output and fix the root cause before stacking more implementation commits. Avoid a rapid chain of speculative commits that all trigger CI.
 - Keep the app static-first and compatible with GitHub Pages. The published release remains `v0.1.0`; package version `0.1.1` is unreleased development metadata, not evidence of a published tag/release.

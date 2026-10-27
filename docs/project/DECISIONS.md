@@ -144,3 +144,9 @@ When the maintainer answers a planning question:
 3. Update `PROGRESS.md` only for actual implementation/test status, not to claim a product decision is implemented.
 4. Keep “confirmed decision”, “planned”, “implemented”, and “verified” as distinct states.
 5. Do not ask the maintainer to repeat decisions already recorded here.
+
+
+## 10. Automated testing policy
+
+- **GitHub Actions is the sole automated test gate.** The consolidated CI workflow runs `npm run test:all` in one job for pushes and pull requests to `main`.
+- Do not install Husky or local Git hooks. Developers may run test commands locally, but local hooks are not required or installed by the project.
